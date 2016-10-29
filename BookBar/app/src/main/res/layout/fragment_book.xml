@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.ssdut411.app.bookbar.widget.ViewPagerIndicator
+        android:id="@+id/vpi_book_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="?attr/font_white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="借阅"
+            android:textColor="?attr/font_black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="预约"
+            android:textColor="?attr/font_gray"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="收藏"
+            android:textColor="?attr/font_gray"
+            android:textSize="16sp" />
+    </com.ssdut411.app.bookbar.widget.ViewPagerIndicator>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_book_viewpager"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
+</LinearLayout>

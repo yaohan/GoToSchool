@@ -38,6 +38,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initViews() {
         viewPager = getViewPager(R.id.mainpage_viewpager);
+        viewPager.setOffscreenPageLimit(3);
         getLinearLayout(R.id.ll_tab_main).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

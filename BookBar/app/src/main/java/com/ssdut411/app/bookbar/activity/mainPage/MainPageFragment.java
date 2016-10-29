@@ -20,12 +20,18 @@ public class MainPageFragment extends BaseFragment {
     protected void initView(final View view) {
         List<Book> bookList = new ArrayList<>();
         bookList.add(new Book());
-        getListView(view,R.id.lv_main_list).setAdapter(new CommonAdapter<Book>(getActivity(),bookList,R.layout.item_book_list) {
+        bookList.add(new Book());
+        bookList.add(new Book());
+        bookList.add(new Book());
+        bookList.add(new Book());
+        bookList.add(new Book());
+        bookList.add(new Book());
+        getGridView(view, R.id.gv_main_list).setAdapter(new CommonAdapter<Book>(getActivity(),bookList,R.layout.item_main_grid) {
             @Override
             public void convert(ViewHolder viewHolder, Book book, int position) {
                 viewHolder.getTextView(R.id.tv_book_name).setText("C语言从入门到精通");
-                viewHolder.getTextView(R.id.tv_book_press).setText("出版社：清华大学出版社");
-                viewHolder.getTextView(R.id.tv_book_time).setVisibility(View.GONE);
+//                viewHolder.getTextView(R.id.tv_book_press).setText("出版社：清华大学出版社");
+//                viewHolder.getTextView(R.id.tv_book_time).setVisibility(View.GONE);
             }
         });
     }

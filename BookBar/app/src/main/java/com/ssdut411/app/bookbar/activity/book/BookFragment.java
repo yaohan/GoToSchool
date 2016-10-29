@@ -18,6 +18,7 @@ public class BookFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         ViewPager viewPager = getViewPager(view,R.id.vp_book_viewpager);
+        viewPager.setOffscreenPageLimit(3);
         final List<Fragment> fragmentList = new ArrayList<Fragment>();
         fragmentList.add(new BorrowFragment());
         fragmentList.add(new ReservationFragment());

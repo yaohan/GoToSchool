@@ -8,6 +8,7 @@
     <color name="font_night">#969C9E</color>
     <color name="font_black">#000000</color>
     <color name="font_gray">#999999</color>
+    <color name="search_hint">#B4B4B5</color>
     <color name="font_red">#E46D6D</color>
 
     <color name="theme_night">#263238</color>
@@ -15,6 +16,7 @@
 
     <color name="background_white">#F8F8F8</color>
     <color name="background_night">#37474F</color>
+    <color name="search_gray">#EEF7FD</color>
 
     <color name="divide_gray">#E5E5E5</color>
     <color name="item_white_pressed">#CCCCCC</color>

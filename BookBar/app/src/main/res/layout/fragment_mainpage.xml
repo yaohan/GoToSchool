@@ -19,15 +19,17 @@
             android:src="@mipmap/icon_search" />
 
         <EditText
-            android:id="@+id/mainpage_search"
+            android:id="@+id/et_main_search"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="@color/search_gray"
             android:hint="请输入关键字进行搜索"
             android:layout_marginLeft="36dp"
-            android:textColorHint="@color/search_hint" />
+            android:textColorHint="@color/search_hint"
+            android:editable="false"/>
 
         <ImageView
+            android:id="@+id/iv_main_scan"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginRight="8dp"
@@ -41,6 +43,7 @@
         android:layout_height="1dp"
         android:background="@color/divide_gray"/>
 <RelativeLayout
+    android:id="@+id/rl_main_library"
     android:layout_width="fill_parent"
     android:layout_height="48dp"
     android:paddingLeft="8dp"

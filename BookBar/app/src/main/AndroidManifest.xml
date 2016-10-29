@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ssdut411.app.bookbar" >
-
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
         android:allowBackup="true"
         android:name=".activity.system.MainApplication"
@@ -20,6 +26,10 @@
         <activity android:name=".activity.person.LoginActivity"/>
         <activity android:name=".activity.person.RegisterActivity"/>
         <activity android:name=".activity.person.ForgetPasswordActivity"/>
+        <activity android:name=".activity.mainPage.SearchActivity"/>
+        <activity android:name=".activity.book.BookDetailActivity"/>
+        <activity android:name=".activity.mainPage.SelectLibraryActivity"/>
+        <activity android:name=".activity.mainPage.CaptureActivity"/>
     </application>
 
 </manifest>

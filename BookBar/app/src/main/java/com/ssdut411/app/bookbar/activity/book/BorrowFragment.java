@@ -1,6 +1,8 @@
 package com.ssdut411.app.bookbar.activity.book;
 
+import android.content.Intent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.ssdut411.app.bookbar.R;
@@ -26,6 +28,12 @@ public class BorrowFragment extends BaseFragment {
                 viewHolder.getTextView(R.id.tv_book_name).setText("C语言从入门到精通");
                 viewHolder.getTextView(R.id.tv_book_press).setText("出版社：清华大学出版社");
                 viewHolder.getTextView(R.id.tv_book_time).setText("离到期还有5天");
+            }
+        });
+        getListView(view,R.id.lv_borrow_list).setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(getActivity(),BookDetailActivity.class));
             }
         });
     }

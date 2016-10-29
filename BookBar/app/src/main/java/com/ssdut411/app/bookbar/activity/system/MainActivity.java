@@ -83,6 +83,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void showView() {
+        setBackTips();
         fragmentList =  new ArrayList<>();
         MainPageFragment mainPageFragment = new MainPageFragment();
         BookFragment bookFragment = new BookFragment();

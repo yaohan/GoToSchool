@@ -10,9 +10,12 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.ssdut411.app.bookbar.widget.ViewPagerIndicator;
 
@@ -66,6 +69,9 @@ public abstract class BaseFragment extends Fragment {
     public ListView getListView(View view,int viewId) {
         return getView(view, viewId);
     }
-    public GridView getGridView(View view,int viewId) { return getView(view,viewId); }
+    public GridView getGridView(View view,int viewId) { return getView(view, viewId); }
+    public EditText getEditText(View view,int viewId) { return getView(view, viewId); }
+    public RelativeLayout getRelativeLayout(View view, int viewId) { return getView(view,viewId); }
+    public ImageView getImageView(View view, int viewId) { return getView(view,viewId); }
 
 }

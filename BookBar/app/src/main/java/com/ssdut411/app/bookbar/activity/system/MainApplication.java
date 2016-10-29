@@ -3,6 +3,8 @@ package com.ssdut411.app.bookbar.activity.system;
 import android.app.Application;
 
 import com.ssdut411.app.bookbar.utils.L;
+import com.ssdut411.app.bookbar.volley.VolleyManager;
+import com.ssdut411.app.bookbar.volley.VolleyUtil;
 
 
 /**
@@ -39,6 +41,7 @@ public class MainApplication extends Application {
 
         // 打印日志信息
         L.isDebug = true;
+        VolleyManager.init(getApplicationContext());
     }
 
     public void clear(){

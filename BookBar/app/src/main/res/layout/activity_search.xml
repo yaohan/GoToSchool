@@ -22,6 +22,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="@color/search_gray"
+            android:textColor="@color/font_black"
             android:hint="请输入关键字进行搜索"
             android:layout_marginLeft="36dp"
             android:textColorHint="@color/search_hint" />
@@ -34,7 +35,8 @@
             android:layout_marginRight="8dp"
             android:layout_centerVertical="true"
             android:text="X"
-            android:textColor="@color/font_gray"/>
+            android:textColor="@color/font_gray"
+            android:visibility="gone"/>
         <Button
             android:id="@+id/bt_search_search"
             android:layout_width="56dp"
@@ -42,6 +44,8 @@
             android:layout_margin="4dp"
             android:text="搜索"
             android:background="@color/colorPrimary"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:visibility="gone"/>
+        />
     </RelativeLayout>
 </LinearLayout>

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by LENOVO on 2016/10/29.
  */
-public class Book implements Serializable{
+public class Book{
     private Rate rating;
     private String subtitle;
     private List<String> author;
@@ -17,7 +17,7 @@ public class Book implements Serializable{
     private String origin_title;
     private String image;
     private String binding;
-    private String translator;
+    private List<String> translator;
     private String catalog;
     private String ebook_url;
     private String pages;
@@ -102,11 +102,11 @@ public class Book implements Serializable{
         this.binding = binding;
     }
 
-    public String getTranslator() {
+    public List<String> getTranslator() {
         return translator;
     }
 
-    public void setTranslator(String translator) {
+    public void setTranslator(List<String> translator) {
         this.translator = translator;
     }
 

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -259,4 +260,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     public ScrollView getScrollView(int viewId) {
         return getView(viewId);
     }
+
+    public FrameLayout getFrameLayout(int viewId) { return getView(viewId); }
 }

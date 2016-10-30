@@ -3,7 +3,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <include layout="@layout/layout_toolbar"/>
+    <FrameLayout
+        android:id="@+id/fl_replace"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+    </FrameLayout>
     <com.ssdut411.app.bookbar.widget.NoScollViewPager
+        android:visibility="gone"
         android:id="@+id/mainpage_viewpager"
         android:layout_width="fill_parent"
         android:layout_height="0dp"

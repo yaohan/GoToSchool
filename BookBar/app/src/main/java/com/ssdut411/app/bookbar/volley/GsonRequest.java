@@ -9,7 +9,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.JsonSyntaxException;
+import com.ssdut411.app.bookbar.model.Book;
 import com.ssdut411.app.bookbar.utils.GsonUtils;
+import com.ssdut411.app.bookbar.utils.L;
 
 import java.util.Map;
 
@@ -79,10 +81,13 @@ public class GsonRequest<T> extends Request<T> {
             String json = new String(response.data);
 
             Log.i("GsonRequest", "服务器返回的json串：" + json);
+            L.i("mClass:"+mClazz);
+            L.i("parse:"+GsonUtils.gsonToObject(json,Book.class));
 
             // 转换为对象
             return Response.success(GsonUtils.gsonToObject(json, mClazz), HttpHeaderParser.parseCacheHeaders(response));
         }catch (JsonSyntaxException e) {
+            L.i("JsonSyntaxException");
             return Response.error(new ParseError(e));
         }
     }

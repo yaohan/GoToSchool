@@ -27,11 +27,12 @@
         android:layout_height="16dp"
         android:background="@color/divide_gray"/>
     <LinearLayout
+        android:id="@+id/ll_person_change"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginLeft="16dp">
+        android:paddingLeft="16dp">
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="48dp"
@@ -45,11 +46,12 @@
         android:background="@color/divide_gray"/>
 
     <LinearLayout
+        android:id="@+id/ll_person_update"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginLeft="16dp">
+        android:paddingLeft="16dp">
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="48dp"
@@ -63,11 +65,12 @@
         android:layout_height="1dp"
         android:background="@color/divide_gray"/>
     <LinearLayout
+        android:id="@+id/ll_person_contact"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginLeft="16dp">
+        android:paddingLeft="16dp">
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="48dp"
@@ -81,11 +84,12 @@
         android:layout_height="1dp"
         android:background="@color/divide_gray"/>
     <LinearLayout
+        android:id="@+id/ll_person_use"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginLeft="16dp">
+        android:paddingLeft="16dp">
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="48dp"

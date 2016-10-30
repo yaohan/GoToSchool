@@ -28,46 +28,10 @@
         android:gravity="center"
         android:paddingLeft="8dp"
         android:paddingRight="8dp">
-        <Button
-            android:id="@+id/bt_detail_borrow"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="32dp"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:text="借阅"
-            android:textColor="@color/font_white"
-            android:textSize="18sp" />
-
-        <View
-            android:layout_width="8dp"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:id="@+id/bt_detail_collection"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="32dp"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:text="收藏"
-            android:textColor="@color/font_white"
-            android:textSize="18sp" />
-
-        <View
-            android:layout_width="8dp"
-            android:layout_height="fill_parent"/>
-
-        <Button
-            android:id="@+id/bt_detail_navigation"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="32dp"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:text="导航"
-            android:textColor="@color/font_white"
-            android:textSize="18sp" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="离可借阅还有8天"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="fill_parent"

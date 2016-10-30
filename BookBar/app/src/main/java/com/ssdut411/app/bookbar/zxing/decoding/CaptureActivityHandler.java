@@ -21,16 +21,14 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.ssdut411.app.bookbar.R;
-import com.ssdut411.app.bookbar.activity.book.BookDetailActivity;
+import com.ssdut411.app.bookbar.activity.mainPage.BookDetailActivity;
 import com.ssdut411.app.bookbar.activity.mainPage.CaptureActivity;
 import com.ssdut411.app.bookbar.zxing.camera.CameraManager;
 import com.ssdut411.app.bookbar.zxing.view.ViewfinderResultPointCallback;
-import com.ssdut411.app.bookbar.utils.L;
 
 import java.util.Vector;
 

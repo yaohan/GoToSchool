@@ -27,9 +27,13 @@
         <activity android:name=".activity.person.RegisterActivity"/>
         <activity android:name=".activity.person.ForgetPasswordActivity"/>
         <activity android:name=".activity.mainPage.SearchActivity"/>
-        <activity android:name=".activity.book.BookDetailActivity"/>
+        <activity android:name=".activity.mainPage.BookDetailActivity"/>
         <activity android:name=".activity.mainPage.SelectLibraryActivity"/>
         <activity android:name=".activity.mainPage.CaptureActivity"/>
+        <activity android:name=".activity.book.BookBorrowActivity"/>
+        <activity android:name=".activity.book.BookCollectionActivity"/>
+        <activity android:name=".activity.book.BookReservationActivity"/>
+        <activity android:name=".activity.person.ChangePasswordActivity"/>
     </application>
 
 </manifest>

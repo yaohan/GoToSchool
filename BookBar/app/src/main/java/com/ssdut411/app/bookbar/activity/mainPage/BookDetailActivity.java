@@ -1,13 +1,16 @@
-package com.ssdut411.app.bookbar.activity.book;
+package com.ssdut411.app.bookbar.activity.mainPage;
 
+import android.content.Intent;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.util.Log;
+import android.view.View;
 
 import com.ssdut411.app.bookbar.R;
 import com.ssdut411.app.bookbar.activity.system.BaseActivity;
 import com.ssdut411.app.bookbar.model.Book;
 import com.ssdut411.app.bookbar.utils.GsonUtils;
 import com.ssdut411.app.bookbar.utils.L;
+import com.ssdut411.app.bookbar.utils.T;
 import com.ssdut411.app.bookbar.volley.ApiCallbackListener;
 import com.ssdut411.app.bookbar.volley.VolleyUtil;
 
@@ -17,7 +20,7 @@ import java.util.List;
  * Created by LENOVO on 2016/10/29.
  */
 public class BookDetailActivity extends BaseActivity {
-    private Object bookInfo;
+    public static int REQUEST_CODE = 1;
 
     @Override
     protected String initTitle() {
@@ -36,7 +39,25 @@ public class BookDetailActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-
+        getButton(R.id.bt_detail_borrow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(context, CaptureActivity.class), REQUEST_CODE);
+                finish();
+            }
+        });
+        getButton(R.id.bt_detail_collection).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                T.showShort(context,"收藏成功");
+            }
+        });
+        getButton(R.id.bt_detail_navigation).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                T.showShort(context, "导航");
+            }
+        });
     }
 
     @Override
@@ -75,6 +96,7 @@ public class BookDetailActivity extends BaseActivity {
             getTextView(R.id.tv_book_publisher).setText(data.getPublisher());
             getTextView(R.id.tv_book_author).setText(getAuthor(data.getAuthor()));
             getTextView(R.id.tv_book_content).setText(data.getSummary());
+            VolleyUtil.displayImage(data.getImage(),getImageView(R.id.iv_book_image),R.mipmap.ic_launcher,R.mipmap.ic_launcher);
         }
 
         @Override

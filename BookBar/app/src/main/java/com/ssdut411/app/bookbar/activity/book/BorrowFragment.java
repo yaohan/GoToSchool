@@ -8,6 +8,7 @@ import android.widget.ListView;
 import com.ssdut411.app.bookbar.R;
 import com.ssdut411.app.bookbar.activity.system.BaseFragment;
 import com.ssdut411.app.bookbar.model.Book;
+import com.ssdut411.app.bookbar.utils.L;
 import com.ssdut411.app.bookbar.widget.CommonAdapter;
 import com.ssdut411.app.bookbar.widget.ViewHolder;
 
@@ -33,7 +34,8 @@ public class BorrowFragment extends BaseFragment {
         getListView(view,R.id.lv_borrow_list).setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(getActivity(),BookDetailActivity.class));
+                L.i("borrow");
+                startActivity(new Intent(getActivity(),BookBorrowActivity.class));
             }
         });
     }

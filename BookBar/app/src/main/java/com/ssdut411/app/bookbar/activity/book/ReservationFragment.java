@@ -33,7 +33,7 @@ public class ReservationFragment extends BaseFragment {
         getListView(view,R.id.lv_reservation_list).setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(getActivity(), BookDetailActivity.class));
+                startActivity(new Intent(getActivity(), BookReservationActivity.class));
             }
         });
     }

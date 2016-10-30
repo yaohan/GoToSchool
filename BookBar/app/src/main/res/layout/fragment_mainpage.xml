@@ -27,15 +27,18 @@
             android:layout_marginLeft="36dp"
             android:textColorHint="@color/search_hint"
             android:editable="false"/>
-
-        <ImageView
-            android:id="@+id/iv_main_scan"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginRight="8dp"
+        <LinearLayout
+            android:id="@+id/ll_main_scan"
+            android:layout_width="28dp"
+            android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/icon_scan" />
+            android:gravity="center">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/icon_scan" />
+        </LinearLayout>
+
     </RelativeLayout>
 
     <View

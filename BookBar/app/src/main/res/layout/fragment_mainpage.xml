@@ -23,6 +23,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="@color/search_gray"
+            android:gravity="center_vertical"
             android:hint="请输入关键字进行搜索"
             android:layout_marginLeft="36dp"
             android:textColorHint="@color/search_hint"

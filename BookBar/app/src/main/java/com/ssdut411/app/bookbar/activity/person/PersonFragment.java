@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.ssdut411.app.bookbar.R;
+import com.ssdut411.app.bookbar.activity.mainPage.SelectLibraryActivity;
+import com.ssdut411.app.bookbar.activity.show.CreateDBActivity;
 import com.ssdut411.app.bookbar.activity.system.BaseFragment;
 import com.ssdut411.app.bookbar.utils.L;
 import com.ssdut411.app.bookbar.utils.T;
@@ -22,7 +24,13 @@ public class PersonFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), LoginActivity.class));
             }
         });
-        getLinearLayout(view,R.id.ll_person_change).setOnClickListener(new View.OnClickListener() {
+        getLinearLayout(view,R.id.ll_person_paperwork).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), PaperWorkActivity.class));
+            }
+        });
+        getLinearLayout(view, R.id.ll_person_change).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), ChangePasswordActivity.class));
@@ -44,6 +52,12 @@ public class PersonFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 T.showShort(getActivity(),"使用手册");
+            }
+        });
+        getLinearLayout(view,R.id.ll_person_train).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), CreateDBActivity.class));
             }
         });
     }

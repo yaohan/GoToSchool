@@ -3,14 +3,18 @@ package com.ssdut411.app.bookbar.activity.mainPage;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 
 import com.ssdut411.app.bookbar.R;
 import com.ssdut411.app.bookbar.activity.system.BaseActivity;
+import com.ssdut411.app.bookbar.utils.KeyBoardUtils;
+import com.ssdut411.app.bookbar.utils.L;
 
 /**
  * Created by yao_han on 2016/10/29.
  */
 public class SearchActivity extends BaseActivity {
+    private EditText etSearch;
     @Override
     protected String initTitle() {
         return "搜索图书";
@@ -28,7 +32,8 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        getEditText(R.id.et_search_input).addTextChangedListener(new TextWatcher() {
+        etSearch =getEditText(R.id.et_search_input);
+        etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -65,6 +70,14 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     protected void showView() {
-        setCanBack();
+        mToolbar.setNavigationIcon(R.mipmap.ic_arrow_back);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                KeyBoardUtils.closeKeyboard(etSearch, context);  //关闭软键盘
+            }
+        });
+        KeyBoardUtils.openKeyboard(etSearch, context);//打开软键盘
     }
 }

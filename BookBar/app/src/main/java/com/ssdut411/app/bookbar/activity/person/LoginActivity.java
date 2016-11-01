@@ -2,14 +2,18 @@ package com.ssdut411.app.bookbar.activity.person;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.EditText;
 
 import com.ssdut411.app.bookbar.R;
 import com.ssdut411.app.bookbar.activity.system.BaseActivity;
+import com.ssdut411.app.bookbar.utils.KeyBoardUtils;
+import com.ssdut411.app.bookbar.utils.T;
 
 /**
  * Created by LENOVO on 2016/10/29.
  */
 public class LoginActivity extends BaseActivity {
+    private EditText etText;
     @Override
     protected String initTitle() {
         return "登录";
@@ -27,6 +31,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        etText = getEditText(R.id.et_login_phone_number);
         getTextView(R.id.tv_login_register).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,7 +41,7 @@ public class LoginActivity extends BaseActivity {
         getTextView(R.id.tv_login_forget_password).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context,ForgetPasswordActivity.class));
+                startActivity(new Intent(context, ForgetPasswordActivity.class));
             }
         });
         getEditText(R.id.et_login_phone_number).setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -59,6 +64,12 @@ public class LoginActivity extends BaseActivity {
             }
 
         });
+        getButton(R.id.bt_login).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                T.showShort(context,"登录");
+            }
+        });
     }
 
     private void reset() {
@@ -73,6 +84,14 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void showView() {
-        setCanBack();
+        mToolbar.setNavigationIcon(R.mipmap.ic_arrow_back);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                KeyBoardUtils.closeKeyboard(etText,context);
+            }
+        });
+        KeyBoardUtils.openKeyboard(etText,context);
     }
 }

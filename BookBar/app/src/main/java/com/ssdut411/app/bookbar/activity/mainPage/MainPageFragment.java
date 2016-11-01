@@ -1,6 +1,7 @@
 package com.ssdut411.app.bookbar.activity.mainPage;
 
 import android.content.Intent;
+import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -64,6 +65,7 @@ public class MainPageFragment extends BaseFragment {
             }
         });
         tvLibraryName = getTextView(view,R.id.tv_main_library);
+//        getEditText(view,R.id.et_main_search).setInputType(InputType.TYPE_NULL  );
     }
 
     @Override

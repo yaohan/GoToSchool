@@ -3,7 +3,6 @@ package com.ssdut411.app.bookbar.activity.mainPage;
 import java.io.IOException;
 import java.util.Vector;
 
-import android.app.Activity;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
@@ -21,6 +20,7 @@ import android.widget.Button;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.ssdut411.app.bookbar.R;
+import com.ssdut411.app.bookbar.activity.system.BaseActivity;
 import com.ssdut411.app.bookbar.zxing.camera.CameraManager;
 import com.ssdut411.app.bookbar.zxing.decoding.CaptureActivityHandler;
 import com.ssdut411.app.bookbar.zxing.decoding.InactivityTimer;
@@ -32,11 +32,10 @@ import com.ssdut411.app.bookbar.zxing.view.ViewfinderView;
  * Time: 下午1:44
  * Email: lei.ren@renren-inc.com
  */
-public class CaptureActivity extends Activity implements SurfaceHolder.Callback {
+public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callback {
 
     //所有扫描消息都发到这个Handler类中
     private CaptureActivityHandler handler;
-
 
     private ViewfinderView viewfinderView;
     private boolean hasSurface;
@@ -47,53 +46,41 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
     private boolean playBeep;
     private static final float BEEP_VOLUME = 0.10f;
     private boolean vibrate;
-    private Button btnClose;
-//    private Button btn_back;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-//        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-        setContentView(R.layout.camera);
-//        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
-//                R.layout.titlebar);
-
-        
-        
-        
-        
-        
-        CameraManager.init(this);
-
-        viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
-        btnClose = (Button)findViewById(R.id.bt_close);
-        btnClose.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				finish();
-			}
-        	
-        });
-        hasSurface = false;
-        inactivityTimer = new InactivityTimer(this);
-
-//        btn_back=(Button)findViewById(R.id.titlebar_bt_back);
-//        btn_back.setVisibility(View.VISIBLE);
-
-//        btn_back.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                Intent intent1=new Intent(CaptureActivity.this,MainActivity.class);
-//                startActivity(intent1);
-//                finish();
-//            }
-//        });
+    protected String initTitle() {
+        return "扫描条码";
     }
 
-    
-    
-    
+    @Override
+    protected int initMenu() {
+        return 0;
+    }
+
+    @Override
+    protected int initContentView() {
+        return R.layout.activity_capture;
+    }
+
+    @Override
+    protected void initViews() {
+        CameraManager.init(this);
+        viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
+        hasSurface = false;
+        inactivityTimer = new InactivityTimer(this);
+    }
+
+    @Override
+    protected void loadData() {
+        setCanBack();
+    }
+
+    @Override
+    protected void showView() {
+
+    }
+
+
     @SuppressWarnings("deprecation")
     @Override
     protected void onResume() {
@@ -143,7 +130,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
             return;
         }
         if (handler == null) {
-            handler = new CaptureActivityHandler(this, decodeFormats,characterSet);
+            handler = new CaptureActivityHandler(this, decodeFormats, characterSet);
         }
     }
 
@@ -182,8 +169,6 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
         inactivityTimer.onActivity();
         Log.i("OUTPUT", obj.getBarcodeFormat().toString() + ":"
                 + obj.getText());
-//        txtResult.setText(obj.getBarcodeFormat().toString() + ":"
-//                + obj.getText());
     }
 
     private void initBeepSound() {

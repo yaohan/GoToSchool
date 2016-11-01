@@ -9,12 +9,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.ssdut411.app.bookbar.R;
 import com.ssdut411.app.bookbar.activity.book.BookFragment;
 import com.ssdut411.app.bookbar.activity.mainPage.MainPageFragment;
 import com.ssdut411.app.bookbar.activity.person.PersonFragment;
+import com.ssdut411.app.bookbar.utils.KeyBoardUtils;
 import com.ssdut411.app.bookbar.utils.L;
 
 import java.util.ArrayList;
@@ -122,4 +124,5 @@ public class MainActivity extends BaseActivity {
         }
 //        super.onActivityResult(requestCode, resultCode, data);
     }
+
 }

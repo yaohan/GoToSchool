@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.ssdut411.app.bookbar.R;
+import com.ssdut411.app.bookbar.activity.show.BrowerBookActivity;
+import com.ssdut411.app.bookbar.activity.show.FindBookActivity;
 import com.ssdut411.app.bookbar.activity.system.BaseActivity;
 import com.ssdut411.app.bookbar.model.Book;
 import com.ssdut411.app.bookbar.utils.GsonUtils;
@@ -55,7 +57,7 @@ public class BookDetailActivity extends BaseActivity {
         getButton(R.id.bt_detail_navigation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                T.showShort(context, "导航");
+                startActivity(new Intent(context, FindBookActivity.class));
             }
         });
     }

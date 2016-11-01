@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.ssdut411.app.bookbar.R;
 import com.ssdut411.app.bookbar.activity.system.BaseActivity;
+import com.ssdut411.app.bookbar.utils.T;
 
 /**
  * Created by LENOVO on 2016/10/29.
@@ -65,6 +66,12 @@ public class RegisterActivity extends BaseActivity {
                 }
             }
 
+        });
+        getButton(R.id.bt_register).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                T.showShort(context,"注册");
+            }
         });
     }
 

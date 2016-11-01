@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.ssdut411.app.bookbar.R;
 import com.ssdut411.app.bookbar.utils.ActivityStackUtils;
 import com.ssdut411.app.bookbar.utils.KeyBoardUtils;
+import com.ssdut411.app.bookbar.utils.L;
 import com.ssdut411.app.bookbar.utils.SPUtils;
 import com.ssdut411.app.bookbar.utils.T;
 
@@ -78,7 +79,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        KeyBoardUtils.closeKeyboard(new EditText(this), this);  //关闭软键盘
+        L.i("BaseActivity  onResume");
+//        KeyBoardUtils.closeKeyboard(new EditText(this), this);  //关闭软键盘
         /**
          * 设置为竖屏
          */

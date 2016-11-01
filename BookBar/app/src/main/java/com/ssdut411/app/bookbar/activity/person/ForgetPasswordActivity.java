@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.ssdut411.app.bookbar.R;
 import com.ssdut411.app.bookbar.activity.system.BaseActivity;
+import com.ssdut411.app.bookbar.utils.T;
 
 /**
  * Created by LENOVO on 2016/10/29.
@@ -61,6 +62,12 @@ public class ForgetPasswordActivity extends BaseActivity {
                     reset();
                     getView(R.id.v_forget_password_again_div).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 }
+            }
+        });
+        getButton(R.id.bt_forget_password).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                T.showShort(context,"确定");
             }
         });
     }

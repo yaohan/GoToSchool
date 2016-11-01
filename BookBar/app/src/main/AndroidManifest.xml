@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ssdut411.app.bookbar" >
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
@@ -34,6 +37,11 @@
         <activity android:name=".activity.book.BookCollectionActivity"/>
         <activity android:name=".activity.book.BookReservationActivity"/>
         <activity android:name=".activity.person.ChangePasswordActivity"/>
+        <activity android:name=".activity.person.PaperWorkActivity"/>
+        <activity android:name=".activity.person.NewPaperActivity"/>
+        <activity android:name=".activity.show.BrowerBookActivity"/>
+        <activity android:name=".activity.show.CreateDBActivity"/>
+        <activity android:name=".activity.show.FindBookActivity"/>
     </application>
 
 </manifest>

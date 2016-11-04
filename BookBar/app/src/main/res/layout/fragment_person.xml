@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/divide_gray">
     <View
         android:layout_width="fill_parent"
         android:layout_height="16dp"
@@ -10,17 +11,19 @@
         android:id="@+id/ll_person_info"
         android:layout_width="fill_parent"
         android:layout_height="96dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:background="@color/background_white">
         <ImageView
             android:layout_marginLeft="16dp"
             android:layout_width="@dimen/tab_height"
             android:layout_height="@dimen/tab_height"
             android:src="@mipmap/ic_launcher"/>
         <TextView
+            android:id="@+id/tv_person_name"
             android:layout_marginLeft="16dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="点击登录"/>
+            android:text="188****4301"/>
     </LinearLayout>
     <View
         android:layout_width="fill_parent"
@@ -32,7 +35,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingLeft="16dp">
+        android:paddingLeft="16dp"
+        android:background="@color/background_white">
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="48dp"
@@ -51,7 +55,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingLeft="16dp">
+        android:paddingLeft="16dp"
+        android:background="@color/background_white">
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="48dp"
@@ -71,7 +76,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingLeft="16dp">
+        android:paddingLeft="16dp"
+        android:background="@color/background_white">
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="48dp"
@@ -91,7 +97,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingLeft="16dp">
+        android:paddingLeft="16dp"
+        android:background="@color/background_white">
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="48dp"
@@ -111,7 +118,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingLeft="16dp">
+        android:paddingLeft="16dp"
+        android:background="@color/background_white">
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="48dp"
@@ -132,7 +140,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingLeft="16dp">
+        android:paddingLeft="16dp"
+        android:background="@color/background_white">
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="48dp"
@@ -142,6 +151,15 @@
 
     <View
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/divide_gray"/>
+    <Button
+        android:id="@+id/bt_person_logout"
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:text="退出登录"
+        android:textSize="18sp"
+        android:background="@color/colorPrimary"
+        android:layout_margin="16dp"/>
 </LinearLayout>

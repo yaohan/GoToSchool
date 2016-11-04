@@ -10,6 +10,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -75,5 +76,6 @@ public abstract class BaseFragment extends Fragment {
     public TextView getTextView(View view,int viewId) { return getView(view, viewId); }
     public RelativeLayout getRelativeLayout(View view, int viewId) { return getView(view,viewId); }
     public ImageView getImageView(View view, int viewId) { return getView(view,viewId); }
+    public Button getButton(View view,int viewId) { return getView(view,viewId); }
 
 }

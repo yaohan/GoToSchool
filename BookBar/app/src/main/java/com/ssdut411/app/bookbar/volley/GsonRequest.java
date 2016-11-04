@@ -82,7 +82,7 @@ public class GsonRequest<T> extends Request<T> {
 
             Log.i("GsonRequest", "服务器返回的json串：" + json);
             L.i("mClass:"+mClazz);
-            L.i("parse:"+GsonUtils.gsonToObject(json,Book.class));
+            L.i("parse:"+GsonUtils.gsonToObject(json,mClazz));
 
             // 转换为对象
             return Response.success(GsonUtils.gsonToObject(json, mClazz), HttpHeaderParser.parseCacheHeaders(response));

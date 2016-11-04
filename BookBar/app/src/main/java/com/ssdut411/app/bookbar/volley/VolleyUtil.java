@@ -7,7 +7,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.ssdut411.app.bookbar.utils.GsonUtils;
 import com.ssdut411.app.bookbar.utils.L;
+import com.ssdut411.app.bookbar.volley.api.ApiCallbackListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +30,7 @@ public class VolleyUtil {
      * @param callBack 回调接口
      */
     public static <T> void doGet(String url, Class<T> cls, Object tag, final ApiCallbackListener<T> callBack) {
+        L.i("get:" + url);
         GsonRequest<T> request = new GsonRequest<T>(Request.Method.GET, url, cls, new Response.Listener<T>() {
             @Override
             public void onResponse(T response) {

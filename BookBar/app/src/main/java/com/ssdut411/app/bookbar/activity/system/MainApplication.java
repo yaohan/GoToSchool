@@ -11,18 +11,10 @@ import com.ssdut411.app.bookbar.volley.VolleyUtil;
  * Created by yao_han on 2015/12/22.
  */
 public class MainApplication extends Application {
-    public static int ROLE_NULL = -1;
-    public static int ROLE_PUPILS = 1;
-    public static int ROLE_TEACHER = 2;
-    public static int ROLE_PARENT = 3;
-
     // 单例一个MainApplication
     private static MainApplication instance;
 
-    private String userId;
-    private String childId;
-    private boolean login;
-    private int role;
+    private String userId,phoneNumber;
     private boolean theme;
 
     /**
@@ -45,6 +37,8 @@ public class MainApplication extends Application {
     }
 
     public void clear(){
+        userId = null;
+        phoneNumber = null;
     }
 
     public boolean getTheTheme() {
@@ -53,5 +47,21 @@ public class MainApplication extends Application {
 
     public void setTheme(Boolean theme) {
         this.theme = theme;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

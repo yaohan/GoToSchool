@@ -35,7 +35,7 @@
             android:layout_height="32dp"
             android:background="@color/colorPrimary"
             android:gravity="center"
-            android:text="借阅"
+            android:text="预约"
             android:textColor="@color/font_white"
             android:textSize="18sp" />
 
@@ -63,7 +63,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="32dp"
-            android:background="@color/colorPrimary"
+            android:background="@color/font_gray"
             android:gravity="center"
             android:text="导航"
             android:textColor="@color/font_white"
@@ -100,7 +100,7 @@
                 android:paddingTop="8dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="书名"
+                android:text="C语言从入门到精通"
                 android:textSize="14sp"/>
 
         </LinearLayout>
@@ -118,7 +118,7 @@
                 android:paddingTop="8dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="出版社"
+                android:text="清华大学出版社"
                 android:textSize="14sp"/>
 
         </LinearLayout>
@@ -137,7 +137,7 @@
                 android:paddingTop="8dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="作者"
+                android:text="韩旭，王娣"
                 android:textSize="14sp"/>
 
 
@@ -157,7 +157,7 @@
                 android:paddingTop="8dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="内容简介"
+                android:text="书中除了对Ｃ语言的语法做了详细的介绍，还对一些高级应用如：网络套接字编程，内存管理和一个简单的学生管理系统做了讲解"
                 android:textSize="14sp"/>
 
         </LinearLayout>

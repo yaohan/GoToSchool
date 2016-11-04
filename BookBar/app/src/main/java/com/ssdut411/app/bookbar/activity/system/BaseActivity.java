@@ -79,8 +79,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        L.i("BaseActivity  onResume");
-//        KeyBoardUtils.closeKeyboard(new EditText(this), this);  //关闭软键盘
         /**
          * 设置为竖屏
          */

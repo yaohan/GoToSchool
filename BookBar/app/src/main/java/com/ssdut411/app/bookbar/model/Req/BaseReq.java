@@ -2,7 +2,11 @@ package com.ssdut411.app.bookbar.model.Req;
 
 import android.util.Log;
 
+import com.ssdut411.app.bookbar.utils.L;
+
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
+import java.net.URLEncoder;
 
 /**
  * Created by yao_han on 2015/12/23.
@@ -49,7 +53,14 @@ public class BaseReq {
                 if(f.get(this) == null){
                     sb.append("");//属性值
                 }else{
-                    sb.append(f.get(this).toString());//属性值
+                    String value;
+                    try {
+                        value = URLEncoder.encode(f.get(this).toString(), "utf-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                        value = "";
+                    }
+                    sb.append(value);//属性值
                 }
             }}catch (Exception e){
             e.printStackTrace();

@@ -5,8 +5,9 @@
     android:orientation="horizontal"
     android:padding="8dp">
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/iv_book_image"
+        android:layout_width="60dp"
+        android:layout_height="80dp"
         android:src="@mipmap/book"/>
     <LinearLayout
         android:paddingLeft="32dp"

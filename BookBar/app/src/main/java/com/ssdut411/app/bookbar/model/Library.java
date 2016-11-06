@@ -4,23 +4,27 @@ package com.ssdut411.app.bookbar.model;
  * Created by LENOVO on 2016/10/29.
  */
 public class Library {
-    private int img;
+    private String url;
+    private String id;
     private String name;
 
     public Library() {
     }
 
-    public Library(int img, String name) {
-        this.img = img;
-        this.name = name;
+    public String getUrl() {
+        return url;
     }
 
-    public int getImg() {
-        return img;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public void setImg(int img) {
-        this.img = img;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

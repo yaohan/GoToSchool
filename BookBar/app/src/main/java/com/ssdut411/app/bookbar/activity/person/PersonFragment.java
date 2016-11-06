@@ -11,7 +11,9 @@ import com.ssdut411.app.bookbar.R;
 import com.ssdut411.app.bookbar.activity.mainPage.SelectLibraryActivity;
 import com.ssdut411.app.bookbar.activity.show.CreateDBActivity;
 import com.ssdut411.app.bookbar.activity.system.BaseFragment;
+import com.ssdut411.app.bookbar.activity.system.MainActivity;
 import com.ssdut411.app.bookbar.activity.system.MainApplication;
+import com.ssdut411.app.bookbar.utils.ActivityStackUtils;
 import com.ssdut411.app.bookbar.utils.L;
 import com.ssdut411.app.bookbar.utils.T;
 
@@ -76,6 +78,8 @@ public class PersonFragment extends BaseFragment {
                 MainApplication.getInstance().clear();
                 name.setText("点击登录");
                 logout.setVisibility(View.GONE);
+                startActivity(new Intent(getActivity(), MainActivity.class));
+                ActivityStackUtils.getInstance().exit();
             }
         });
     }

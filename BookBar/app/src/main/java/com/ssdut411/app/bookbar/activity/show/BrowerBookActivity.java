@@ -12,7 +12,14 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.ssdut411.app.bookbar.R;
+import com.ssdut411.app.bookbar.activity.system.BaseActivity;
+import com.ssdut411.app.bookbar.model.Req.GetLocationReq;
+import com.ssdut411.app.bookbar.model.Resp.GetLocationResp;
+import com.ssdut411.app.bookbar.utils.GsonUtils;
 import com.ssdut411.app.bookbar.utils.T;
+import com.ssdut411.app.bookbar.volley.core.ActionCallbackListener;
+import com.ssdut411.app.bookbar.volley.core.AppAction;
+import com.ssdut411.app.bookbar.volley.core.AppActionImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +29,7 @@ import java.util.TimerTask;
 /**
  * Created by LENOVO on 2016/10/23.
  */
-public class BrowerBookActivity extends Activity {
+public class BrowerBookActivity extends BaseActivity {
     private List<WifiInfo> wifiInfoList;
     private Timer timer = new Timer();;
     private BrowerBookView browerBookView;
@@ -35,31 +42,38 @@ public class BrowerBookActivity extends Activity {
             }
         }
     };
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_browerbook);
+    protected String initTitle() {
+        return "定位图书";
+    }
+
+    @Override
+    protected int initMenu() {
+        return 0;
+    }
+
+    @Override
+    protected int initContentView() {
+        return R.layout.activity_browerbook;
+    }
+
+    @Override
+    protected void initViews() {
         RelativeLayout layout = (RelativeLayout)findViewById(R.id.layout);
         browerBookView = new BrowerBookView(BrowerBookActivity.this);
         layout.addView(browerBookView);
         startScanWIFI();
-        final EditText bookName = (EditText)findViewById(R.id.et_book);
-        Button btSubmit = (Button)findViewById(R.id.bt_submit);
-        btSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(nowLocation == null){
-                    T.showShort(BrowerBookActivity.this,"定位失败");
-                }else{
-                    String book = bookName.getText().toString();
-                    if(book.length() == 0){
-                        T.showShort(BrowerBookActivity.this, "书名不能为空");
-                    }else{
-                        DBFile.addBook(book,nowLocation);
-                    }
-                }
-            }
-        });
+    }
+
+    @Override
+    protected void loadData() {
+
+    }
+
+    @Override
+    protected void showView() {
+
     }
 
     private void startScanWIFI() {
@@ -77,15 +91,29 @@ public class BrowerBookActivity extends Activity {
                     wifiList.add(wifiInfo);
                 }
                 wifiInfoList = wifiList;
-                Location location = DBFile.searchLocation(wifiInfoList);
-                nowLocation = location;
-                Message msg = new Message();
-                handler.sendMessage(msg);
+                AppAction action = new AppActionImpl(context);
+                GetLocationReq getLocationReq = new GetLocationReq();
+                getLocationReq.setWifiInfoList(GsonUtils.gsonToJsonString(wifiInfoList));
+                action.getLocation(getLocationReq, new ActionCallbackListener<GetLocationResp>() {
+                    @Override
+                    public void onSuccess(GetLocationResp data) {
+                        if (data.isStatus()) {
+                            browerBookView.drawCircle(Float.parseFloat(data.getLocationX()), Float.parseFloat(data.getLocationY()));
+                        } else {
+                            T.showShort(context, data.getDesc());
+                        }
+                    }
 
+                    @Override
+                    public void onFailure(String message) {
+                        T.showShort(context, message);
+                    }
+                });
             }
         }, 1000, 1000);
-    } @Override
-      protected void onPause() {
+    }
+    @Override
+    protected void onPause() {
         super.onPause();
         timer.cancel();
     }

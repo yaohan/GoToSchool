@@ -11,26 +11,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/et_book"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="书名"
-            android:visibility="gone" />
-
         <Button
-            android:id="@+id/bt_submit"
+            android:id="@+id/bt_find_borrow"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/et_book"
-            android:text="提交"
-            android:visibility="gone" />
-
+            android:layout_margin="8dp"
+            android:text="已找到图书，点击借阅"
+            android:background="@color/colorPrimary"/>
         <ImageView
+            android:layout_below="@+id/bt_find_borrow"
+            android:layout_above="@+id/tv_find_error"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:src="@mipmap/map705" />
+        <TextView
+            android:id="@+id/tv_find_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/floor" />
+            android:layout_margin="8dp"
+            android:text="位置报错"
+            android:textColor="@color/colorPrimary"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"/>
+
 
     </RelativeLayout>
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.ssdut411.app.bookbar.activity.show;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -19,7 +20,13 @@ import android.widget.RelativeLayout;
 
 import com.ssdut411.app.bookbar.R;
 import com.ssdut411.app.bookbar.activity.system.BaseActivity;
+import com.ssdut411.app.bookbar.model.Req.GetLocationReq;
+import com.ssdut411.app.bookbar.model.Resp.GetLocationResp;
+import com.ssdut411.app.bookbar.utils.GsonUtils;
 import com.ssdut411.app.bookbar.utils.T;
+import com.ssdut411.app.bookbar.volley.core.ActionCallbackListener;
+import com.ssdut411.app.bookbar.volley.core.AppAction;
+import com.ssdut411.app.bookbar.volley.core.AppActionImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,25 +95,15 @@ public class FindBookActivity extends BaseActivity implements SensorEventListene
         browerBookView = new BrowerBookView(FindBookActivity.this);
         layout.addView(browerBookView);
         startScanWIFI();
-        final EditText bookName = (EditText)findViewById(R.id.et_book);
-        Button btSubmit = (Button)findViewById(R.id.bt_submit);
-        btSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String book = bookName.getText().toString();
-                if (book.length() == 0) {
-                    T.showShort(FindBookActivity.this, "书名不能为空");
-                } else {
-                    Location location= DBFile.searchBook(book);
-                    if(location != null){
-                        browerBookView.drawCircle(location.getX(),location.getY());
-                    }
-                }
-            }
-        });
         attitude = new Attitude(this);
         sensorManager=(SensorManager)getSystemService(Context.SENSOR_SERVICE);
         attitude.mv=browerBookView;
+        getButton(R.id.bt_find_borrow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context,BrowerBookActivity.class));
+            }
+        });
     }
 
     @Override
@@ -134,10 +131,32 @@ public class FindBookActivity extends BaseActivity implements SensorEventListene
                     wifiList.add(wifiInfo);
                 }
                 wifiInfoList = wifiList;
-                Location location = DBFile.searchLocation(wifiInfoList);
-                nowLocation = location;
-                Message msg = new Message();
-                handler.sendMessage(msg);
+                AppAction action = new AppActionImpl(context);
+                GetLocationReq getLocationReq = new GetLocationReq();
+                getLocationReq.setWifiInfoList(GsonUtils.gsonToJsonString(wifiInfoList));
+                action.getLocation(getLocationReq, new ActionCallbackListener<GetLocationResp>() {
+                    @Override
+                    public void onSuccess(GetLocationResp data) {
+                        if(data.isStatus()){
+                            browerBookView.drawCircle(Float.parseFloat(data.getLocationX()), Float.parseFloat(data.getLocationY()));
+                            if(start){
+                                browerBookView.setStart(Float.parseFloat(data.getLocationX()), Float.parseFloat(data.getLocationY()));
+                                start = false;
+                            }
+                        }else {
+                            T.showShort(context, data.getDesc());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(String message) {
+                        T.showShort(context,message);
+                    }
+                });
+//                Location location = DBFile.searchLocation(wifiInfoList);
+//                nowLocation = location;
+//                Message msg = new Message();
+//                handler.sendMessage(msg);
 
             }
         }, 1000, 1000);

@@ -8,6 +8,8 @@ import android.widget.RelativeLayout;
 
 import com.ssdut411.app.bookbar.R;
 import com.ssdut411.app.bookbar.activity.system.BaseActivity;
+import com.ssdut411.app.bookbar.utils.GsonUtils;
+import com.ssdut411.app.bookbar.utils.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +71,7 @@ public class CreateDBActivity extends BaseActivity {
                     WifiInfo wifiInfo = new WifiInfo(list.get(i).BSSID, WifiManager.calculateSignalLevel(list.get(i).level, 100));
                     wifiList.add(wifiInfo);
                 }
+//                L.i(GsonUtils.gsonToJsonString(wifiList));
                 wifiInfoList = wifiList;
             }
         }, 1000, 1000);

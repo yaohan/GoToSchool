@@ -18,8 +18,8 @@
             android:text="点击地图某一点，将该点的RSSI值存进系统中" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/floor" />
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:src="@mipmap/map705" />
     </RelativeLayout>
 </LinearLayout>

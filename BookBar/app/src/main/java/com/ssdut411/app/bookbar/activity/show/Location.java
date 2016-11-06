@@ -8,17 +8,11 @@ import java.util.List;
 public class Location {
     private float x;
     private float y;
-    private String location;
     private List<WifiInfo> wifiInfo;
 
     public Location(float x, float y, List<WifiInfo> wifiInfo) {
         this.x = x;
         this.y = y;
-        this.wifiInfo = wifiInfo;
-    }
-
-    public Location(String location, List<WifiInfo> wifiInfo) {
-        this.location = location;
         this.wifiInfo = wifiInfo;
     }
 
@@ -36,14 +30,6 @@ public class Location {
 
     public void setY(float y) {
         this.y = y;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public List<WifiInfo> getWifiInfo() {

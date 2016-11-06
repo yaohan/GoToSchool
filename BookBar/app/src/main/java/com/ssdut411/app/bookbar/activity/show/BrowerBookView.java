@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import com.ssdut411.app.bookbar.utils.L;
+
 /**
  * Created by LENOVO on 2016/10/23.
  */
@@ -83,13 +85,14 @@ public class BrowerBookView extends View
     {
         super.onDraw(canvas);
         drawPath(canvas);
-        if(drawCircle){
+//        if(drawCircle){
            canvas.drawCircle(x,y,r,paint);
-            drawCircle = false;
-        }
+//            drawCircle = false;
+//        }
     }
 
     void drawPath(Canvas canvas){
+        L.i("pointsIndex:"+pointsIndex);
         for(int i=0;i<pointsIndex-1;i++){
             canvas.drawLine(points[i][0], points[i][1], points[i+1][0], points[i+1][1], paint);
         }

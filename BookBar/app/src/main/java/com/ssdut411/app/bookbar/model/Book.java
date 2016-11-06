@@ -9,6 +9,7 @@ import java.util.List;
  * Created by LENOVO on 2016/10/29.
  */
 public class Book{
+    private int BookId;
     private Rate rating;
     private String subtitle;
     private List<String> author;
@@ -36,6 +37,14 @@ public class Book{
     private String price;
 
     public Book() {
+    }
+
+    public int getBookId() {
+        return BookId;
+    }
+
+    public void setBookId(int bookId) {
+        BookId = bookId;
     }
 
     public Rate getRating() {
@@ -311,7 +320,7 @@ public class Book{
             this.title = title;
         }
     }
-    private class Image{
+    public class Image{
         private String small;
         private String large;
         private String medium;

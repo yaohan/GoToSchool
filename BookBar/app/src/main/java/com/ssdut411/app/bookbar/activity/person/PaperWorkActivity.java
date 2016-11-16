@@ -39,7 +39,7 @@ public class PaperWorkActivity extends BaseActivity {
         getListView(R.id.lv_paper_list).setAdapter(new CommonAdapter<String>(context, paperlist, R.layout.item_paper_work) {
             @Override
             public void convert(ViewHolder viewHolder, String s, int position) {
-                viewHolder.getTextView(R.id.tv_paper_library).setText("大连理工大学开发区图书馆");
+                viewHolder.getTextView(R.id.tv_paper_library).setText("测试图书馆1");
                 viewHolder.getTextView(R.id.tv_paper_number).setText("201292425");
             }
         });

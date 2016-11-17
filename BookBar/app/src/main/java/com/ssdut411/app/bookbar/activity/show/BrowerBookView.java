@@ -1,21 +1,43 @@
 package com.ssdut411.app.bookbar.activity.show;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
+import com.ssdut411.app.bookbar.R;
+import com.ssdut411.app.bookbar.model.Req.UploadPrintReq;
+import com.ssdut411.app.bookbar.model.Resp.UploadPrintResp;
+import com.ssdut411.app.bookbar.utils.GsonUtils;
 import com.ssdut411.app.bookbar.utils.L;
+import com.ssdut411.app.bookbar.utils.T;
+import com.ssdut411.app.bookbar.volley.core.ActionCallbackListener;
+import com.ssdut411.app.bookbar.volley.core.AppAction;
+import com.ssdut411.app.bookbar.volley.core.AppActionImpl;
+
+import java.util.List;
 
 /**
  * Created by LENOVO on 2016/10/23.
  */
 public class BrowerBookView extends View
 {
+    private float bookX;
+    private float bookY;
+    private boolean train=false;//测试阶段定位
+    private boolean navigation=false;//导航阶段-路线
+    private boolean location=false;//导航阶段-位置
+    private boolean book=false;//导航阶段-图书
     float x,y,r=10;
     private boolean drawCircle;
     private Path path;
@@ -26,10 +48,11 @@ public class BrowerBookView extends View
     float startY;// 起始Y
     float stopX;// 结束X
     float stopY;// 结束Y
-    float stepLength=25;
+    float stepLength=25*3;
     boolean isPause=true;
     float[][]points=new float[500][2];
     int pointsIndex=0;
+    private Context context;
 
     public void setStepLength(int sl)
     {
@@ -38,6 +61,7 @@ public class BrowerBookView extends View
     public BrowerBookView(Context context)
     {
         super(context);
+        this.context = context;
         path=new Path();
         paint=new Paint(Paint.DITHER_FLAG);
         paint.setColor(Color.RED);
@@ -84,15 +108,24 @@ public class BrowerBookView extends View
     public void onDraw(Canvas canvas)
     {
         super.onDraw(canvas);
-        drawPath(canvas);
-//        if(drawCircle){
-           canvas.drawCircle(x,y,r,paint);
-//            drawCircle = false;
-//        }
+        plotMap(canvas);
+        if(navigation){
+            drawPath(canvas);
+        }
+        if(location){
+            canvas.drawCircle(x,y,r,paint);
+        }
+        if(book){
+            canvas.drawBitmap(BitmapFactory.decodeResource(getResources(),R.mipmap.aim_book),bookX,bookY,paint);
+        }
+        canvas.drawLine(startX,startY,stopX,stopY,paint);
+        paint.setColor(Color.BLACK);
+        canvas.drawCircle(startX,startY,5,paint);
+        paint.setColor(Color.RED);
     }
 
     void drawPath(Canvas canvas){
-        L.i("pointsIndex:"+pointsIndex);
+//        L.i("pointsIndex:" + pointsIndex);
         for(int i=0;i<pointsIndex-1;i++){
             canvas.drawLine(points[i][0], points[i][1], points[i+1][0], points[i+1][1], paint);
         }
@@ -116,6 +149,7 @@ public class BrowerBookView extends View
     }
 
     public void setHeading(float ori){
+        ori = (float)(ori-Math.PI/2.0f);
             float sina=(float)Math.sin(ori);
             float cosa=(float)Math.cos(ori);
             float newStopX,newStopY;
@@ -146,8 +180,8 @@ public class BrowerBookView extends View
     public void setStart(float x,float y){
         startX = x;
         startY = y;
-        stopX = x;
-        stopY = y-1;
+        stopX = x+1;
+        stopY = y;
     }
 
     public void drawCircle(float x,float y){
@@ -156,4 +190,101 @@ public class BrowerBookView extends View
         drawCircle = true;
         invalidate();
     }
+    @Override
+    public boolean onTouchEvent(final MotionEvent event)
+    {
+        final float x=event.getX();
+        final float y=event.getY();
+        switch(event.getAction())
+        {
+            case MotionEvent.ACTION_DOWN:
+                if(train){
+                    AlertDialog dialog = new AlertDialog.Builder(getContext()).setTitle("定位").setMessage("确定在此定位").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            CreateDBActivity createDBActivity = (CreateDBActivity) getContext();
+                            List<WifiInfo> wifiInfos = createDBActivity.getWifiInfoList();
+//                            Location location = new Location(x, y, createDBActivity.getWifiInfoList());
+//                            Log.i("yao", "put x:" + x + " y:" + y);
+                            AppAction action = new AppActionImpl(context);
+                            UploadPrintReq uploadPrintReq = new UploadPrintReq();
+                            uploadPrintReq.setLocationX(x + "");
+                            uploadPrintReq.setLocationY(y + "");
+//                            L.i("wifiInfos:"+ GsonUtils.gsonToJsonString(wifiInfos));
+                            uploadPrintReq.setWifiInfoList(GsonUtils.gsonToJsonString(wifiInfos));
+                            action.uploadPrint(uploadPrintReq, new ActionCallbackListener<UploadPrintResp>() {
+                                @Override
+                                public void onSuccess(UploadPrintResp data) {
+                                    T.showShort(context, data.getDesc());
+                                }
+
+                                @Override
+                                public void onFailure(String message) {
+                                    T.showShort(context,context.getString(R.string.error_message));
+//                                    L.i("message:"+message);
+                                }
+                            });
+//                        DBFile.addLocation(location);
+                        }
+                    }).create();
+                    dialog.show();
+                    TextView textView = (TextView)dialog.findViewById(android.R.id.message);
+                    textView.setTextColor(getResources().getColor(R.color.font_black));
+                }
+                break;
+            case MotionEvent.ACTION_MOVE:
+                break;
+            case MotionEvent.ACTION_UP:
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+
+    public boolean isTrain() {
+        return train;
+    }
+
+    public void setTrain(boolean train) {
+        this.train = train;
+    }
+
+    public boolean isNavigation() {
+        return navigation;
+    }
+
+    public void setNavigation(boolean navigation) {
+        this.navigation = navigation;
+    }
+
+    public boolean isLocation() {
+        return location;
+    }
+
+    public void setLocation(boolean location) {
+        this.location = location;
+    }
+
+    public boolean isBook() {
+        return book;
+    }
+
+    public void setBook(boolean book) {
+        this.book = book;
+    }
+
+    public void printBook(float x, float y){
+        bookX = x;
+        bookY = y;
+    }
+    private void plotMap(Canvas canvas){
+        paint.setColor(Color.BLACK);
+        canvas.drawRect(100, 470, 980, 1450, paint);
+        canvas.drawRect(130,590,770,710,paint);
+        canvas.drawRect(280,890,820,1020,paint);
+        canvas.drawRect(220, 1200, 820, 1320, paint);
+        paint.setColor(Color.RED);
+    }
+
 }

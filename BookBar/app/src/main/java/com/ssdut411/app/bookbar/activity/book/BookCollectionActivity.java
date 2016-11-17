@@ -57,7 +57,7 @@ public class BookCollectionActivity extends BaseActivity {
         if(bookId !=null && bookId.length()>0){
             getBookInfoById(bookId);
         }else{
-            T.showShort(context,"未知错误");
+            T.showShort(context,getString(R.string.error_message));
             finish();
         }
     }
@@ -74,13 +74,13 @@ public class BookCollectionActivity extends BaseActivity {
             @Override
             public void onSuccess(GetBookByIdResp data) {
                 if (data.isStatus()) {
-                    T.showShort(context, data.getDesc());
                     bookModel = data.getBook();
                     getTextView(R.id.tv_book_name).setText(bookModel.getTitle());
                     getTextView(R.id.tv_book_publisher).setText(bookModel.getPublisher());
                     getTextView(R.id.tv_book_author).setText(bookModel.getAuthor());
                     getTextView(R.id.tv_book_content).setText(bookModel.getSummary());
-                    getTextView(R.id.tv_book_time).setText(bookModel.getTime());
+                    L.i("time:" + bookModel.getTime());
+                    getTextView(R.id.tv_book_time).setText("收藏时间：" + getIntent().getStringExtra("time"));
                     VolleyUtil.displayImage(bookModel.getUrl(), getImageView(R.id.iv_book_image), R.mipmap.ic_launcher, R.mipmap.ic_launcher);
                 } else {
                     T.showShort(context, data.getDesc());
@@ -89,7 +89,8 @@ public class BookCollectionActivity extends BaseActivity {
 
             @Override
             public void onFailure(String message) {
-                T.showShort(context, message);
+
+                T.showShort(context,getString(R.string.error_message));
             }
         });
     }

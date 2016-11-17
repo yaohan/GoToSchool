@@ -97,7 +97,8 @@ public class ForgetPasswordActivity extends BaseActivity {
 
                         @Override
                         public void onFailure(String message) {
-                            T.showShort(context, message);
+
+                            T.showShort(context,getString(R.string.error_message));
                         }
                     });
                 }

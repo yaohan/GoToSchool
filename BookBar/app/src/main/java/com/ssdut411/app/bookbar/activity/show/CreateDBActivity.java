@@ -41,10 +41,12 @@ public class CreateDBActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        CreateDBView createDBView = new CreateDBView(CreateDBActivity.this);
+        BrowerBookView createDBView = new BrowerBookView(CreateDBActivity.this);
+        createDBView.setTrain(true);
         RelativeLayout layout = (RelativeLayout)findViewById(R.id.layout);
         layout.addView(createDBView);
         startScanWIFI();
+
     }
 
     @Override

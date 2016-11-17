@@ -25,7 +25,6 @@ import com.ssdut411.app.bookbar.widget.ViewPagerIndicator;
  * Created by LENOVO on 2016/10/28.
  */
 public abstract class BaseFragment extends Fragment {
-    protected Context context = getActivity();
 
     private SparseArray<View> views = new SparseArray<View>();
     public BaseFragment() {

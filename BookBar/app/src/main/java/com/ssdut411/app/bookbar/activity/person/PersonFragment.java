@@ -57,7 +57,7 @@ public class PersonFragment extends BaseFragment {
         getLinearLayout(view,R.id.ll_person_contact).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                T.showShort(getActivity(),"联系我们");
+                startActivity(new Intent(getActivity(),ContactActivity.class));
             }
         });
         getLinearLayout(view,R.id.ll_person_use).setOnClickListener(new View.OnClickListener() {
@@ -69,7 +69,8 @@ public class PersonFragment extends BaseFragment {
         getLinearLayout(view,R.id.ll_person_train).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), CreateDBActivity.class));
+                startActivity(new Intent(getActivity(),AdminActivity.class));
+//                startActivity(new Intent(getActivity(), CreateDBActivity.class));
             }
         });
         logout.setOnClickListener(new View.OnClickListener() {

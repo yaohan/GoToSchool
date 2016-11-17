@@ -17,6 +17,7 @@ import com.ssdut411.app.bookbar.model.Resp.GetReservationResp;
 import com.ssdut411.app.bookbar.model.Resp.LoginResp;
 import com.ssdut411.app.bookbar.model.Resp.RegisterResp;
 import com.ssdut411.app.bookbar.model.Resp.ReservationBookResp;
+import com.ssdut411.app.bookbar.model.Resp.ReturnBookResp;
 import com.ssdut411.app.bookbar.model.Resp.SearchResp;
 import com.ssdut411.app.bookbar.model.Resp.UploadBookResp;
 import com.ssdut411.app.bookbar.model.Resp.UploadPrintResp;
@@ -46,5 +47,5 @@ public interface Api {
     public void uploadBook(String url, String reqJson, Object tag, ApiCallbackListener<UploadBookResp> listener);
     public void getLocation(String url, String reqJson, Object tag, ApiCallbackListener<GetLocationResp> listener);
     public void getBookLocation(String url, String reqJson, Object tag, ApiCallbackListener<GetBookLocationResp> listener);
-
+    public void returnBook(String url, String reqJson, Object tag, ApiCallbackListener<ReturnBookResp> listener);
 }

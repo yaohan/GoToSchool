@@ -5,6 +5,7 @@ package com.ssdut411.app.bookbar.model;
  */
 public class BookModel {
     private int bookId;
+    private String borrowId;
     private String url;
     private String title;
     private String publisher;
@@ -13,6 +14,8 @@ public class BookModel {
     private int number;
     private String isbn13;
     private String time;
+    private float locationX;
+    private float locationY;
 
     public BookModel() {
     }
@@ -23,6 +26,14 @@ public class BookModel {
 
     public void setBookId(int bookId) {
         this.bookId = bookId;
+    }
+
+    public String getBorrowId() {
+        return borrowId;
+    }
+
+    public void setBorrowId(String borrowId) {
+        this.borrowId = borrowId;
     }
 
     public String getUrl() {
@@ -87,5 +98,21 @@ public class BookModel {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public float getLocationX() {
+        return locationX;
+    }
+
+    public void setLocationX(float locationX) {
+        this.locationX = locationX;
+    }
+
+    public float getLocationY() {
+        return locationY;
+    }
+
+    public void setLocationY(float locationY) {
+        this.locationY = locationY;
     }
 }

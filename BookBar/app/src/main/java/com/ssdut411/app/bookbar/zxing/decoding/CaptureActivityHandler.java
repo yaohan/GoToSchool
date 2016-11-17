@@ -27,6 +27,11 @@ import com.google.zxing.Result;
 import com.ssdut411.app.bookbar.R;
 import com.ssdut411.app.bookbar.activity.mainPage.BookDetailActivity;
 import com.ssdut411.app.bookbar.activity.mainPage.CaptureActivity;
+import com.ssdut411.app.bookbar.activity.show.FindBookActivity;
+import com.ssdut411.app.bookbar.activity.system.MainApplication;
+import com.ssdut411.app.bookbar.utils.ActivityStackUtils;
+import com.ssdut411.app.bookbar.utils.L;
+import com.ssdut411.app.bookbar.utils.T;
 import com.ssdut411.app.bookbar.zxing.camera.CameraManager;
 import com.ssdut411.app.bookbar.zxing.view.ViewfinderResultPointCallback;
 
@@ -90,13 +95,29 @@ private static final String TAG = CaptureActivityHandler.class.getSimpleName();
         
         String str_result=((Result) message.obj).getText();
         activity.handleDecode((Result) message.obj, barcode);
-        
+
+        ActivityStackUtils.getInstance().finishActivity(FindBookActivity.class);
         //鑾峰彇鍒癐SBN鐮佸悗杩斿洖鍒颁富Activity
-    	Intent intent=new Intent(activity,BookDetailActivity.class);
+    	final Intent intent=new Intent(activity,BookDetailActivity.class);
 //        L.i("result："+str_result);
         intent.putExtra("result", str_result);
-		activity.startActivity(intent);
-		activity.finish();
+        MainApplication.getInstance().setHasScan(true);
+
+        if(MainApplication.getInstance().isDirectBorrow()){
+          ActivityStackUtils.getInstance().finishActivity(BookDetailActivity.class);
+          new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+              MainApplication.getInstance().setDirectBorrow(true);
+              activity.startActivity(intent);
+              activity.finish();
+            }
+          },1000);
+        }else{
+          ActivityStackUtils.getInstance().finishActivity(BookDetailActivity.class);
+          activity.startActivity(intent);
+          activity.finish();
+        }
         break;
         
       case R.id.decode_failed:
@@ -106,8 +127,8 @@ private static final String TAG = CaptureActivityHandler.class.getSimpleName();
         break;
       case R.id.return_scan_result:
 //        Log.i("OUTPUT", "Got return scan result message scan result");
-    	Intent intent2=new Intent(activity,BookDetailActivity.class);
-		activity.startActivity(intent2);
+//    	Intent intent2=new Intent(activity,BookDetailActivity.class);
+//		activity.startActivity(intent2);
         break;
     }
   }

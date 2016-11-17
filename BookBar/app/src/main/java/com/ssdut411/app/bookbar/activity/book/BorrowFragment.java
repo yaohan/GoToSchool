@@ -58,8 +58,11 @@ public class BorrowFragment extends BaseFragment {
         lvBorrow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), BookCollectionActivity.class);
+                Intent intent = new Intent(getActivity(), BookBorrowActivity.class);
                 L.i("put bookId:"+bookModelList.get(position).getBookId());
+                L.i("put borrowId:"+bookModelList.get(position).getBorrowId());
+                intent.putExtra("borrowId", bookModelList.get(position).getBorrowId());
+                intent.putExtra("time",bookModelList.get(position).getTime());
                 intent.putExtra("bookId", bookModelList.get(position).getBookId()+"");
                 startActivity(intent);
             }
@@ -104,7 +107,7 @@ public class BorrowFragment extends BaseFragment {
 
                 @Override
                 public void onFailure(String message) {
-                    T.showShort(getActivity(),message);
+                    T.showShort(getActivity(), getString(R.string.error_message));
                 }
             });
         }

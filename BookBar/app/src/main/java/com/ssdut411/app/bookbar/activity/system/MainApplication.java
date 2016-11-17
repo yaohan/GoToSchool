@@ -20,7 +20,11 @@ public class MainApplication extends Application {
     private String userId, phoneNumber;
     private boolean theme;
     private Context context;
-
+    private boolean hasScan = false;
+    private boolean isAdmin = false;
+    private String server;
+    private float locationX,locationY;
+    private boolean directBorrow = false;
     /**
      * 得到MainApplication实例
      *
@@ -47,13 +51,16 @@ public class MainApplication extends Application {
         if (phoneNumber.length() == 0) {
             phoneNumber = null;
         }
-
+        server = SPUtils.get(context,"server","").toString();
+        if(server.length() == 0){
+            server = "http://192.168.1.104:8081";
+        }
     }
 
     public void clear() {
         userId = null;
         phoneNumber = null;
-        SPUtils.clear(context);
+        SPUtils.remove(context,"userId");
     }
 
     public boolean getTheTheme() {
@@ -80,5 +87,53 @@ public class MainApplication extends Application {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
         SPUtils.put(context, "phoneNumber", phoneNumber);
+    }
+
+    public boolean isHasScan() {
+        return hasScan;
+    }
+
+    public void setHasScan(boolean hasScan) {
+        this.hasScan = hasScan;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    public String getServer() {
+        return server;
+    }
+
+    public void setServer(String server) {
+        this.server = server;
+    }
+
+    public float getLocationY() {
+        return locationY;
+    }
+
+    public void setLocationY(float locationY) {
+        this.locationY = locationY;
+    }
+
+    public float getLocationX() {
+        return locationX;
+    }
+
+    public void setLocationX(float locationX) {
+        this.locationX = locationX;
+    }
+
+    public boolean isDirectBorrow() {
+        return directBorrow;
+    }
+
+    public void setDirectBorrow(boolean directBorrow) {
+        this.directBorrow = directBorrow;
     }
 }

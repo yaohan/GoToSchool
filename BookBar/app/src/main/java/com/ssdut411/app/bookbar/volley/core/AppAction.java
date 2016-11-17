@@ -16,6 +16,7 @@ import com.ssdut411.app.bookbar.model.Req.GetReservationReq;
 import com.ssdut411.app.bookbar.model.Req.LoginReq;
 import com.ssdut411.app.bookbar.model.Req.RegisterReq;
 import com.ssdut411.app.bookbar.model.Req.ReservationBookReq;
+import com.ssdut411.app.bookbar.model.Req.ReturnBookReq;
 import com.ssdut411.app.bookbar.model.Req.SearchReq;
 import com.ssdut411.app.bookbar.model.Req.UploadBookReq;
 import com.ssdut411.app.bookbar.model.Req.UploadPrintReq;
@@ -35,6 +36,7 @@ import com.ssdut411.app.bookbar.model.Resp.GetReservationResp;
 import com.ssdut411.app.bookbar.model.Resp.LoginResp;
 import com.ssdut411.app.bookbar.model.Resp.RegisterResp;
 import com.ssdut411.app.bookbar.model.Resp.ReservationBookResp;
+import com.ssdut411.app.bookbar.model.Resp.ReturnBookResp;
 import com.ssdut411.app.bookbar.model.Resp.SearchResp;
 import com.ssdut411.app.bookbar.model.Resp.UploadBookResp;
 import com.ssdut411.app.bookbar.model.Resp.UploadPrintResp;
@@ -64,4 +66,5 @@ public interface AppAction {
     public void uploadBook(UploadBookReq req, ActionCallbackListener<UploadBookResp> listener);
     public void getLocation(GetLocationReq req, ActionCallbackListener<GetLocationResp> listener);
     public void getBookLocation(GetBookLocationReq req, ActionCallbackListener<GetBookLocationResp> listener);
+    public void returnBook(ReturnBookReq req, ActionCallbackListener<ReturnBookResp> listener);
 }

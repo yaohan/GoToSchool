@@ -2,6 +2,7 @@ package com.ssdut411.app.bookbar.volley.core;
 
 import android.content.Context;
 
+import com.ssdut411.app.bookbar.activity.system.MainApplication;
 import com.ssdut411.app.bookbar.model.Req.BorrowBookReq;
 import com.ssdut411.app.bookbar.model.Req.CollectionBookReq;
 import com.ssdut411.app.bookbar.model.Req.CreateBookReq;
@@ -18,6 +19,7 @@ import com.ssdut411.app.bookbar.model.Req.GetReservationReq;
 import com.ssdut411.app.bookbar.model.Req.LoginReq;
 import com.ssdut411.app.bookbar.model.Req.RegisterReq;
 import com.ssdut411.app.bookbar.model.Req.ReservationBookReq;
+import com.ssdut411.app.bookbar.model.Req.ReturnBookReq;
 import com.ssdut411.app.bookbar.model.Req.SearchReq;
 import com.ssdut411.app.bookbar.model.Req.UploadBookReq;
 import com.ssdut411.app.bookbar.model.Req.UploadPrintReq;
@@ -37,6 +39,7 @@ import com.ssdut411.app.bookbar.model.Resp.GetReservationResp;
 import com.ssdut411.app.bookbar.model.Resp.LoginResp;
 import com.ssdut411.app.bookbar.model.Resp.RegisterResp;
 import com.ssdut411.app.bookbar.model.Resp.ReservationBookResp;
+import com.ssdut411.app.bookbar.model.Resp.ReturnBookResp;
 import com.ssdut411.app.bookbar.model.Resp.SearchResp;
 import com.ssdut411.app.bookbar.model.Resp.UploadBookResp;
 import com.ssdut411.app.bookbar.model.Resp.UploadPrintResp;
@@ -54,6 +57,7 @@ import com.ssdut411.app.bookbar.volley.api.ApiImpl;
 public class AppActionImpl implements AppAction {
     private Context context;
     private Api api;
+    private String server = MainApplication.getInstance().getServer();
 
     public AppActionImpl(Context context) {
         this.context = context;
@@ -62,7 +66,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void login(LoginReq req, final ActionCallbackListener<LoginResp> listener) {
-        String url = ApiConfig.BASE_URL + "/login";
+        String url = server + "/login";
         String reqJson = req.toGetFormat();
 
         api.login(url, reqJson, context, new ApiCallbackListener<LoginResp>() {
@@ -80,7 +84,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void forgetPassword(ForgetPasswordReq req, final ActionCallbackListener<ForgetPasswordResp> listener) {
-        String url = ApiConfig.BASE_URL + "/forgetPassword";
+        String url = server + "/forgetPassword";
         String reqJson = req.toGetFormat();
 
         api.forgetPassword(url, reqJson, context, new ApiCallbackListener<ForgetPasswordResp>() {
@@ -98,7 +102,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void register(RegisterReq req, final ActionCallbackListener<RegisterResp> listener) {
-        String url = ApiConfig.BASE_URL + "/register";
+        String url = server + "/register";
         String reqJson = req.toGetFormat();
 
         api.register(url, reqJson, context, new ApiCallbackListener<RegisterResp>() {
@@ -116,7 +120,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void createBook(CreateBookReq req, final ActionCallbackListener<CreateBookResp> listener) {
-        String url = ApiConfig.BASE_URL + "/createBook";
+        String url = server + "/createBook";
         String reqJson = req.toGetFormat();
 
         api.createBook(url, reqJson, context, new ApiCallbackListener<CreateBookResp>() {
@@ -134,7 +138,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void getRecommendBooks(GetRecommendBooksReq req, final ActionCallbackListener<GetRecommendBooksResp> listener) {
-        String url = ApiConfig.BASE_URL + "/getRecommendBooks";
+        String url = server + "/getRecommendBooks";
         String reqJson = req.toGetFormat();
 
         api.getRecommendBooks(url, reqJson, context, new ApiCallbackListener<GetRecommendBooksResp>() {
@@ -152,7 +156,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void getBookByISBN(GetBookByISBNReq req, final ActionCallbackListener<GetBookByISBNResp> listener) {
-        String url = ApiConfig.BASE_URL + "/getBookByISBN";
+        String url = server + "/getBookByISBN";
         String reqJson = req.toGetFormat();
         api.getBookByISBN(url, reqJson, context, new ApiCallbackListener<GetBookByISBNResp>() {
             @Override
@@ -169,7 +173,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void getBookById(GetBookByIdReq req, final ActionCallbackListener<GetBookByIdResp> listener) {
-        String url = ApiConfig.BASE_URL + "/getBookById";
+        String url = server + "/getBookById";
         String reqJson = req.toGetFormat();
         api.getBookById(url, reqJson, context, new ApiCallbackListener<GetBookByIdResp>() {
             @Override
@@ -186,7 +190,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void search(SearchReq req, final ActionCallbackListener<SearchResp> listener) {
-        String url = ApiConfig.BASE_URL + "/search";
+        String url = server+ "/search";
         String reqJson = req.toGetFormat();
         api.search(url, reqJson, context, new ApiCallbackListener<SearchResp>() {
             @Override
@@ -203,7 +207,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void collectionBook(CollectionBookReq req, final ActionCallbackListener<CollectionBookResp> listener) {
-        String url = ApiConfig.BASE_URL + "/collectionBook";
+        String url = server + "/collectionBook";
         String reqJson = req.toGetFormat();
         api.collectionBook(url, reqJson, context, new ApiCallbackListener<CollectionBookResp>() {
             @Override
@@ -220,7 +224,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void getCollection(GetCollectionReq req, final ActionCallbackListener<GetCollectionResp> listener) {
-        String url = ApiConfig.BASE_URL + "/getCollection";
+        String url = server + "/getCollection";
         String reqJson = req.toGetFormat();
         api.getCollection(url, reqJson, context, new ApiCallbackListener<GetCollectionResp>() {
             @Override
@@ -237,7 +241,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void reservationBook(ReservationBookReq req, final ActionCallbackListener<ReservationBookResp> listener) {
-        String url = ApiConfig.BASE_URL + "/reservationBook";
+        String url = server + "/reservationBook";
         String reqJson = req.toGetFormat();
         api.reservationBook(url, reqJson, context, new ApiCallbackListener<ReservationBookResp>() {
             @Override
@@ -254,7 +258,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void getReservation(GetReservationReq req, final ActionCallbackListener<GetReservationResp> listener) {
-        String url = ApiConfig.BASE_URL + "/getReservation";
+        String url = server + "/getReservation";
         String reqJson = req.toGetFormat();
         api.getReservation(url, reqJson, context, new ApiCallbackListener<GetReservationResp>() {
             @Override
@@ -271,7 +275,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void borrowBook(BorrowBookReq req, final ActionCallbackListener<BorrowBookResp> listener) {
-        String url = ApiConfig.BASE_URL + "/borrowBook";
+        String url = server + "/borrowBook";
         String reqJson = req.toGetFormat();
         api.borrowBook(url, reqJson, context, new ApiCallbackListener<BorrowBookResp>() {
             @Override
@@ -288,7 +292,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void getBorrow(GetBorrowReq req, final ActionCallbackListener<GetBorrowResp> listener) {
-        String url = ApiConfig.BASE_URL + "/getBorrow";
+        String url = server + "/getBorrow";
         String reqJson = req.toGetFormat();
         api.getBorrow(url, reqJson, context, new ApiCallbackListener<GetBorrowResp>() {
             @Override
@@ -305,7 +309,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void getLibrary(GetLibraryReq req, final ActionCallbackListener<GetLibraryResp> listener) {
-        String url = ApiConfig.BASE_URL + "/getLibrary";
+        String url = server + "/getLibrary";
         String reqJson = req.toGetFormat();
         api.getLibrary(url, reqJson, context, new ApiCallbackListener<GetLibraryResp>() {
             @Override
@@ -322,7 +326,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void uploadPrint(UploadPrintReq req, final ActionCallbackListener<UploadPrintResp> listener) {
-        String url = ApiConfig.BASE_URL + "/uploadPrint";
+        String url = server + "/uploadPrint";
         String reqJson = req.toGetFormat();
         api.uploadPrint(url, reqJson, context, new ApiCallbackListener<UploadPrintResp>() {
             @Override
@@ -339,7 +343,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void uploadBook(UploadBookReq req, final ActionCallbackListener<UploadBookResp> listener) {
-        String url = ApiConfig.BASE_URL + "/uploadBook";
+        String url = server + "/uploadBook";
         String reqJson = req.toGetFormat();
         api.uploadBook(url, reqJson, context, new ApiCallbackListener<UploadBookResp>() {
             @Override
@@ -356,7 +360,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void getLocation(GetLocationReq req, final ActionCallbackListener<GetLocationResp> listener) {
-        String url = ApiConfig.BASE_URL + "/getLocation";
+        String url = server + "/getLocation";
         String reqJson = req.toGetFormat();
         api.getLocation(url, reqJson, context, new ApiCallbackListener<GetLocationResp>() {
             @Override
@@ -374,7 +378,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void getBookLocation(GetBookLocationReq req, final ActionCallbackListener<GetBookLocationResp> listener) {
-        String url = ApiConfig.BASE_URL + "/getBookLocation";
+        String url = server + "/getBookLocation";
         String reqJson = req.toGetFormat();
         api.getBookLocation(url, reqJson, context, new ApiCallbackListener<GetBookLocationResp>() {
             @Override
@@ -388,6 +392,23 @@ public class AppActionImpl implements AppAction {
             }
         });
 
+    }
+
+    @Override
+    public void returnBook(ReturnBookReq req, final ActionCallbackListener<ReturnBookResp> listener) {
+        String url = server + "/returnBook";
+        String reqJson = req.toGetFormat();
+        api.returnBook(url, reqJson, context, new ApiCallbackListener<ReturnBookResp>() {
+            @Override
+            public void onSuccess(ReturnBookResp data) {
+                listener.onSuccess(data);
+            }
+
+            @Override
+            public void onFailure(String message) {
+                listener.onFailure(message);
+            }
+        });
     }
 
 }

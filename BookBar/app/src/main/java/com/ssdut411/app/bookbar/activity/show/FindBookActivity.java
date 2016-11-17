@@ -19,10 +19,13 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.ssdut411.app.bookbar.R;
+import com.ssdut411.app.bookbar.activity.mainPage.CaptureActivity;
 import com.ssdut411.app.bookbar.activity.system.BaseActivity;
+import com.ssdut411.app.bookbar.activity.system.MainApplication;
 import com.ssdut411.app.bookbar.model.Req.GetLocationReq;
 import com.ssdut411.app.bookbar.model.Resp.GetLocationResp;
 import com.ssdut411.app.bookbar.utils.GsonUtils;
+import com.ssdut411.app.bookbar.utils.L;
 import com.ssdut411.app.bookbar.utils.T;
 import com.ssdut411.app.bookbar.volley.core.ActionCallbackListener;
 import com.ssdut411.app.bookbar.volley.core.AppAction;
@@ -93,6 +96,9 @@ public class FindBookActivity extends BaseActivity implements SensorEventListene
     protected void initViews() {
         RelativeLayout layout = (RelativeLayout)findViewById(R.id.layout);
         browerBookView = new BrowerBookView(FindBookActivity.this);
+        browerBookView.setLocation(true);
+        browerBookView.setNavigation(true);
+        browerBookView.setBook(true);
         layout.addView(browerBookView);
         startScanWIFI();
         attitude = new Attitude(this);
@@ -101,14 +107,25 @@ public class FindBookActivity extends BaseActivity implements SensorEventListene
         getButton(R.id.bt_find_borrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context,BrowerBookActivity.class));
+                MainApplication.getInstance().setDirectBorrow(true);
+                startActivity(new Intent(context, CaptureActivity.class));
+            }
+        });
+        getButton(R.id.tv_find_error).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                T.showShort(context,"onClick");
+                startActivity(new Intent(context, CreateDBActivity.class));
             }
         });
     }
 
     @Override
     protected void loadData() {
-
+        float x = getIntent().getFloatExtra("locationX",540);
+        float y = getIntent().getFloatExtra("locationY",960);
+        L.i("x:" + x + "y:" + y);
+        browerBookView.printBook(x,y);
     }
 
     @Override
@@ -144,13 +161,13 @@ public class FindBookActivity extends BaseActivity implements SensorEventListene
                                 start = false;
                             }
                         }else {
-                            T.showShort(context, data.getDesc());
+//                            T.showShort(context, data.getDesc());
                         }
                     }
 
                     @Override
                     public void onFailure(String message) {
-                        T.showShort(context,message);
+//                        T.showShort(context,message);
                     }
                 });
 //                Location location = DBFile.searchLocation(wifiInfoList);
@@ -248,6 +265,7 @@ public class FindBookActivity extends BaseActivity implements SensorEventListene
     public void onStop()
     {
         sensorManager.unregisterListener(this);
+
         super.onStop();
     }
 }

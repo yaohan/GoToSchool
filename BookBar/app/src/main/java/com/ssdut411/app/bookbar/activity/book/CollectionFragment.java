@@ -59,6 +59,7 @@ public class CollectionFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), BookCollectionActivity.class);
                 L.i("put bookId:"+bookModelList.get(position).getBookId());
+                intent.putExtra("time",bookModelList.get(position).getTime());
                 intent.putExtra("bookId", bookModelList.get(position).getBookId()+"");
                 startActivity(intent);
             }
@@ -105,7 +106,8 @@ public class CollectionFragment extends BaseFragment {
 
                 @Override
                 public void onFailure(String message) {
-                    T.showShort(getActivity(),message);
+
+                    T.showShort(getActivity(),getString(R.string.error_message));
                 }
             });
         }

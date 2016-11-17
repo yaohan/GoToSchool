@@ -103,8 +103,8 @@ public class MainPageFragment extends BaseFragment {
 
             @Override
             public void onFailure(String message) {
-                T.showShort(getActivity(), message);
-                L.i(message);
+
+                T.showShort(getActivity(),getString(R.string.error_message));
             }
         });
     }

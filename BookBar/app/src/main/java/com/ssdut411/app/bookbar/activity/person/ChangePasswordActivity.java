@@ -71,7 +71,7 @@ public class ChangePasswordActivity extends BaseActivity {
         getButton(R.id.bt_change_password).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                T.showShort(context,"修改");
+                T.showShort(context,getString(R.string.error_message));
             }
         });
     }

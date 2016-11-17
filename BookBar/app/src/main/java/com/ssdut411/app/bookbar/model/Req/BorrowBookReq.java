@@ -7,6 +7,8 @@ public class BorrowBookReq extends BaseReq {
     private int bookId;
     private String userId;
     private String time;
+    private float locationX;
+    private float locationY;
     public BorrowBookReq() {
     }
 
@@ -32,5 +34,21 @@ public class BorrowBookReq extends BaseReq {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public float getLocationX() {
+        return locationX;
+    }
+
+    public void setLocationX(float locationX) {
+        this.locationX = locationX;
+    }
+
+    public float getLocationY() {
+        return locationY;
+    }
+
+    public void setLocationY(float locationY) {
+        this.locationY = locationY;
     }
 }

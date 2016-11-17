@@ -100,13 +100,14 @@ public class BrowerBookActivity extends BaseActivity {
                         if (data.isStatus()) {
                             browerBookView.drawCircle(Float.parseFloat(data.getLocationX()), Float.parseFloat(data.getLocationY()));
                         } else {
-                            T.showShort(context, data.getDesc());
+//                            T.showShort(context, data.getDesc());
                         }
                     }
 
                     @Override
                     public void onFailure(String message) {
-                        T.showShort(context, message);
+
+                        T.showShort(context,getString(R.string.error_message));
                     }
                 });
             }

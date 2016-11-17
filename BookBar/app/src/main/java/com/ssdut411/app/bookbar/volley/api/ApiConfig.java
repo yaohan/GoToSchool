@@ -14,5 +14,5 @@ public class ApiConfig {
 //    海马玩 本地地址
 //    public static final String BASE_URL = "http://192.168.1.104:8080";
     //本地服务器
-    public static final String BASE_URL = "http://192.168.1.100:8081";
+    public static final String BASE_URL = "http://192.168.1.110:8081";
 }

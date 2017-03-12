@@ -1,0 +1,16 @@
+\beamer@endinputifotherversion {3.06pt}
+\select@language {english}
+\beamer@sectionintoc {1}{Overview}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Goals}{3}{0}{1}
+\beamer@sectionintoc {2}{Search Trees}{4}{0}{2}
+\beamer@subsectionintoc {2}{1}{Search trees}{4}{0}{2}
+\beamer@sectionintoc {3}{Binary Search Trees}{5}{0}{3}
+\beamer@subsectionintoc {3}{1}{Inorder Tree Walk}{7}{0}{3}
+\beamer@sectionintoc {4}{Querying A Binary Search Tree}{8}{0}{4}
+\beamer@subsectionintoc {4}{1}{Searching}{8}{0}{4}
+\beamer@subsectionintoc {4}{2}{Minimum and Maximum}{9}{0}{4}
+\beamer@subsectionintoc {4}{3}{Successor and predecessor}{10}{0}{4}
+\beamer@sectionintoc {5}{Insertion and Deletion}{11}{0}{5}
+\beamer@subsectionintoc {5}{1}{Insertion}{11}{0}{5}
+\beamer@subsectionintoc {5}{2}{Deletion}{12}{0}{5}
+\beamer@sectionintoc {6}{Minimizing Running Time}{14}{0}{6}

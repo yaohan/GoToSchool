@@ -1,0 +1,11 @@
+\beamer@endinputifotherversion {3.07pt}
+\select@language {english}
+\beamer@sectionintoc {1}{Overview}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Goals}{3}{0}{1}
+\beamer@sectionintoc {2}{Heaps}{4}{0}{2}
+\beamer@subsectionintoc {2}{1}{Heap data structure}{4}{0}{2}
+\beamer@subsectionintoc {2}{2}{Building a heap}{9}{0}{2}
+\beamer@sectionintoc {3}{The Heapsort Algorithm}{11}{0}{3}
+\beamer@subsectionintoc {3}{1}{The Heapsort Algorithm}{11}{0}{3}
+\beamer@sectionintoc {4}{Heap Implementation of Priority Queue}{13}{0}{4}
+\beamer@subsectionintoc {4}{1}{Priority queue}{13}{0}{4}

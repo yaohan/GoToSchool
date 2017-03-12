@@ -1,0 +1,13 @@
+\beamer@endinputifotherversion {3.33pt}
+\select@language {english}
+\beamer@sectionintoc {1}{Course Info}{3}{0}{1}
+\beamer@sectionintoc {2}{Overview}{4}{0}{2}
+\beamer@subsectionintoc {2}{1}{Goals}{4}{0}{2}
+\beamer@sectionintoc {3}{Insertion Sort}{5}{0}{3}
+\beamer@subsectionintoc {3}{1}{Insertion sort}{5}{0}{3}
+\beamer@subsectionintoc {3}{2}{Correctness}{7}{0}{3}
+\beamer@sectionintoc {4}{Analyzing Algorithms}{10}{0}{4}
+\beamer@subsectionintoc {4}{1}{RAM Model}{10}{0}{4}
+\beamer@subsectionintoc {4}{2}{Running Time}{11}{0}{4}
+\beamer@sectionintoc {5}{Designing Algorithms}{15}{0}{5}
+\beamer@subsectionintoc {5}{1}{Divide and conquer}{15}{0}{5}

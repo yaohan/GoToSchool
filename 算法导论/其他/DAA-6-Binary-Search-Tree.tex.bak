@@ -1,0 +1,304 @@
+\documentclass[notes,serif]{beamer}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{clrscode}
+\usepackage{amssymb,amsmath}
+
+% You should run 'pdflatex' TWICE, because of TOC issues.
+
+\mode<presentation>
+{
+  % A tip: pick a theme you like first, and THEN modify the color theme, and then add math content.
+  % Warsaw is the theme selected by default in Beamer's installation sample files.
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%% THEME
+  %\usetheme{AnnArbor}
+  %\usetheme{Antibes}
+  %\usetheme{Bergen}
+  %\usetheme{Berkeley}
+  %\usetheme{Berlin}
+  %\usetheme{Boadilla}
+  %\usetheme{boxes}
+  %\usetheme{CambridgeUS}
+  %\usetheme{Copenhagen}
+  %\usetheme{Darmstadt}
+  %\usetheme{default}
+  %\usetheme{Dresden}
+  %\usetheme{Frankfurt}
+  %\usetheme{Goettingen}
+  %\usetheme{Hannover}
+  %\usetheme{Ilmenau}
+  %\usetheme{JuanLesPins}
+  %\usetheme{Luebeck}
+  %\usetheme{Madrid}
+  %\usetheme{Malmoe}
+  %\usetheme{Marburg}
+  %\usetheme{Montpellier}
+  %\usetheme{PaloAlto}
+  %\usetheme{Pittsburgh}
+  %\usetheme{Rochester}
+  %\usetheme{Singapore}
+  %\usetheme{Szeged}
+  \usetheme{Warsaw}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%% COLOR THEME
+  %\usecolortheme{albatross}
+  %\usecolortheme{beetle}
+  %\usecolortheme{crane}
+  \usecolortheme{default}
+  %\usecolortheme{dolphin}
+  %\usecolortheme{dove}
+  %\usecolortheme{fly}
+  %\usecolortheme{lily}
+  %\usecolortheme{orchid}
+  %\usecolortheme{rose}
+  %\usecolortheme{seagull}
+  %\usecolortheme{seahorse}
+  %\usecolortheme{sidebartab}
+  %\usecolortheme{structure}
+  %\usecolortheme{whale}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%% OUTER THEME
+  %\useoutertheme{default}
+  %\useoutertheme{infolines}
+  %\useoutertheme{miniframes}
+  %\useoutertheme{shadow}
+  %\useoutertheme{sidebar}
+  %\useoutertheme{smoothbars}
+  %\useoutertheme{smoothtree}
+  %\useoutertheme{split}
+  %\useoutertheme{tree}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%% INNER THEME
+  %\useinnertheme{circles}
+  %\useinnertheme{default}
+  %\useinnertheme{inmargin}
+  %\useinnertheme{rectangles}
+  %\useinnertheme{rounded}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%  \setbeamercovered{transparent} % or whatever (possibly just delete it)
+  \setbeamercovered{invisible} % or whatever (possibly just delete it)
+  % To change behavior of \uncover from graying out to totally invisible, can change \setbeamercovered to invisible instead of transparent. apparently there are also 'dynamic' modes that make the amount of graying depend on how long it'll take until the thing is uncovered.
+
+}
+
+
+% Get rid of nav bar
+\beamertemplatenavigationsymbolsempty
+
+% Use short top
+%\usepackage[headheight=12pt,footheight=12pt]{beamerthemeboxes}
+%\addheadboxtemplate{\color{black}}{
+%\hskip0.3cm
+%\color{white}
+%\insertshortauthor \ \ \ \
+%\insertframenumber \ \ \ \ \ \ \
+%\insertsection \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \insertsubsection
+%\hskip0.3cm}
+%\addheadboxtemplate{\color{black}}{
+%\color{white}
+%\ \ \ \
+%\insertsection
+%}
+%\addheadboxtemplate{\color{black}}{
+%\color{white}
+%\ \ \ \
+%\insertsubsection
+%}
+
+% Insert frame number at bottom of the page.
+\usefoottemplate{\hfil\tiny{\color{black!90}\insertframenumber}}
+
+\usepackage[english]{babel}
+\usepackage[latin1]{inputenc}
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+
+\title{Design and Analysis of Algorithms}
+\subtitle{Lecture 6---Binary Search Trees}
+
+\author{Lei Wang}
+
+\institute{Dalian University of Technology}
+
+%\date{Date}
+\date{October 8, 2008}
+
+\subject{Talks}
+
+\def\defn#1{{\color{red} #1}}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Binary Search Trees}
+  \tableofcontents
+\end{frame}
+
+\section{Overview}
+\subsection{Goals}
+
+\begin{frame}
+\frametitle{Goals}
+\begin{itemize}
+    \item Binary search trees, tree walks, and operations on binary search trees.
+\end{itemize}
+\end{frame}
+
+\section{Search Trees}
+
+\subsection{Search trees}
+
+\begin{frame}
+  \frametitle{Search Trees}
+    \begin{itemize}
+      \item Data structures that support many dynamic-set operations.
+      \item Can be used as both a dictionary and as a priority queue.
+      \item Basic operations take time proportional to the {\bf\em height} of the tree.
+      \item For complete binary tree with $n$ nodes: worst case $\Theta(\text{lg}n)$.
+      \item For linear chain of $n$ nodes: worst case $\Theta(n)$.
+      \item Different types of search trees include binary search trees, red-black trees
+(covered in Chapter 13), and B-trees (covered in Chapter 18).
+    \end{itemize}
+\end{frame}
+
+\section{Binary Search Trees}
+\begin{frame}
+  \frametitle{Binary search trees}
+  Binary search trees are an important data structure for dynamic sets.
+  \begin{itemize}
+    \item Accomplish many dynamic-set operations in $O(h)$ time, where $h$ = height of
+tree.
+    \item Each node contains the fields
+    \begin{itemize}
+      \item $key$ (and possibly other satellite data).
+      \item $left$: points to left child.
+      \item $right$: points to right child.
+      \item $p$: points to parent. $p[root[T ]] = \textsc{nil}$.
+    \end{itemize}
+    \item Stored keys must satisfy the {\bf \em binary-search-tree} property.
+    \begin{itemize}
+      \item If $y$ is in left subtree of $x$, then $key[y]  \leq key[x]$.
+      \item If $y$ is in right subtree of $x$, then $key[y] \ge key[x]$.
+    \end{itemize}
+  \end{itemize}
+%  \begin{block}{\textsc{Hire-Assistant($n$)}}
+%    \includegraphics[height=3.5cm]{05-hire_assistant}
+%  \end{block}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{Example}
+    \includegraphics[height=6.5cm]{12-binary-serach-trees.png}
+  \end{block}
+\end{frame}
+
+\subsection{Inorder Tree Walk}
+\begin{frame}
+\frametitle{Inorder tree walk}
+    Elements are printed in monotonically increasing order.
+    How INORDER-TREE-WALK works:
+  \begin{itemize}
+    \item Check to make sure that $x$ is not NIL.
+    \item Recursively, print the keys of the nodes in $x$'s left subtree.
+    \item Print $x$'s key.
+    \item Recursively, print the keys of the nodes in $x$'s right subtree.
+  \end{itemize}
+  \begin{columns}
+  \column{0.7\textwidth}
+  \begin{block}{\textsc{Inorder-Tree-Walk}}
+    \includegraphics[height=2.7cm]{12-inorder_tree_walk}
+  \end{block}
+
+  \column{0.3\textwidth}
+  \begin{block}{}
+  {\bf\em Time:} Intuitively, the walk takes $\Theta(n)$ time for a tree with $n$ nodes, because we
+visit and print each node once.
+  \end{block}
+  \end{columns}
+\end{frame}
+
+\section{Querying A Binary Search Tree}
+\subsection{Searching}
+\begin{frame}
+\frametitle{Searching}
+  \begin{block}{\textsc{Tree-Search}}
+    \includegraphics[height=4cm]{12-tree_search}
+  \end{block}
+
+  \begin{block}{}
+  {\bf\em Time:} The algorithm recurses, visiting nodes on a downward path from the root.
+Thus, running time is $O(h)$, where h is the height of the tree.
+  \end{block}
+\end{frame}
+
+\subsection{Minimum and maximum}
+\begin{frame}
+\frametitle{Minimum and maximum}
+  The binary-search-tree property guarantees that:
+  \begin{itemize}
+    \item the minimum key of a binary search tree is located at the leftmost node, and
+    \item the maximum key of a binary search tree is located at the rightmost node.
+  \end{itemize}
+  \begin{columns}
+  \column{0.5\textwidth}
+  \begin{block}{\textsc{Tree-Maximum}}
+    \includegraphics[height=2cm]{12-tree_minimum}
+  \end{block}
+
+  \column{0.5\textwidth}
+  \begin{block}{\textsc{Tree-Minimum}}
+    \includegraphics[height=2cm]{12-tree_maximum}
+  \end{block}
+  \end{columns}
+\end{frame}
+
+\subsection{Indicator Random Variables}
+\begin{frame}
+\frametitle{Indicator random variables}
+Given a sample space and an event $A$, we define the {\bf \em indicator random variable}
+$$
+I\{A\}=
+\begin{cases}
+1 & \text{if $A$ occurs,} \\
+0 & \text{if $A$ does not occur.}
+\end{cases}
+$$
+  \begin{block}{\bf \em Lemma}
+    For an event $A$, let $X_A = I\{A\}$. Then $E[X_A] = \text{Pr}\{A\}$. \\
+    {\bf \em Proof} Letting $\overline{A}$ be the complement of $A$, we have
+    \begin{align*}
+      E[X_A] &= E[I\{A\}] \\
+                   &= 1 \cdot \text{Pr} \{A\} + 0 \cdot \text{Pr} \{\overline{A}\}  & & \text{(definition of expected value)} \\
+                   &= \text{Pr} \{A\}.
+    \end{align*}
+  \end{block}
+Some examples...
+\end{frame}
+
+\subsection{Analysis of the hiring problem}
+\begin{frame}
+\frametitle{Analysis of the hiring problem}
+Assume that the candidates arrive in a random order.  Let $X$ be a random variable that equals the number of times we hire a new office assistant.  Define indicator random variables $X_1, X_2, \dots , X_n$, where $X_i = I\{\text{candidate $i$ is hired}\}$.
+
+\begin{block}{\bf \em Useful properties:}
+  \begin{itemize}
+    \item $X = X_1 + X_2 + \cdots + X_n$.
+    \item {\bf Lemma} $\Rightarrow E[X_i] = \text{Pr}\{\text{candidate $i$ is hired}\}$.
+    \item Pr\{candidate $i$ is the best so far\} $= 1/i$, which implies $E[X_i] = 1/i$.
+    \item we can get \\
+      $ E[X] = E [ \sum_{i=1}^n X_i ] = \sum_{i=1}^nE[X_i ] = \sum_{i=1}^n 1/i = \text{ln}n + O(1) $
+      $ \Rightarrow \mbox { the expected hiring cost } O(c_h \cdot \text{ln}n), \mbox{\color{red} much better than } O(c_h n).
+      $
+  \end{itemize}
+\end{block}
+\end{frame}
+
+\end{document}

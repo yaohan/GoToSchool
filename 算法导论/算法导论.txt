@@ -1,0 +1,215 @@
+=========================
+2 Getting Started
+Insert sort 插入排序 【O(n2)】
+	步骤：依次将每个元素通过交换的方式插入到相应的位置
+Loop invariant 循环不变式
+	Initialization 	初始化 第一次迭代前为真
+	Maintenance	保持   如果每次迭代前为真，则迭代后为真
+	Termination	终止   终止时，提供性质证明算法正确
+Worst-case analysis
+	1.最坏运行时间是算法运行时间的上界 
+	2.某些算法最坏运行时间经常发生 
+	3.平均运行时间经常与最坏运行时间一样差
+Divide and conquer 分治
+	Divide 	分解	分解为子问题
+	Conquer 解决	递归或直接求解每一个子问题
+	Combine 合并	合并子问题的解成为原问题的解
+Merge sort 归并排序 【O(nlgn)】
+	步骤：将序列两半，对每一半递归操作，然后将两半合并
+	T(n)=2T(n/2)+Θ(n)
+=========================
+3 Growth of Functions 函数的增长
+O ≈ ≤	对于n>=n0,存在c和n0使得0<=f(n)<=cg(n)	
+Ω≈ ≥ 对于n>=n0,存在c和n0使得0<=cg(n)<=f(n)
+Θ≈ =  对于n>=n0,存在c1,c2,n0使得0<=c1g(n)<=f(n)<=c2g(n)
+o ≈ <  对于n>=n0，c>0,存在n0使得0<=f(n)<cg(n)	
+ω ≈ > 对于n>=n0，c>0,存在n0使得0<=cg(n)<f(n)
+
+	Transitivity	传递性：OΩΘoω
+	Reflexivity	自反性：OΩΘ
+	Symmetry	对称性：Θ
+	Transpose symmetry 对称传递：O-Ω o-ω
+=========================
+4 Recurrences 分治策略(重复)
+Substitution method 替代法
+	步骤：1.猜测结果 2.用归纳法证明
+		Basis 		基础： n=1时成立
+		Inductive step 	归纳： n/2时成立，推导出n时成立
+Recursion trees 递归树
+	用来产生猜测
+Master method 主方法
+	T(n)=aT(n/b)+f(n)
+	1.f(n)<=n[logb(a)-e]		T(n)=Θ(n[logb(a)])
+	2.f(n)=n[logb(a)]lg[k](n)	T(n)=Θ(n[logb(a)]lg[k](n))
+	3.f(n)>=n[logb(a)+e]		T(n)=Θ(f(n))
+=========================
+5 Probabilistic Analysis and Randomized Algrithms 概率分析，随机算法
+Indicator random variables 随机变量 p<P 1  p>p 0
+	E=P
+	雇佣问题概率结果ln(n)+O(1)
+Randomly permuting an array 随机生成数
+	步骤：将第i个数与i-n的随机一个交换	
+=========================
+6 Heapsort 堆排序【O(nlgn)】
+	优点：时间复杂度nlgn,空间原址性
+	堆：数组实现，根节点A[1] A[i]的父节点A[i/2],左孩子A[2i]，右孩子A[2i+1] 可通过位移计算
+	最大堆：父节点的值都大于孩子节点的值
+		维护：如果找到当前节点和两个孩子节点中最大值，与父节点交换，向下递归
+		构建：n/2降到1，依次维护。 n/2 .. n都是叶子节点
+		排序：i从n降到1，将根节点与i节点交换，维护堆性质
+priority queue 优先队列
+	快速插入，缓慢取出 【lgn】
+	操作：插入x,取得最值，弹出最值，降低值
+=========================
+7 Quicksort 快速排序【最坏Θ(n2) 平均Θ(nlgn)且常数项较小 】
+	步骤：选取一个值，通过交换将比它小的放左边，比它大的放右边，递归操作两个序列
+	改进：随机选取值
+=========================
+8 Sorting in Linear Time 线性时间排序
+	Comparision sort 比较排序： 最好时间复杂度Ω(nlgn)
+		insertion sort 插入排序	Θ(n2)
+		selection sort 选择排序 Θ(n2)
+		merge sort 归并排序	Θ(nlgn)
+		quick sort 快速排序	最差Θ(n2) 平均Θ(nlgn)
+		heap sort 堆排序	O(nlgn)
+		tree sort 决策树排序	
+Counting sort 计数排序 (Θ(n+k))
+	步骤：数组A为初始数组，数组C存储元素的位置，后项减前项为下标对应数的个数，按照A的逆序将值存入数组C对应下标
+Radix sort 基数排序 (Θ(d(n+k)))
+	步骤：按照位数从后往前排，每位按照计数排序来排
+Bucket sort 桶排序O(n) 
+	步骤：按照第一位将数组存入对应链表中，插入排序每个链表
+=========================
+9 Medians and Order Statistics 中位数和顺序统计量
+	统计最值 O(n)
+	统计最大值和最小值 不是2n-2 而是3n/2(两个一起比较)
+	统计第i大的值 类似快速排序，选择一个值，通过交换将小的放左侧，大的放右侧。统计该值是不是第i大，不是的话循环
+	最坏情况Θ(n2) 期望情况Θ(n)
+	改进：将元素5个一组，计算每组中位数，再计算中位数的中位数。然后类似快速排序得出该数的排号，然后在左边或者右边递归
+	最坏情况Θ(n)
+=========================
+11 Hash Tables 散列表
+ 	平均查找时间O(1) 最坏查找时间Θ(n)
+Direct-address tables 直接寻址表 【Θ(1)】
+	条件：每个元素有key，且都不一样，key的范围不大
+	步骤：将元素插入到key下标中
+Hash tables 散列表【平均Θ(1)】
+	改进：减小空间
+	步骤：通过函数h计算h(k)作为key值存储
+	Collisions 冲突 
+Collision resolution by chaining	1+α
+	将所有元素插入到链表中，链首为key对应位置
+	Insertion 插入 O(1)
+	Search 	  查询 O(L(T))
+	Deletion  删除 O(L(T))
+Hash functions 散列函数
+	Division method 除法
+	Multiplication method 乘法
+	Universal hashing 全域散列法
+Open addressing 开放寻址法 插入 1/(1-α) 查找(1/α)*(1/(1-α))
+	Linear probing 线性探查
+	Quadratic probing 二次探查
+	Double hashing 双散列
+=========================
+12 Binary Search Trees 二叉搜索树
+	左孩子<=父节点<=右孩子
+	inorder tree walk中序遍历 左-中-右
+	查询：O(h)
+	最大值：一直right 最小值:一直left
+	Successor：后继 		predecessor：前驱
+	Insert 插入:找到对应叶节点插入
+	DELETE 删除:没有孩子直接删，有一个孩子直接替换，有两个孩子翻转
+=========================
+13 Red-black tree 红黑树
+性质：	1.每个节点是红的或者黑的
+	2.根节点是黑的
+	3.叶节点是黑的
+	4.红节点的孩子是黑的
+	5.到每个叶节点拥有相同的黑节点
+Rotation 旋转
+Insertion 插入
+	父节点红色	1.叔节点红色。			父叔变黑，爷变红 递归爷 到根节点变黑
+			2.叔节点黑色，z是右孩子。 	左旋再右旋。【z是父，父是左，爷是右】
+			3.叔节点黑色，z是左孩子。	父变黑，爷变红，右旋【z是左，父是父，爷是右】
+Delete 删除	？？？
+	当前节点黑色	1.叔节点红色			叔父换色，左旋【叔变爷，叔左儿变右兄，叔右儿变父兄】
+=========================
+14 Augmenting Data Structures 数据结构扩张
+	红黑树每个节点添加子节点数目信息，据此计算第i小的数和rank
+	步骤：1.选择基础数据结构 2.确定要维护的附加信息 3.检验基本操作能否维护附加信息 4.设计新操作
+=========================
+15 Dynamic Programming 动态规划
+	步骤：	1.刻画最优解的结构特征
+		2.递归定义最优解的值
+		3.计算最优解的值，通常采用自底向上方法
+		4.利用计算信息构造最优解
+Assembly-line scheduling 装配线调度  f1(j-1)<=f2(j-1)+t2(j-1)
+Longest common subsequence 最长公共子序列 
+	if xi=yi
+		c[i,j]=c[i-1,j-1]+1 
+	else if c[i-1,j]>=c[i,j-1]
+		c[i,j]=c[i-1,j]
+	     else
+		c[i,j]=c[i,j-1]
+Optimal binary search trees 最优二叉搜索树
+	
+=========================
+16 Greedy Algorithms 贪心算法
+Activity Selection 活动选择 使总时间最大
+=========================
+17 Amortized Analysis 摊还分析
+Aggregate Analysis 聚合分析
+Acc
+=========================
+22 Elementary Graph Algrithms 基本的图算法
+表示：	Adjacency lists 邻接链表
+	Adjacency matrix 邻接矩阵
+Breadth-first search 宽度优先搜索	Θ(V+E)	队列
+Depth-first search 深度优先搜索	Θ(V+E)		栈
+	Tree edge 树边：最顶上的
+	Back edge 后向边：指向祖先
+	Forward edge 前向边：指向后代
+	Cross edge 横向边：其他
+Topological sort 拓扑排序
+	DFS按照f倒序排
+=========================
+23 Minimum Spanning Trees 最小生成树 O(ElgV)
+Kruskal's algorithm 
+	步骤：每次选择权重最小的边，查看两端是否已经在树上
+Prim's algorithm 
+	步骤：从源点出发，选择树上和其他节点连接中最小的边
+=========================
+=========================
+24 Single-Source Shorteest Paths 单源最短路径
+The Bellman-Ford algorithm 【Θ(VE)】
+	步骤：初始化->|V|次循环，每次对每条边做一次松弛操作->每条边再松弛，如果不符合三角不等式，则有负权重环
+	变形：先拓扑排序，按照顺序依次松弛【Θ(V+E)】
+Dijkstra's algrithm 【堆：O(ElgV) Fibonacci堆：O(VlgV+E)】
+   	条件：没有负权重环
+	步骤：当前节点松弛->找当前最小权重点作为当前节点  （使用队列维护当前节点）
+Difference constraints 差分约束 【Θ(m+n)】
+	有可行解<-->没有负权重环
+=========================
+25 All-Pairs Shortest Paths 所有节点的最短路径问题
+|V|次Bellman-Ford 算法 【O(V2E)】 稠密矩阵：【O(V4)】
+|V|次Dijkstra算法 【O(VElgV)】稠密矩阵：【O(V3lgV)】 Fibonacci堆【O(V2lgV+VE)】	稠密矩阵：【O(V3)】
+matrix multiplication 矩阵乘法 【Θ(n4)】
+	步骤：对于每一对节点，依次遍历其他节点作为中间节点，计算出最小值。 多次迭代，计算出L(V-1)
+	加速：计算1,2,4，...2的幂，时间复杂度【Θ(n3lgn)】
+Floyd-Warshall algrithm	【O(n3)】
+	步骤：对于每对节点，计算ij距离=min（ij,ik+kj）
+	变形：TRANSITIVE-CLOSURE  
+		步骤：存在边为1，不存在为0。对于每对节点。ij=ijV(ik^kj)
+Johnson's algrithm
+	前提：对于稀疏图，使用Fibonacci堆比Floyd-Warshall更快 
+	步骤：构造G' w'(u,v)=w(u,v)+h(u)-h(v) h(x)=δ(s,x)
+		运行Bellman-Ford算法，如果没有负权重环，运行n次Dijkstra算法计算δ'  δ=δ'+h(v)-h(u)
+=========================
+26 Maximum Flow 最大流
+	maximum flow最大流=minimum cut最小割
+Ford-Fulkerson algrithm	【O(Ef*)】
+	步骤：所有流量清零，存在增强边，就加上。 增强边：反向流量，正向容量-流量
+Edmonds-Karp algrithm	【O(VE2)】
+	步骤：通过BFS计算Gf的最短路径
+Maximum bipartite matching 
+	将左边作为流入，右边作为流出，按照最大流算法计算

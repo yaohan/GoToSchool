@@ -1,0 +1,60 @@
+\beamer@endinputifotherversion {3.06pt}
+\headcommand {\slideentry {0}{0}{1}{1/1}{}{0}}
+\headcommand {\beamer@framepages {1}{1}}
+\headcommand {\slideentry {0}{0}{2}{2/2}{}{0}}
+\headcommand {\beamer@framepages {2}{2}}
+\headcommand {\sectionentry {1}{Overview}{3}{Overview}{0}}
+\headcommand {\beamer@sectionpages {1}{2}}
+\headcommand {\beamer@subsectionpages {1}{2}}
+\headcommand {\beamer@subsectionpages {3}{2}}
+\headcommand {\slideentry {1}{1}{1}{3/3}{Goals}{0}}
+\headcommand {\beamer@framepages {3}{3}}
+\headcommand {\sectionentry {2}{Search Trees}{4}{Search Trees}{0}}
+\headcommand {\beamer@sectionpages {3}{3}}
+\headcommand {\beamer@subsectionpages {3}{3}}
+\headcommand {\beamer@subsectionpages {4}{3}}
+\headcommand {\slideentry {2}{1}{1}{4/4}{Search trees}{0}}
+\headcommand {\beamer@framepages {4}{4}}
+\headcommand {\sectionentry {3}{Binary Search Trees}{5}{Binary Search Trees}{0}}
+\headcommand {\beamer@sectionpages {4}{4}}
+\headcommand {\beamer@subsectionpages {4}{4}}
+\headcommand {\slideentry {3}{0}{2}{5/5}{}{0}}
+\headcommand {\beamer@framepages {5}{5}}
+\headcommand {\slideentry {3}{0}{3}{6/6}{}{0}}
+\headcommand {\beamer@framepages {6}{6}}
+\headcommand {\beamer@subsectionpages {5}{6}}
+\headcommand {\slideentry {3}{1}{1}{7/7}{Inorder Tree Walk}{0}}
+\headcommand {\beamer@framepages {7}{7}}
+\headcommand {\sectionentry {4}{Querying A Binary Search Tree}{8}{Querying A Binary Search Tree}{0}}
+\headcommand {\beamer@sectionpages {5}{7}}
+\headcommand {\beamer@subsectionpages {7}{7}}
+\headcommand {\beamer@subsectionpages {8}{7}}
+\headcommand {\slideentry {4}{1}{1}{8/8}{Searching}{0}}
+\headcommand {\beamer@framepages {8}{8}}
+\headcommand {\beamer@subsectionpages {8}{8}}
+\headcommand {\slideentry {4}{2}{1}{9/9}{Minimum and Maximum}{0}}
+\headcommand {\beamer@framepages {9}{9}}
+\headcommand {\beamer@subsectionpages {9}{9}}
+\headcommand {\slideentry {4}{3}{1}{10/10}{Successor and predecessor}{0}}
+\headcommand {\beamer@framepages {10}{10}}
+\headcommand {\sectionentry {5}{Insertion and Deletion}{11}{Insertion and Deletion}{0}}
+\headcommand {\beamer@sectionpages {8}{10}}
+\headcommand {\beamer@subsectionpages {10}{10}}
+\headcommand {\beamer@subsectionpages {11}{10}}
+\headcommand {\slideentry {5}{1}{1}{11/11}{Insertion}{0}}
+\headcommand {\beamer@framepages {11}{11}}
+\headcommand {\beamer@subsectionpages {11}{11}}
+\headcommand {\slideentry {5}{2}{1}{12/12}{Deletion}{0}}
+\headcommand {\beamer@framepages {12}{12}}
+\headcommand {\slideentry {5}{2}{2}{13/13}{Deletion}{0}}
+\headcommand {\beamer@framepages {13}{13}}
+\headcommand {\sectionentry {6}{Minimizing Running Time}{14}{Minimizing Running Time}{0}}
+\headcommand {\beamer@sectionpages {11}{13}}
+\headcommand {\beamer@subsectionpages {12}{13}}
+\headcommand {\slideentry {6}{0}{3}{14/14}{}{0}}
+\headcommand {\beamer@framepages {14}{14}}
+\headcommand {\beamer@partpages {1}{14}}
+\headcommand {\beamer@subsectionpages {14}{14}}
+\headcommand {\beamer@sectionpages {14}{14}}
+\headcommand {\beamer@documentpages {14}}
+\headcommand {\def \inserttotalframenumber {14}}

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/divide_gray"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_toolbar" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="16dp"
+        android:background="@color/divide_gray" />
+
+    <LinearLayout
+        android:id="@+id/ll_admin_train"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:text="训练阶段" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/divide_gray" />
+
+    <LinearLayout
+        android:id="@+id/ll_admin_add_book"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:text="添加图书" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/divide_gray" />
+
+    <LinearLayout
+        android:id="@+id/ll_admin_server"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:text="设置服务器" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_admin_clear"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:text="清除缓存" />
+    </LinearLayout>
+</LinearLayout>

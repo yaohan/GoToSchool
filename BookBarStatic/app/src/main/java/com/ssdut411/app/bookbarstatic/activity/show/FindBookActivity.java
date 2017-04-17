@@ -40,7 +40,6 @@ public class FindBookActivity extends BaseActivity implements SensorEventListene
         @Override
         public void handleMessage(Message msg) {
             if (nowLocation != null) {
-//                T.showShort(context,"x:"+nowLocation.getX()+" y:"+nowLocation.getY());
                 browerBookView.drawCircle(nowLocation.getX(), nowLocation.getY());
                 Log.i("yao", "get x:" + nowLocation.getX() + " y:" + nowLocation.getY());
                 if(start){
@@ -116,6 +115,7 @@ public class FindBookActivity extends BaseActivity implements SensorEventListene
     protected void loadData() {
         float x = getIntent().getFloatExtra("locationX",540);
         float y = getIntent().getFloatExtra("locationY",960);
+        x = 100;y=500;
         L.i("x:" + x + "y:" + y);
         browerBookView.printBook(x,y);
     }

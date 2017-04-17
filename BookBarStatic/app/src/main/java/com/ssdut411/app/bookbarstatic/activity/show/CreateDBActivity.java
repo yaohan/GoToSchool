@@ -43,7 +43,6 @@ public class CreateDBActivity extends BaseActivity {
         RelativeLayout layout = (RelativeLayout)findViewById(R.id.layout);
         layout.addView(createDBView);
         startScanWIFI();
-
     }
 
     @Override

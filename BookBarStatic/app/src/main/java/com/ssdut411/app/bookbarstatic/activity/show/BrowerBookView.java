@@ -3,11 +3,13 @@ package com.ssdut411.app.bookbarstatic.activity.show;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 
 
 import com.ssdut411.app.bookbarstatic.R;
+import com.ssdut411.app.bookbarstatic.utils.L;
 
 import java.util.List;
 
@@ -48,7 +51,7 @@ public class BrowerBookView extends View
 
     public void setStepLength(int sl)
     {
-        stepLength=25;
+        stepLength=30;
     }
     public BrowerBookView(Context context)
     {
@@ -100,6 +103,8 @@ public class BrowerBookView extends View
     public void onDraw(Canvas canvas)
     {
         super.onDraw(canvas);
+        plotMap(canvas);
+        L.i("onDraw");
         if(navigation){
             drawPath(canvas);
         }
@@ -113,11 +118,10 @@ public class BrowerBookView extends View
         paint.setColor(Color.BLACK);
         canvas.drawCircle(startX, startY, 5, paint);
         paint.setColor(Color.RED);
-        plotMap(canvas);
     }
 
     void drawPath(Canvas canvas){
-//        L.i("pointsIndex:" + pointsIndex);
+        L.i("pointsIndex:" + pointsIndex);
         for(int i=0;i<pointsIndex-1;i++){
             canvas.drawLine(points[i][0], points[i][1], points[i+1][0], points[i+1][1], paint);
         }
@@ -257,10 +261,15 @@ public class BrowerBookView extends View
     }
     private void plotMap(Canvas canvas){
         paint.setColor(Color.BLACK);
-        canvas.drawRect(100, 470, 980, 1450, paint);
-        canvas.drawRect(130, 590, 770, 710, paint);
-        canvas.drawRect(280,890,820,1020,paint);
-        canvas.drawRect(220,1200,820,1320,paint);
+//        canvas.drawRect(100, 470, 980, 1450, paint);
+//        canvas.drawRect(130, 590, 770, 710, paint);
+//        canvas.drawRect(280,890,820,1020,paint);
+//        canvas.drawRect(220,1200,820,1320,paint);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ssdut413);
+        int height = bitmap.getHeight(),width = bitmap.getWidth();
+        Rect mSrcRect = new Rect(0,0,width,height);
+        Rect mRelRect = new Rect(0,200,1080,1600);
+        canvas.drawBitmap(bitmap, mSrcRect, mRelRect, paint);
         paint.setColor(Color.RED);
     }
 }

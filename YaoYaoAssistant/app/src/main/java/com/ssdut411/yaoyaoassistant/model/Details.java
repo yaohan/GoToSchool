@@ -1,5 +1,8 @@
 package com.ssdut411.yaoyaoassistant.model;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+
 /**
  * Created by yao_han on 2017/4/22.
  */
@@ -10,16 +13,16 @@ public class Details {
     private int type;
     private String name;
     private double money;
-    private String date;
+    private String time;
     private double sum;
 
     public Details() {
     }
 
-    public Details(String name, double money, String date, double sum) {
+    public Details(String name, double money, String time, double sum) {
         this.name = name;
         this.money = money;
-        this.date = date;
+        this.time = time;
         this.sum = sum;
     }
 
@@ -71,12 +74,12 @@ public class Details {
         this.money = money;
     }
 
-    public String getDate() {
-        return date;
+    public String getTime() {
+        return time;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public double getSum() {

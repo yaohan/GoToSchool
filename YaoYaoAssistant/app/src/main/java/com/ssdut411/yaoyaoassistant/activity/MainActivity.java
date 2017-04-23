@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.google.gson.Gson;
 import com.ssdut411.yaoyaoassistant.R;
 import com.ssdut411.yaoyaoassistant.core.ActionCallbackListener;
 import com.ssdut411.yaoyaoassistant.core.AppAction;
@@ -18,7 +17,6 @@ import com.ssdut411.yaoyaoassistant.utils.L;
 import com.ssdut411.yaoyaoassistant.widget.CommonAdapter;
 import com.ssdut411.yaoyaoassistant.widget.ViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity {
@@ -57,7 +55,7 @@ public class MainActivity extends BaseActivity {
         getButton(R.id.bt_main_income).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,CreateActivity.class);
+                Intent intent = new Intent(context,CreateDetailsActivity.class);
                 intent.putExtra("title","收入");
                 startActivity(intent);
             }
@@ -65,7 +63,7 @@ public class MainActivity extends BaseActivity {
         getButton(R.id.bt_main_outlay).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, CreateActivity.class);
+                Intent intent = new Intent(context, CreateDetailsActivity.class);
                 intent.putExtra("title", "支出");
                 startActivity(intent);
             }
@@ -73,7 +71,7 @@ public class MainActivity extends BaseActivity {
         getButton(R.id.bt_main_transfer).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, CreateActivity.class);
+                Intent intent = new Intent(context, TransferActivity.class);
                 intent.putExtra("title", "转账");
                 startActivity(intent);
             }
@@ -82,6 +80,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(context, DetailsActivity.class);
+                intent.putExtra("accountId",list.get(position).getId());
                 startActivity(intent);
             }
         });
@@ -123,7 +122,6 @@ public class MainActivity extends BaseActivity {
                 } else {
                     L.i(data.getDesc());
                 }
-
             }
 
             @Override

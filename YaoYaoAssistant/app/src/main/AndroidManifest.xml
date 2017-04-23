@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.CreateActivity"/>
+        <activity android:name=".activity.CreateDetailsActivity"/>
         <activity android:name=".activity.DetailsActivity"/>
         <activity android:name=".activity.CreateAccountActivity"/>
         <activity android:name=".activity.TransferActivity"/>

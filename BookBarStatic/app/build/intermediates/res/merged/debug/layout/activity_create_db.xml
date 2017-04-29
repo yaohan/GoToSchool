@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_toolbar" />
+
+    <RelativeLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/bt_find_borrow"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:text="点击地图某一点，上传信号强度信息"
+            android:gravity="center_vertical"/>
+        <ImageView
+            android:visibility="gone"
+            android:layout_below="@+id/bt_find_borrow"
+            android:layout_above="@+id/tv_find_error"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:src="@mipmap/map705" />
+        <TextView
+            android:id="@+id/tv_find_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="位置报错"
+            android:textColor="@color/colorPrimary"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"/>
+
+
+    </RelativeLayout>
+</LinearLayout>
+<!-- From: file:/D:/Android/Android/BookBarStatic/app/src/main/res/layout/activity_create_db.xml -->

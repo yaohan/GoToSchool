@@ -1,0 +1,83 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include layout="@layout/layout_toolbar"/>
+    <com.ssdut411.app.bookbarstatic.widget.NoScollViewPager
+        android:id="@+id/mainpage_viewpager"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/divide_gray"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/tab_height"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/ll_tab_main"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/iv_tab_main"
+                android:layout_width="@dimen/tab_size"
+                android:layout_height="@dimen/tab_size"
+                android:src="@mipmap/icon_library_select"/>
+            <TextView
+                android:id="@+id/tv_tab_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/font_gray"
+                android:text="首页"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_tab_book"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/iv_tab_book"
+                android:layout_width="@dimen/tab_size"
+                android:layout_height="@dimen/tab_size"
+                android:src="@mipmap/icon_book_unselect" />
+            <TextView
+                android:id="@+id/tv_tab_book"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/font_gray"
+                android:text="书籍"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_tab_person"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/iv_tab_person"
+                android:layout_width="@dimen/tab_size"
+                android:layout_height="@dimen/tab_size"
+                android:src="@mipmap/icon_person_unselect"/>
+            <TextView
+                android:id="@+id/tv_tab_person"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/font_gray"
+                android:text="我的"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+<!-- From: file:/D:/Android/Android/BookBarStatic/app/src/main/res/layout/activity_main.xml -->

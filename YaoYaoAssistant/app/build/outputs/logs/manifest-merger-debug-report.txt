@@ -1,0 +1,83 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:2:1-30:12
+	package
+		ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:3:5-43
+		INJECTED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml
+		INJECTED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml
+		INJECTED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:2:11-69
+	android:versionCode
+		INJECTED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml
+		INJECTED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:5:5-76
+	android:name
+		ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:5:22-73
+uses-permission#android.permission.CHANGE_WIFI_STATE
+ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:6:5-76
+	android:name
+		ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:6:22-73
+uses-permission#android.permission.INTERNET
+ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:7:5-67
+	android:name
+		ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:7:22-64
+application
+ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:9:5-28:19
+MERGED from [com.android.support:appcompat-v7:23.1.1] D:\GoToSchool\YaoYaoAssistant\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.1\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] D:\GoToSchool\YaoYaoAssistant\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\AndroidManifest.xml:22:5-20
+	android:label
+		ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:13:9-41
+	android:allowBackup
+		ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:10:9-35
+	android:icon
+		ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:12:9-43
+	android:theme
+		ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:14:9-40
+	android:name
+		ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:11:9-52
+activity#com.ssdut411.yaoyaoassistant.activity.MainActivity
+ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:15:9-23:20
+	android:label
+		ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:17:13-45
+	android:name
+		ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:16:13-50
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:18:13-22:29
+action#android.intent.action.MAIN
+ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:19:17-69
+	android:name
+		ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:19:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:21:17-77
+	android:name
+		ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:21:27-74
+activity#com.ssdut411.yaoyaoassistant.activity.CreateDetailsActivity
+ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:24:9-67
+	android:name
+		ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:24:19-65
+activity#com.ssdut411.yaoyaoassistant.activity.DetailsActivity
+ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:25:9-61
+	android:name
+		ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:25:19-59
+activity#com.ssdut411.yaoyaoassistant.activity.CreateAccountActivity
+ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:26:9-67
+	android:name
+		ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:26:19-65
+activity#com.ssdut411.yaoyaoassistant.activity.TransferActivity
+ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:27:9-62
+	android:name
+		ADDED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml:27:19-60
+uses-sdk
+INJECTED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support:appcompat-v7:23.1.1] D:\GoToSchool\YaoYaoAssistant\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.1\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.1] D:\GoToSchool\YaoYaoAssistant\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\AndroidManifest.xml:20:5-43
+	android:targetSdkVersion
+		INJECTED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml
+		INJECTED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml
+		INJECTED from D:\GoToSchool\YaoYaoAssistant\app\src\main\AndroidManifest.xml

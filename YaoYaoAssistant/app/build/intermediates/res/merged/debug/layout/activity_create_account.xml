@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/layout_toolbar"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/touch_view_48"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="@dimen/touch_view_96"
+            android:layout_height="fill_parent"
+            android:text="账户"
+            android:textSize="18sp"
+            android:gravity="center"/>
+        <EditText
+            android:id="@+id/et_create_account_name"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/background_white"
+            android:gravity="center_vertical|left"
+            android:layout_marginLeft="@dimen/margin_space_16"
+            android:hint="请输入账户名称"
+            android:text="余额宝"
+            android:textSize="18sp"/>
+    </LinearLayout>
+    <include layout="@layout/divide_gray_horizontal"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/touch_view_48"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="@dimen/touch_view_96"
+            android:layout_height="fill_parent"
+            android:text="金额"
+            android:textSize="18sp"
+            android:gravity="center"/>
+        <EditText
+            android:id="@+id/et_create_account_money"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="@dimen/margin_space_16"
+            android:background="@color/background_white"
+            android:hint="请输入金额"
+            android:inputType="numberDecimal"
+            android:textSize="18sp"
+            android:textColor="@color/font_gray"/>
+    </LinearLayout>
+    <include layout="@layout/divide_gray_horizontal"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/touch_view_48"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="@dimen/touch_view_96"
+            android:layout_height="fill_parent"
+            android:text="备注"
+            android:textSize="18sp"
+            android:gravity="center"/>
+        <EditText
+            android:id="@+id/et_create_account_desc"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="@dimen/margin_space_16"
+            android:background="@color/background_white"
+            android:hint="请输入备注"
+            android:textSize="18sp"
+            android:textColor="@color/font_gray"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_create_account"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/touch_view_48"
+        android:layout_marginTop="@dimen/margin_space_16"
+        android:background="@color/theme_green"
+        android:text="提交"
+        android:textColor="@color/font_white"
+        android:textSize="20sp"/>
+</LinearLayout><!-- From: file:/D:/GoToSchool/YaoYaoAssistant/app/src/main/res/layout/activity_create_account.xml -->

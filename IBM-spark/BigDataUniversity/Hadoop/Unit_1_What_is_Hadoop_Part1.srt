@@ -1,0 +1,224 @@
+0
+00:00:00,620 --> 00:00:07,040
+Hello everyone and welcome to Hadoop Fundamentals What is Hadoop. My name is Asma Desai
+
+1
+00:00:07,190 --> 00:00:10,400
+and I will be covering this topic.
+
+2
+00:00:10,400 --> 00:00:14,910
+In this video we will explain what is Hadoop and what is Big Data. We will define some
+
+3
+00:00:14,910 --> 00:00:20,100
+Hadoop-related open source projects and give some examples of Hadoop in action. Finally
+
+4
+00:00:20,100 --> 00:00:24,750
+we will end off with some Big Data solutions and the Cloud.
+
+5
+00:00:24,750 --> 00:00:29,450
+Imagine this scenario: You have 1GB of data that you need to process.
+
+6
+00:00:29,450 --> 00:00:33,570
+The data is stored in a relational database in your desktop computer which has no problem
+
+7
+00:00:33,570 --> 00:00:35,350
+handling the load
+
+8
+00:00:35,350 --> 00:00:40,750
+Then your company starts growing very quickly, and that data grows to 10GB,
+
+9
+00:00:40,750 --> 00:00:41,310
+then 100GB,
+
+10
+00:00:41,310 --> 00:00:46,500
+And you start to reach the limits of your current desktop computer.
+
+11
+00:00:46,500 --> 00:00:52,030
+so what do you do? you scale up by investing in a larger computer, and you are then OK
+
+12
+00:00:52,030 --> 00:00:54,320
+for a few more months
+
+13
+00:00:54,320 --> 00:00:58,350
+When your data grows from 1 TB to 10TB, and then 100TB,
+
+14
+00:00:58,350 --> 00:01:02,489
+you are again quickly approaching the limits of that computer.
+
+15
+00:01:02,489 --> 00:01:09,170
+Moreover, you are now asked to feed your application with unstructured data coming from sources
+
+16
+00:01:09,170 --> 00:01:14,780
+like Facebook, Twitter, RFID readers, sensors, and so on.
+
+17
+00:01:14,780 --> 00:01:18,770
+Your management wants to derive information from both the relational data and the unstructured
+
+18
+00:01:18,770 --> 00:01:22,529
+data and wants this information as soon as possible
+
+19
+00:01:22,529 --> 00:01:27,279
+What should you do? Hadoop may be the answer
+
+20
+00:01:27,279 --> 00:01:30,630
+What is Hadoop? Hadoop is an open source project of the Apache
+
+21
+00:01:30,630 --> 00:01:33,529
+Foundation. It is a framework written in Java originally
+
+22
+00:01:33,529 --> 00:01:37,529
+developed by Doug Cutting who named it after his son&#39;s toy elephant.
+
+23
+00:01:37,529 --> 00:01:41,109
+Hadoop uses Google&#39;s MapReduce technology as its foundation.
+
+24
+00:01:41,109 --> 00:01:45,529
+It is optimized to handle massive quantities of data which could be structured, unstructured
+
+25
+00:01:45,529 --> 00:01:51,569
+or semi-structured, using commodity hardware, that is, relatively inexpensive computers.
+
+26
+00:01:51,569 --> 00:01:54,959
+This massive parallel processing is done with great performance. However, it is a batch
+
+27
+00:01:54,959 --> 00:02:00,229
+operation handling massive amounts of data, so the response time is not immediate. Currently,
+
+28
+00:02:00,229 --> 00:02:04,529
+in place updates are not possible in Hadoop, but appends to existing data is supported.
+
+29
+00:02:04,529 --> 00:02:09,030
+Now, what&#39;s the value of a system if the information it stores or retrieves is not
+
+30
+00:02:09,030 --> 00:02:12,580
+consistent? Hadoop replicates its data across different
+
+31
+00:02:12,580 --> 00:02:16,370
+computers, so that if one goes down, the data is processed on one of the replicated computers.
+
+32
+00:02:17,420 --> 00:02:21,780
+Hadoop is not suitable for OnLine Transaction Processing workloads where data is randomly
+
+33
+00:02:21,780 --> 00:02:24,540
+accessed on structured data like a relational database.
+
+34
+00:02:24,540 --> 00:02:29,090
+Also, Hadoop is not suitable for OnLine Analytical Processing or Decision Support System workloads
+
+35
+00:02:29,090 --> 00:02:33,610
+where data is sequentially accessed on structured data like a relational database, to generate
+
+36
+00:02:33,610 --> 00:02:38,500
+reports that provide business intelligence. As of Hadoop version 2.6, updates are not
+
+37
+00:02:38,500 --> 00:02:42,610
+possible, but appends are possible. Hadoop is used for Big Data. It complements
+
+38
+00:02:42,610 --> 00:02:46,240
+OnLine Transaction Processing and OnLine Analytical Processing.
+
+39
+00:02:46,240 --> 00:02:50,050
+It is NOT a replacement for a relational database system.
+
+40
+00:02:50,050 --> 00:02:55,080
+So, what is Big Data? With all the devices available today to collect
+
+41
+00:02:55,080 --> 00:03:00,820
+data, such as RFID readers, microphones, cameras, sensors, and so on, we are seeing an explosion
+
+42
+00:03:00,820 --> 00:03:05,370
+in data being collected worldwide. Big Data is a term used to describe large
+
+43
+00:03:05,370 --> 00:03:10,200
+collections of data (also known as datasets) that may be unstructured, and grow so large
+
+44
+00:03:10,200 --> 00:03:14,580
+and quickly that it is difficult to manage with a regular database or statistical tools.
+
+45
+00:03:14,580 --> 00:03:19,790
+In terms of numbers, what are we looking at? How BIG is &quot;big data&quot;?
+
+46
+00:03:19,790 --> 00:03:23,390
+Well there are more than 3.2 billion internet users, and
+
+47
+00:03:23,390 --> 00:03:28,470
+Active cell phones have surpassed 7.6 billion. There are now more in-use cell phones than
+
+48
+00:03:28,470 --> 00:03:30,380
+there are people on the planet (7.4 billion).
+
+49
+00:03:30,380 --> 00:03:33,110
+Twitter processes 7TB of data ever day,
+
+50
+00:03:33,110 --> 00:03:36,200
+and 600TB of data is processed by Facebook every day.
+
+51
+00:03:36,200 --> 00:03:39,490
+Interestingly, about 80% of this data is unstructured.
+
+52
+00:03:39,490 --> 00:03:43,650
+With this massive amount of data, businesses need fast, reliable, deeper data insight.
+
+53
+00:03:43,650 --> 00:03:48,340
+Therefore, Big Data solutions based on Hadoop and other analytics software are becoming
+
+54
+00:03:48,340 --> 00:03:50,340
+more and more relevant
+
+55
+00:03:50,340 --> 00:03:52,340
+This lesson continues in the next video
+

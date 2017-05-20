@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
-    <title>ECharts</title>
+    <title>Compare</title>
     <style>
     	.chart_image{
 			width:30vw;
@@ -9,6 +9,7 @@
 			display: inline-block;
     	}
     	.white-block{
+    		display: none;
 			position: absolute;
 			top: 10%;
 			left: 10%;
@@ -21,6 +22,7 @@
 			overflow: auto;
     	}
     	.fade-block{
+    		display: none;	
 			position: absolute;
 			top: 0%;
 			left: 0%;
@@ -32,29 +34,43 @@
 			opacity:.80;
 			filter: alpha(opacity=80);
     	}
+			#chartDetails{width:100%;border:solid 1px #666;background-color:#eee;}
+			#chartDetails tr{line-height:23px}
+			#chartDetails tr th{background-color:#ccc;color:#fff;text-align: center}
+			#chartDetails tr td{text-align: center;}
+			#chartDetails .trOdd{background-color:#fff}
     </style>
+
+    <script src="js/jquery.js"></script>
+    <script type="text/javascript">
+	    function hideDetails(){
+			$('#detail').hide();
+			$("#fade").hide();	
+	    }
+	    hideDetails();
+    </script>
 </head>
 <body>
-	<div id="chart">
-    </div>
+	<h2 style="display: inline-block;">CICS Analytics Compare</h1>
+    <h5 style="display: inline-block;">01/11/2016 14:00:00 and 16:00:00</h6>
+	<div id="chart" style="overflow:auto; overflow-y:auto; max-height:700px;height:700px;"></div>
     <div id="detail" class="white-block">
 		<div id="detail1" style="width:78vw;height:80vh;display: inline-block;"></div>
-    	<div id="detail2" style="width:78vw;height:80vh;display: inline-block;"></div> 
-    	<div id="detail3" style="width:78vw;height:80vh;display: inline-block;"></div>                        
+		<table id="chartDetails" cellpadding="0" cellspacing="0">
+			<tbody>
+				
+			</tbody>
+		</table>
 	</div>
 	<div id="fade"  class="fade-block">
 		<a id="close_txt" style="z-index:1002;font-size: 24px;color:white;position: fixed;right:10%;top:3%">关闭</a>
 	</div>
 </body>
-    <!-- ECharts单文件引入 -->
-    <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
-    <script src="js/jquery.js"></script>
-    <script type="text/javascript">
-
-	$('#detail').hide();
-	$("#fade").hide();
-
-
+<!-- ECharts单文件引入 -->
+<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+<script type="text/javascript">
+var height = document.body.offsetHeight ;
+$("#chart").attr("max-height",height);
 jsonTrend=[
 {"APPID":"AP15POA1","ColTime":"08:00:00","TotlTran":"30","MXTTimeRch":"0","PeakMXTRatio":"5.50","TClassMaxActTims":"0","QRDispRatio":"85.51","ASCPUUtilRatio":"0.04","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"7.62","EDSAPercent":"43.35","EDSAHWMRatio":"36.39","WriteReq":"0","ShuntWriteRequest":"0","PkDB2TCBRatio":"1.25","ThreadRatio":"2.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
 {"APPID":"AP15POA1","ColTime":"10:00:00","TotlTran":"2168","MXTTimeRch":"0","PeakMXTRatio":"8.00","TClassMaxActTims":"0","QRDispRatio":"81.54","ASCPUUtilRatio":"0.40","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.14","EDSAPercent":"43.35","EDSAHWMRatio":"36.74","WriteReq":"108","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
@@ -218,23 +234,32 @@ jsonTrend=[
 {"APPID":"BP18PAA8","ColTime":"22:00:00","TotlTran":"94935","MXTTimeRch":"0","PeakMXTRatio":"15.00","TClassMaxActTims":"120","QRDispRatio":"77.58","ASCPUUtilRatio":"16.70","ENQImmSuccessRatio":"99.58","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.08","EDSAPercent":"49.91","EDSAHWMRatio":"35.88","WriteReq":"28829","ShuntWriteRequest":"0","PkDB2TCBRatio":"7.0","ThreadRatio":"7.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"}
 ]
 
-	var compare1 = "14:00:00";
-	var compare2 = "16:00:00";
+var data = {"data":[],"xAxis":[]};
+var chartCount = 0;
+var compare1 = "14:00:00";
+var compare2 = "16:00:00";
+var options = new Array();
+var types = new Array();
+var detailChart;
+function initData(){
 	var compareIndex = "ColTime";
 	var xAxisIndex = "APPID";
-	var chartCount = 0;
-	var data = {"data":[]};
 	for(var type in jsonTrend[0]){
 		if(type!=xAxisIndex && type!=compareIndex){
+			types[chartCount] = type;
 			var temp = document.createElement("div");
 			temp.id = type;
 			temp.className="chart_image";
 			$("#chart").append(temp);	
+			$("div[id="+type+"]").click(function(){
+				showDetails(this.id)
+			})
 		}
 		chartCount++;
 		var temp = {"type":type,compare1:[],compare2:[],dis:[],base:[]};
 		jsonTrend.forEach(function(item){
 			var content = parseFloat(item[type]);
+			
 			if(item[compareIndex] == compare1){
 				if(temp.min == undefined || temp.min > content){
 					temp.min = content;
@@ -261,9 +286,12 @@ jsonTrend=[
 				temp.compare2.push(parseFloat(tempNum));
 			}
 		})
+		if(temp.min == temp.max){
+			temp.max = temp.max+1;
+		}
 		data.data.push(temp);
 	}
-
+		
 	data.data.forEach(function(item){
 		for(var i=0;i<item.compare1.length;i++){
 			var temp1 = parseFloat(item.compare1[i]);
@@ -277,34 +305,23 @@ jsonTrend=[
 			}
 		}
 	})
-	// console.log("data:"+JSON.stringify(data));
+	jsonTrend.forEach(function(reg1){
+		var flag = true;
+		data.xAxis.forEach(function(reg2){
+			if(reg1["APPID"] == reg2){
+				flag = false;
+			}
 
-
-
-    $("#close_txt").click(function close(){
-    	console.log("close")
-    	$('#detail').hide();
-		$("#fade").hide();
-    })
-
-    function showDetails(){
-    	$('#detail').show();
-		$("#fade").show();
-    }
-	$("#main").click(function(){
-		$('#detail').show();
-		$("#fade").show();
+		})
+		if(flag){
+			data.xAxis.push(reg1["APPID"]);
+		}
 	})
+	console.log("xAxis:"+JSON.stringify(data.xAxis))
+}
 
-        
-    // 使用
-
-    var option = new Array();
-// window.onload = function(){
-	// console.log("data:"+JSON.stringify(data));
-	console.log("onload")
-
-    // 路径配置
+function showChart(){
+	// 路径配置
     require.config({
         paths: {
             echarts: 'http://echarts.baidu.com/build/dist'
@@ -321,32 +338,29 @@ jsonTrend=[
             'echarts/chart/radar'// 使用柱状图就加载bar模块，按需加载
         ],
         function (ec) {
-        	$(".chart_image").each(function(){
-        		console.log("each:"+JSON.stringify($(this)));
-        	})
             // 基于准备好的dom，初始化echarts图表
+            // console.log("detailChart set")
+            detailChart = ec.init(document.getElementById("detail1"),"macarons");
+
             var chart = document.getElementsByClassName("chart_image");
             for(var i=2;i<chartCount;i++){
             	var temp = data.data[i];
-            	chart[i-2].click(function(){
-            		console.log("click");
-            		showDetails();
-            	})
             	var sum = 0;
             	// temp.dis.forEach(function(dis){
             	// 	sum+=dis;
             	// });
             	// if(sum!=0){
-	            	var opt = {
+	            	options[i-2] = {
 	                    title :{text : temp.type},
 	                    tooltip : {trigger: 'axis'},
 	                    legend: {data:[compare1, compare2],selectedMode:true},
-	                    xAxis : [{show: true,type : 'category',data : data.data[0].compare1}],
+	                    xAxis : [{show: true,type : 'category',data : data.xAxis}],
 	                    yAxis : [{name: "TotlTran",type : 'value', min : temp.min, max : temp.max}],
 	                    series : [
 	                    	{
 	                            name:compare2,
 	                            type:'line',
+	                    		clickable:true,
 	                            itemStyle: {normal: {color : 'rgba(18,189,4,1)'}},
 	                            data:temp.compare1
 	                        },
@@ -379,27 +393,80 @@ jsonTrend=[
 	                        }
 	                    ]
 	                };
-	                // var chartTemp = chart[0];
-					// var myChart = ec.init(chart,'macarons'); 
-					// console.log("chart:"+chart);
-					// console.log("myChart:"+myChart);
-					myChart = ec.init(chart[i-2],'macarons');
-	            	myChart.setOption(opt);
-	            	console.log("option:"+JSON.stringify(opt))
+	                myChart = ec.init(chart[i-2],"macarons");
+	                // console.log("options:"+JSON.stringify(options[i-2]))
+					myChart.setOption(options[i-2]);
             	// }
             };
             setTimeout(function(){
             	myChart.resize();	
             })
+
+	hideDetails();
+		}
+	);	
+}
+
+$("#close_txt").click(function close(){
+	// console.log("close")
+	hideDetails();
+})
+
+function createTable(temp){
+	// console.log("temp:"+JSON.stringify(temp))
+	var table = $("#chartDetails");
+	table.empty();
+	var tr = $("<tr></tr>")
+	tr.appendTo(table);
+	tr.append($("<th>Compare</th>"))
+	tr.append($("<th>"+compare1+"</th>"))
+	tr.append($("<th>"+compare2+"</th>"))
+	// console.log("createTable append")
+	var index = 0;
+	for(var type in jsonTrend[0]){
 			
-			// console.log("options:"+JSON.stringify(option[0]))
-			// myChart.setOptions(option[0]);
-   //          chartTemp = new Array();
+	}
+	for(var i=0;i<temp.compare1.length;i++){
+		if(i%2 == 1){
+			var tr = $("<tr class='trOdd'></tr>")
+		}else{
+			var tr = $("<tr></tr>")
+		}
+		tr.appendTo(table);
+		tr.append($("<td>"+data.xAxis[i]+"</td>"))
+		var var1 = temp.compare1[i];
+		var var2 = temp.compare2[i];
+		tr.append($("<td>"+var1+"</td>"))
+		if(var1 > var2){
+			tr.append($("<td style='color:blue'>"+var2+"↓</td>"))	
+		}else if(var1 < var2){
+			tr.append($("<td style='color:red'>"+var2+"↑</td>"))	
+		}else{
+			tr.append($("<td>"+var2+"</td>"))	
+		}
+		
+	}
+}
 
-    }
-);
+function showDetails(type){
+	var index = 0;
+	data.data.forEach(function(temp){
+		if(temp.type == type){
+			// console.log("options:"+JSON.stringify(options[index-2]));
+			detailChart.setOption(options[index-2]);
+			// console.log("createTable start")
+			createTable(temp);
+			// console.log("createTable end")
+		}
+		index++;
+	})
+	$('#detail').show();
+	$("#fade").show();
+	return false;
+}
+ 
 
-	console.log("onload finish")
-// }
-    
+ initData();
+ showChart();
+ console.log("types:")
 </script>

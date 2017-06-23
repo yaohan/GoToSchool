@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>Compare</title>
+</head>
+<link rel='stylesheet' href='css/detail.css' />
+<body>
+	<h2 class="inline-title">CICS Analytics Compare</h2>
+    <h5 class="inline-title" id="subtitle"></h5>
+	<div id="chart" class="chart-box"></div>
+    <div id="detail" class="white-block">
+		<div id="detail1" class="detail-block"></div>
+		<table id="chartDetails" cellpadding="0" cellspacing="0">
+			<tbody>
+				
+			</tbody>
+		</table>
+	</div>
+	<div id="fade"  class="fade-block">
+		<a id="close_txt" class="button-close">关闭</a>
+	</div>
+</body>
+
+<script src="js/jquery.min.js"></script>
+<!-- ECharts单文件引入 -->
+<script src="dist/echarts.js"></script>
+<script type="text/javascript">
+//console.log("data:"+data);
+	function hideDetails(){
+		$('#detail').hide();
+		$("#fade").hide();
+	}
+	hideDetails();
+
+var height = document.body.offsetHeight ;
+$("#chart").attr("max-height",height);
+
+var sourceData = JSON.parse(sessionStorage.getItem("jsonData"));
+$("#subtitle").text(sourceData.base+" and "+sourceData.compare)
+//console.log("sourceData:"+JSON.stringify(sourceData))
+jsonTrend=sourceData.data;
+
+var data = {"data":[],"xAxis":[]};
+var chartCount = 0;
+var compare1 = sourceData.base;
+var compare2 = sourceData.compare;
+var options = new Array();
+var types = new Array();
+var myChart = new Array();
+var detailChart;
+var typeList = sourceData.typeList;
+var compareIndex = sourceData.compareIndex;
+var xAxisIndex = sourceData.xAxisIndex;
+
+function initData(){
+    typeList.forEach(function(type){
+        if(type!=xAxisIndex && type!=compareIndex){
+            types[chartCount] = type;
+            var temp = document.createElement("div");
+            temp.id = type;
+            temp.className="chart_image";
+            $("#chart").append(temp);
+            $("div[id="+type+"]").click(function(){
+                showDetails(this.id)
+            })
+            chartCount++;
+            var temp = {"type":type,compare1:[],compare2:[],dis:[],base:[]};
+            jsonTrend.forEach(function(item){
+                var content = parseFloat(item[type]);
+
+                if(item[compareIndex] == compare1){
+                    if(temp.min == undefined || temp.min > content){
+                        temp.min = content;
+                    }
+                    if(temp.max == undefined || temp.max < content){
+                        temp.max = content
+                    }
+                    tempNum = parseFloat(item[type]);
+                    if(tempNum == null){
+                        tempNum = item[type];
+                    }
+                    temp.compare1.push(tempNum);
+                }else if(item[compareIndex] == compare2){
+                    if(temp.min == undefined || temp.min > content){
+                        temp.min = content;
+                    }
+                    if(temp.max == undefined || temp.max < content){
+                        temp.max = content
+                    }
+                    tempNum = parseFloat(item[type]);
+                    if(tempNum == null){
+                        tempNum = item[type];
+                    }
+                    temp.compare2.push(parseFloat(tempNum));
+                }
+            })
+            if(temp.min == temp.max){
+                temp.max = temp.max+1;
+            }
+            data.data.push(temp);
+        }
+    })
+    data.data.forEach(function(item){
+        for(var i=0;i<item.compare1.length;i++){
+            var temp1 = parseFloat(item.compare1[i]);
+            var temp2 = parseFloat(item.compare2[i]);
+            if(temp1<temp2){
+                item.base.push(temp1);
+                item.dis.push({value : temp2-temp1, itemStyle:{ normal:{color:'red'}}})
+            }else{
+                item.base.push(temp2);
+                item.dis.push({value : temp1-temp2, itemStyle:{ normal:{color:'green'}}})
+            }
+        }
+    })
+    jsonTrend.forEach(function(reg1){
+        var flag = true;
+        data.xAxis.forEach(function(reg2){
+            if(reg1["APPID"] == reg2){
+                flag = false;
+            }
+
+        })
+        if(flag){
+            data.xAxis.push(reg1["APPID"]);
+        }
+    })
+
+    console.log("data:"+JSON.stringify(data))
+}
+
+function showChart(){
+    // 路径配置
+    require.config({
+        paths: {
+            echarts: 'dist'
+        }
+    });
+    require(
+            [
+                'echarts',
+                'echarts/chart/bar',
+                'echarts/chart/line',
+                'echarts/chart/pie',
+                'echarts/chart/gauge',
+                'echarts/chart/funnel',
+                'echarts/chart/radar'// 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                // console.log("detailChart set")
+                detailChart = ec.init(document.getElementById("detail1"),"macarons");
+
+                var chart = document.getElementsByClassName("chart_image");
+                for(var i=0;i<chartCount;i++){
+                    var temp = data.data[i];
+                    var sum = 0;
+                    options[i] = {
+                        title :{text : temp.type,x:'center'},
+                        legend: {show:false,data:[compare1, compare2],selectedMode:true},
+                        xAxis : [{show: false,type : 'category',data : data.xAxis}],
+                        yAxis : [{show:false,name: "",type : 'value', min : temp.min, max : temp.max}],
+                        series : [
+                            {
+                                name:compare1,
+                                type:'line',
+                                clickable:true,
+                                itemStyle: {normal: {color : 'rgba(18,189,4,1)'}},
+                                data:temp.compare1
+                            },
+                            {
+                                name:compare2,
+                                type:'line',
+                                itemStyle:{normal:{color: 'rgba(203,173,0,1)'}},
+                                data:temp.compare2
+                            },
+                            {
+                                name:'base',
+                                type:'bar',
+                                stack: '1',
+                                barWidth: 6,
+                                itemStyle:{
+                                    normal:{
+                                        color:'rgba(0,0,0,0)'
+                                    },
+                                    emphasis:{
+                                        color:'rgba(0,0,0,0)'
+                                    }
+                                },
+                                data:temp.base
+                            },
+                            {
+                                name:'change',
+                                type:'bar',
+                                stack: '1',
+                                data:temp.dis
+                            }
+                        ]
+                    };
+                    myChart[i] = ec.init(chart[i],"macarons");
+                    // console.log("options:"+JSON.stringify(options[i-2]))
+                    myChart[i].setOption(options[i]);
+                    // }
+                };
+                hideDetails();
+            }
+    );
+}
+
+$("#close_txt").click(function close(){
+    // console.log("close")
+    hideDetails();
+})
+
+function createTable(temp){
+    // console.log("temp:"+JSON.stringify(temp))
+    var table = $("#chartDetails");
+    table.empty();
+    var tr = $("<tr></tr>")
+    tr.appendTo(table);
+    tr.append($("<th>Region</th>"))
+    tr.append($("<th>"+compare1+"</th>"))
+    tr.append($("<th>"+compare2+"</th>"))
+    tr.append($("<th>change</th>"))
+    tr.append($("<th>changeRadio</th>"))
+    // console.log("createTable append")
+    var index = 0;
+    for(var type in jsonTrend[0]){
+
+    }
+    for(var i=0;i<temp.compare1.length;i++){
+        if(i%2 == 1){
+            var tr = $("<tr class='trOdd'></tr>")
+        }else{
+            var tr = $("<tr></tr>")
+        }
+        tr.appendTo(table);
+        tr.append($("<td>"+data.xAxis[i]+"</td>"))
+        var var1 = temp.compare1[i];
+        var var2 = temp.compare2[i];
+        var change = (var2-var1).toFixed(2);
+        if(var1 == 0){
+            var changeRadio = "0.00%"
+        }else{
+            var changeRadio = ((change/var1)*100).toFixed(2)+"%";
+        }
+        tr.append($("<td>"+var1+"</td>"))
+        if(change<0){
+            tr.append($("<td style='color:blue'>"+var2+"↓</td>"))
+            tr.append($("<td style='color:blue'>"+change+"</td>"));
+            tr.append($("<td style='color:blue'>"+changeRadio+"</td>"));
+        }else if(change>0){
+            tr.append($("<td style='color:red'>"+var2+"↑</td>"))
+            tr.append($("<td style='color:red'>"+change+"</td>"));
+            tr.append($("<td style='color:red'>"+changeRadio+"</td>"));
+        }else{
+            tr.append($("<td>"+var2+"</td>"))
+            tr.append($("<td>"+change+"</td>"));
+            tr.append($("<td>"+changeRadio+"</td>"));
+        }
+    }
+}
+
+function showDetails(type){
+    var index = 0;
+    data.data.forEach(function(temp){
+        if(temp.type == type){
+            var options = {
+                title :{text : temp.type},
+                tooltip : {trigger: 'axis',
+                    formatter:function(a){
+                        var base;
+                        var compare;
+                        var region;
+                        console.log(JSON.stringify(a));
+                        a.forEach(function(item){
+                            region = item[1];
+                            console.log("item[0]"+item[0]+"  compare1:"+compare1+" compare2:"+compare2)
+                            if(item[0] == compare1){
+								base = item[2];
+                            }else if(item[0] == compare2){
+								compare = item[2];
+                            }
+                        })
+                        var change = (compare-base).toFixed(2);
+                        if(base == 0){
+                            var changeRadio = "0.00%";
+                        }else{
+                            var changeRadio = ((change/base)*100).toFixed(2)+"%";
+                        }
+                        var val;
+                        if(change<0){
+                            val = region+"<br>"+
+                                    "change:<span style='color:blue;display:inline-block'>"+change+"</span><br>"+
+                                    "changeRadio:<span style='color:blue;display:inline-block'>"+changeRadio+"</span><br>"+
+                                    compare1+":"+base+"<br>"+
+                                    compare2+":"+compare;
+                        }else if(change>0){
+                            val = region+"<br>"+
+                                    "change:<span style='color:red;display:inline-block'>"+change+"</span><br>"+
+                                    "changeRadio:<span style='color:red;display:inline-block'>"+changeRadio+"</span><br>"+
+                                    compare1+":"+base+"<br>"+
+                                    compare2+":"+compare;
+                        }else{
+                            val = region+"<br>"+
+                                    "change:"+change+"<br>"+
+                                    "changeRadio:"+changeRadio+"<br>"+
+                                    compare1+":"+base+"<br>"+
+                                    compare2+":"+compare;
+                        }
+//                            console.log("val:"+val)
+                        return val;
+
+                    }},
+                legend: {data:[compare1, compare2],selectedMode:true},
+                xAxis : [{type : 'category',data : data.xAxis}],
+                yAxis : [{name: "",type : 'value', min : temp.min, max : temp.max}],
+                series : [
+                    {
+                        name:compare1,
+                        type:'line',
+                        clickable:true,
+                        itemStyle: {normal: {color : 'rgba(18,189,4,1)'}},
+                        data:temp.compare1
+                    },
+                    {
+                        name:compare2,
+                        type:'line',
+                        itemStyle:{normal:{color: 'rgba(203,173,0,1)'}},
+                        data:temp.compare2
+                    },
+                    {
+                        name:'base',
+                        type:'bar',
+                        stack: '1',
+                        barWidth: 6,
+                        itemStyle:{
+                            normal:{
+                                color:'rgba(0,0,0,0)'
+                            },
+                            emphasis:{
+                                color:'rgba(0,0,0,0)'
+                            }
+                        },
+                        data:temp.base
+                    },
+                    {
+                        name:'change',
+                        type:'bar',
+                        stack: '1',
+                        data:temp.dis
+                    }
+                ]
+            };
+            detailChart.setOption(options);
+            createTable(temp);
+        }
+        index++;
+    })
+    $('#detail').show();
+    $("#fade").show();
+    return false;
+}
+ initData();
+ showChart();
+setTimeout(function (){
+    window.onresize = function () {
+        myChart.forEach(function(item){
+            item.resize();
+        })
+        detailChart.resize();
+    }
+},200)
+</script>

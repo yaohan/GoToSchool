@@ -5,7 +5,7 @@
 </body>
 <script type="text/javascript">
 	var data = [
-  {"APPID":"AP15POA1","ColTime":"08:00:00","TotlTran":"30","MXTTimeRch":"0","PeakMXTRatio":"5.50","TClassMaxActTims":"0","QRDispRatio":"85.51","ASCPUUtilRatio":"0.04","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"7.62","EDSAPercent":"43.35","EDSAHWMRatio":"36.39","WriteReq":"0","ShuntWriteRequest":"0","PkDB2TCBRatio":"1.25","ThreadRatio":"2.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+  {"APPID":"AP15POA1","ColTime":"08:00:00","TotlTran":"30","MXTTimeRch":"0","PeakMXTRatio":"5.50","TClassMaxActTims":"0","QRDispRatio":"85.51","ASCPUUtilRatio":"0.04","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"7.62","EDSAPercent":"43.35","  ":"36.39","WriteReq":"0","ShuntWriteRequest":"0","PkDB2TCBRatio":"1.25","ThreadRatio":"2.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
   {"APPID":"AP15POA1","ColTime":"10:00:00","TotlTran":"2168","MXTTimeRch":"0","PeakMXTRatio":"8.00","TClassMaxActTims":"0","QRDispRatio":"81.54","ASCPUUtilRatio":"0.40","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.14","EDSAPercent":"43.35","EDSAHWMRatio":"36.74","WriteReq":"108","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
   {"APPID":"AP15POA1","ColTime":"12:00:00","TotlTran":"5175","MXTTimeRch":"0","PeakMXTRatio":"9.50","TClassMaxActTims":"0","QRDispRatio":"84.42","ASCPUUtilRatio":"0.91","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.53","EDSAPercent":"43.50","EDSAHWMRatio":"36.95","WriteReq":"302","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
   {"APPID":"AP15POA1","ColTime":"14:00:00","TotlTran":"3471","MXTTimeRch":"0","PeakMXTRatio":"8.50","TClassMaxActTims":"0","QRDispRatio":"81.00","ASCPUUtilRatio":"0.55","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.27","EDSAPercent":"43.50","EDSAHWMRatio":"36.88","WriteReq":"129","ShuntWriteRequest":"0","PkDB2TCBRatio":"3.75","ThreadRatio":"6.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
@@ -169,6 +169,7 @@
 var parseData = []
 var i=0;
 var temp = [];
+int count = 8
 data.forEach(function(item){
 	if(i==8){
 		i=0;

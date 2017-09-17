@@ -34,6 +34,7 @@
 import os
 import shutil
 from sys import exit
+from sys import argv
 import sys
 import json
 import platform
@@ -2463,9 +2464,10 @@ STATISTICS_DATE = ''
 #Main logic begins here
 #######################################################################################################################################
 #Open a directory and select CICS Statistics
-InitialDir = os.getcwd()      
-input_filename = tkFileDialog.askopenfilename(initialdir = InitialDir)
-fo_input = open(input_filename,"r")
+#InitialDir = os.getcwd()      
+#input_filename = tkFileDialog.askopenfilename(initialdir = InitialDir)
+print("the argv is ",argv[1])
+fo_input = open(argv[1],"r")
 print("Begin to analyze file: " + fo_input.name)
 
 try:

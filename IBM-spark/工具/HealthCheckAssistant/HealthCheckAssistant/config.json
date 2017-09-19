@@ -1,9 +1,0 @@
-{    
-    "ENQName":"*TOTALS*",    
-    "TClassName":"*TOTALS*",
-    "ApplidPattern":".{6}A.",
-    "DSARatioThreshold":"80",
-    "EDSARatioThreshold":"80",
-    "QRDispRatioThreshold":"50",
-    "ENQImmeSuccessThreshold":"90"
-}

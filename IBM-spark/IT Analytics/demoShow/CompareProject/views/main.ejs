@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>Compare</title>
+</head>
+<link rel='stylesheet' href='/stylesheets/detail.css' />
+<link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+<body>
+<h2>CICS Analytics Compare</h2>
+
+<div style="margin-top:50px">
+    <button onclick="showExample()">样例展示</button><button onclick="download()" style="margin-left:30px">下载样例数据</button>
+</div>
+
+<div style="margin-top:50px">
+    <input type="file" id="fileSelect"/>
+</div>
+<div id="select" hidden>
+    <div>
+        <h4 class="inline-title">请选择x轴属性</h4>
+        <input id="selectX" type="text" onclick="selectX()" contenteditable="false"></input>
+    </div>
+    <div>
+        <h4 class="inline-title">请选择配置属性</h4>
+        <input id="selectType" type="text" onclick="selectType()" contenteditable="false"></input>
+    </div>
+    <div>
+        <h4 class="inline-title">请选择修改前配置</h4>
+        <input id="selectBase" type="text" onclick="selectBase()" contenteditable="false"></input>
+    </div>
+    <div>
+        <h4 class="inline-title">请选择修改后配置</h4>
+        <input id="selectCompare" type="text" onclick="selectCompare()" contenteditable="false"></input>
+    </div>
+    <div>
+        <button class="inline-title" onclick="sortParams()">请对参数进行排序</button>
+    </div>
+</div>
+
+<p id="show" style="color:red"></p>
+<div style="margin-top:50px">
+    <button onclick="toDetail()">开始比较</button>
+</div>
+<pre>
+
+
+
+大连理工大学 姚晗
+
+使用说明：
+    1. <b>样例展示</b> 可以查看默认配置下的展示效果
+    2. <b>下载样例数据</b> 可下载样例展示中的json数据
+    3. <b>选择文件</b> 需选择json格式数据，且必须是数组形式
+        文件选择成功后，弹出配置项
+        3.1 <b>请选择x轴属性</b> 默认配置下是APPID
+        3.2 <b>请选择配置属性</b> 默认配置下是ColTie
+        3.3 <b>请选择修改前配置</b> 默认配置下是14:00:00
+        3.4 <b>请选择修改后配置</b> 默认配置下是16:00:00
+        3.5 <b>请对参数进行排序</b> 可拖动进行排序
+    4. <b>开始比较</b> 跳转到比较页面
+        比较页面显示每个参数的修改前后数据
+        点击可查看详细参数，下方有具体数值的表格
+        鼠标悬浮可以查看对应数值
+注：
+    1. 目前仅完成了功能需求，界面UI还需要进一步开发。
+    2. 引用了百度CDN的jQuery,jQuery-UI,echarts，请<b>联网使用</b>
+    3. 使用了<b>html5</b>的sessionStorage进行存储，部分浏览器可能不支持。
+    4. 本系统还在不断完善之中，如果在使用时发现BUG，恳请您发邮件至<a href="Mailto:yaohan125@qq.com">yaohan125@qq.com</a>进行反馈。
+</pre>
+<div id="detail" class="white-block" style="text-align: left">
+    <ul id="typeList">uuuuuuj
+    </ul>
+</div>
+<div id="fade"  class="fade-block">
+    <p  onclick="closeFade()"id="close_txt" class="button-close">关闭</p>
+</div>
+</body>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script>
+    $("#select").hide();
+    hideDetails();
+    var sourceData;//文件text
+    var data;//文件JSON数据
+    var typeList = [];//字段信息
+    var configureList = [];//配置列表
+    function download() {
+        location.href="downloadExample";
+    }
+    $("#fileSelect").change(function () {
+        var fileSelector = $("#fileSelect")[0].files;
+        var file = fileSelector[0];
+//        var showText = "";
+//        var fileName = file.name+"\n";
+        var reader = new FileReader();
+        reader.onload = function(){
+            sourceData = this.result;
+            isJSON(function (result,desc) {
+                $("#show").text(desc)
+                if(result){
+                    for(var type in data[0]){
+                        typeList.push(type)
+                    }
+                }
+            })
+        }
+        reader.readAsText(file);
+//        console.log("name:"+fileName);
+    })
+    function isJSON(callback) {
+        try{
+            data = JSON.parse(sourceData)
+            if(sourceData.charAt(0) !='[') {
+                callback(false,"JSON不是一个数组，请检查后重试");
+            }else{
+                callback(true,"");
+                $("#select").show();
+            }
+        }catch(err){
+            console.log("JSON解析异常："+err+"data:"+sourceData)
+            callback(false,"JSON格式不正确，请检查后重试");
+        }
+    }
+
+    function hideDetails(){
+        $('#detail').hide();
+        $("#fade").hide();
+    }
+
+    function showDetails(){
+        $('#detail').show();
+        $("#fade").show();
+    }
+    function selectX(){
+
+        $("#typeList").empty();
+        typeList.forEach(function(typeName){
+            $("#typeList").append("<button onclick=getX('"+typeName+"')>"+typeName+"</button><br>")
+        })
+        showDetails()
+    }
+    function selectType(){
+        $("#typeList").empty();
+        typeList.forEach(function(typeName){
+            $("#typeList").append("<button onclick=getType('"+typeName+"')>"+typeName+"</button><br>")
+        })
+        showDetails()
+    }
+    function selectBase(){
+        $("#typeList").empty();
+        configureList.forEach(function (typeName) {
+            $("#typeList").append("<button onclick=getBase('"+typeName+"')>"+typeName+"</button><br>")
+        })
+        showDetails()
+    }
+    function selectCompare(){
+        $("#typeList").empty();
+        configureList.forEach(function (typeName) {
+            $("#typeList").append("<button onclick=getCompare('"+typeName+"')>"+typeName+"</button><br>")
+        })
+        showDetails()
+    }
+    function toDetail(){
+        if($("#fileSelect").val().length == 0){
+            $("#show").text("请上传文件")
+        }else if($("#selectX").val().length == 0){
+            $("#show").text("请选择x轴属性")
+        }else if($("#selectType").val().length == 0){
+            $("#show").text("请选择配置属性")
+        }else if($("#selectBase").val().length == 0){
+            $("#show").text("请选择基础配置")
+        }else if($("#selectCompare").val().length == 0){
+            $("#show").text("请选择比较配置")
+        }else{
+            data={data:data,
+                compareIndex:$("#selectType").val(),
+                xAxisIndex:$("#selectX").val(),
+                compare:$("#selectCompare").val(),
+                base:$("#selectBase").val(),
+                typeList:typeList}
+            sessionStorage.setItem("jsonData",JSON.stringify(data));
+            window.location.href = "detail";
+        }
+    }
+    function closeFade(){
+        // console.log("close")
+        hideDetails();
+    }
+    function getX(type){
+        hideDetails();
+        $("#selectX").val(type)
+    }
+    function getType(type){
+        hideDetails();
+        $("#selectType").val(type)
+        configureList = [];
+        $("#selectBase").val("")
+        $("#selectCompare").val("")
+        data.forEach(function(item){
+            var flag = true;
+            configureList.forEach(function(configure){
+                if(configure == item[type]){
+                    flag = false;
+                }
+            })
+            if(flag){
+                configureList.push(item[type]);
+            }
+        })
+    }
+    function getBase(type){
+        hideDetails();
+        $("#selectBase").val(type)
+    }
+    function getCompare(type){
+        hideDetails();
+        $("#selectCompare").val(type)
+    }
+    function showExample(){
+        location.href="showExample"
+    }
+    function sortParams(){
+        $("#typeList").empty();
+        $("#typeList").append("<button onclick='finishSort()'>确定</button>")
+        $("#typeList").append("<p>可拖动进行排序，点击确定按钮完成</p>")
+        typeList.forEach(function (typeName) {
+            $("#typeList").append("<li>"+typeName+"</li>")
+        })
+        $("#typeList").sortable();
+        showDetails()
+    }
+    function finishSort(){
+        typeList = [];
+        $("#detail").find("li").each(function(){
+            console.log("this:"+JSON.stringify($(this)));
+            typeList.push($(this).text())
+        })
+        console.log("typeList:"+JSON.stringify(typeList))
+        hideDetails();
+    }
+</script>

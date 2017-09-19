@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>Compare</title>
+    <style>
+    	.chart_image{
+			width:30vw;
+			height:30vh;
+			display: inline-block;
+    	}
+    	.white-block{
+    		display: none;
+			position: absolute;
+			top: 10%;
+			left: 10%;
+			width: 80%;
+			height: 80%;
+			padding: 16px;
+			border: none;
+			background-color: white;
+			z-index:1002;
+			overflow: auto;
+    	}
+    	.fade-block{
+    		display: none;	
+			position: absolute;
+			top: 0%;
+			left: 0%;
+			width: 100%;
+			height: 100%;
+			background-color: black;
+			z-index:1001;
+			-moz-opacity: 0.8;
+			opacity:.80;
+			filter: alpha(opacity=80);
+    	}
+			#chartDetails{width:100%;border:solid 1px #666;background-color:#eee;}
+			#chartDetails tr{line-height:23px}
+			#chartDetails tr th{background-color:#ccc;color:#fff;text-align: center}
+			#chartDetails tr td{text-align: center;}
+			#chartDetails .trOdd{background-color:#fff}
+    </style>
+
+    <script src="js/jquery.js"></script>
+    <script type="text/javascript">
+	    function hideDetails(){
+			$('#detail').hide();
+			$("#fade").hide();	
+	    }
+	    hideDetails();
+    </script>
+</head>
+<body>
+	<h2 style="display: inline-block;">CICS Analytics Compare</h1>
+    <h5 style="display: inline-block;">01/11/2016 14:00:00 and 16:00:00</h6>
+	<div id="chart" style="overflow:auto; overflow-y:auto; max-height:700px;height:700px;"></div>
+    <div id="detail" class="white-block">
+		<div id="detail1" style="width:78vw;height:80vh;display: inline-block;"></div>
+		<table id="chartDetails" cellpadding="0" cellspacing="0">
+			<tbody>
+				
+			</tbody>
+		</table>
+	</div>
+	<div id="fade"  class="fade-block">
+		<a id="close_txt" style="z-index:1002;font-size: 24px;color:white;position: fixed;right:10%;top:3%">关闭</a>
+	</div>
+</body>
+<!-- ECharts单文件引入 -->
+<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+<script type="text/javascript">
+var height = document.body.offsetHeight ;
+$("#chart").attr("max-height",height);
+jsonTrend=[
+{"APPID":"AP15POA1","ColTime":"08:00:00","TotlTran":"30","MXTTimeRch":"0","PeakMXTRatio":"5.50","TClassMaxActTims":"0","QRDispRatio":"85.51","ASCPUUtilRatio":"0.04","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"7.62","EDSAPercent":"43.35","EDSAHWMRatio":"36.39","WriteReq":"0","ShuntWriteRequest":"0","PkDB2TCBRatio":"1.25","ThreadRatio":"2.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP15POA1","ColTime":"10:00:00","TotlTran":"2168","MXTTimeRch":"0","PeakMXTRatio":"8.00","TClassMaxActTims":"0","QRDispRatio":"81.54","ASCPUUtilRatio":"0.40","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.14","EDSAPercent":"43.35","EDSAHWMRatio":"36.74","WriteReq":"108","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP15POA1","ColTime":"12:00:00","TotlTran":"5175","MXTTimeRch":"0","PeakMXTRatio":"9.50","TClassMaxActTims":"0","QRDispRatio":"84.42","ASCPUUtilRatio":"0.91","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.53","EDSAPercent":"43.50","EDSAHWMRatio":"36.95","WriteReq":"302","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP15POA1","ColTime":"14:00:00","TotlTran":"3471","MXTTimeRch":"0","PeakMXTRatio":"8.50","TClassMaxActTims":"0","QRDispRatio":"81.00","ASCPUUtilRatio":"0.55","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.27","EDSAPercent":"43.50","EDSAHWMRatio":"36.88","WriteReq":"129","ShuntWriteRequest":"0","PkDB2TCBRatio":"3.75","ThreadRatio":"6.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP15POA1","ColTime":"16:00:00","TotlTran":"4610","MXTTimeRch":"0","PeakMXTRatio":"8.50","TClassMaxActTims":"0","QRDispRatio":"81.52","ASCPUUtilRatio":"0.88","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.33","EDSAPercent":"43.50","EDSAHWMRatio":"39.41","WriteReq":"206","ShuntWriteRequest":"0","PkDB2TCBRatio":"3.75","ThreadRatio":"6.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP15POA1","ColTime":"18:00:00","TotlTran":"4200","MXTTimeRch":"0","PeakMXTRatio":"9.00","TClassMaxActTims":"0","QRDispRatio":"83.67","ASCPUUtilRatio":"0.73","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.27","EDSAPercent":"43.66","EDSAHWMRatio":"37.33","WriteReq":"218","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP15POA1","ColTime":"20:00:00","TotlTran":"970","MXTTimeRch":"0","PeakMXTRatio":"6.50","TClassMaxActTims":"0","QRDispRatio":"79.32","ASCPUUtilRatio":"0.43","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"7.94","EDSAPercent":"43.81","EDSAHWMRatio":"37.21","WriteReq":"54","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP15POA1","ColTime":"22:00:00","TotlTran":"200","MXTTimeRch":"0","PeakMXTRatio":"6.00","TClassMaxActTims":"0","QRDispRatio":"82.95","ASCPUUtilRatio":"0.15","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"7.81","EDSAPercent":"43.81","EDSAHWMRatio":"36.89","WriteReq":"4","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP15POA3","ColTime":"08:00:00","TotlTran":"34","MXTTimeRch":"0","PeakMXTRatio":"5.50","TClassMaxActTims":"0","QRDispRatio":"77.65","ASCPUUtilRatio":"0.04","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"7.62","EDSAPercent":"43.35","EDSAHWMRatio":"36.43","WriteReq":"10","ShuntWriteRequest":"0","PkDB2TCBRatio":"1.25","ThreadRatio":"2.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP15POA3","ColTime":"10:00:00","TotlTran":"2201","MXTTimeRch":"0","PeakMXTRatio":"8.00","TClassMaxActTims":"0","QRDispRatio":"77.71","ASCPUUtilRatio":"0.37","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.20","EDSAPercent":"43.35","EDSAHWMRatio":"36.88","WriteReq":"129","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP15POA3","ColTime":"12:00:00","TotlTran":"4960","MXTTimeRch":"0","PeakMXTRatio":"9.50","TClassMaxActTims":"0","QRDispRatio":"81.78","ASCPUUtilRatio":"0.69","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.59","EDSAPercent":"43.35","EDSAHWMRatio":"37.21","WriteReq":"224","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP15POA3","ColTime":"14:00:00","TotlTran":"3520","MXTTimeRch":"0","PeakMXTRatio":"8.50","TClassMaxActTims":"0","QRDispRatio":"78.47","ASCPUUtilRatio":"0.69","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.40","EDSAPercent":"43.66","EDSAHWMRatio":"37.07","WriteReq":"127","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP15POA3","ColTime":"16:00:00","TotlTran":"4268","MXTTimeRch":"0","PeakMXTRatio":"8.50","TClassMaxActTims":"0","QRDispRatio":"79.26","ASCPUUtilRatio":"0.58","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.33","EDSAPercent":"44.41","EDSAHWMRatio":"39.90","WriteReq":"109","ShuntWriteRequest":"0","PkDB2TCBRatio":"3.75","ThreadRatio":"6.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP15POA3","ColTime":"18:00:00","TotlTran":"4084","MXTTimeRch":"0","PeakMXTRatio":"8.00","TClassMaxActTims":"0","QRDispRatio":"79.98","ASCPUUtilRatio":"0.78","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.14","EDSAPercent":"44.41","EDSAHWMRatio":"37.23","WriteReq":"202","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP15POA3","ColTime":"20:00:00","TotlTran":"985","MXTTimeRch":"0","PeakMXTRatio":"6.50","TClassMaxActTims":"0","QRDispRatio":"74.90","ASCPUUtilRatio":"0.39","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"7.94","EDSAPercent":"44.41","EDSAHWMRatio":"37.11","WriteReq":"49","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP15POA3","ColTime":"22:00:00","TotlTran":"164","MXTTimeRch":"0","PeakMXTRatio":"6.00","TClassMaxActTims":"0","QRDispRatio":"77.28","ASCPUUtilRatio":"0.11","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"7.81","EDSAPercent":"44.41","EDSAHWMRatio":"36.90","WriteReq":"10","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP16POA2","ColTime":"08:00:00","TotlTran":"38","MXTTimeRch":"0","PeakMXTRatio":"5.50","TClassMaxActTims":"0","QRDispRatio":"87.61","ASCPUUtilRatio":"0.04","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"7.62","EDSAPercent":"43.35","EDSAHWMRatio":"36.32","WriteReq":"5","ShuntWriteRequest":"0","PkDB2TCBRatio":"1.25","ThreadRatio":"2.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP16POA2","ColTime":"10:00:00","TotlTran":"2184","MXTTimeRch":"0","PeakMXTRatio":"8.00","TClassMaxActTims":"0","QRDispRatio":"85.81","ASCPUUtilRatio":"0.90","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.20","EDSAPercent":"43.35","EDSAHWMRatio":"36.66","WriteReq":"84","ShuntWriteRequest":"0","PkDB2TCBRatio":"3.75","ThreadRatio":"6.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP16POA2","ColTime":"12:00:00","TotlTran":"5085","MXTTimeRch":"0","PeakMXTRatio":"11.00","TClassMaxActTims":"0","QRDispRatio":"83.01","ASCPUUtilRatio":"0.78","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.66","EDSAPercent":"43.35","EDSAHWMRatio":"37.09","WriteReq":"288","ShuntWriteRequest":"0","PkDB2TCBRatio":"3.75","ThreadRatio":"6.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP16POA2","ColTime":"14:00:00","TotlTran":"3698","MXTTimeRch":"0","PeakMXTRatio":"8.50","TClassMaxActTims":"0","QRDispRatio":"83.34","ASCPUUtilRatio":"0.55","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.14","EDSAPercent":"43.50","EDSAHWMRatio":"36.90","WriteReq":"219","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP16POA2","ColTime":"16:00:00","TotlTran":"4419","MXTTimeRch":"0","PeakMXTRatio":"8.50","TClassMaxActTims":"0","QRDispRatio":"82.95","ASCPUUtilRatio":"0.71","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.33","EDSAPercent":"43.50","EDSAHWMRatio":"39.36","WriteReq":"198","ShuntWriteRequest":"0","PkDB2TCBRatio":"3.75","ThreadRatio":"6.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP16POA2","ColTime":"18:00:00","TotlTran":"4152","MXTTimeRch":"0","PeakMXTRatio":"9.00","TClassMaxActTims":"0","QRDispRatio":"80.23","ASCPUUtilRatio":"0.69","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.33","EDSAPercent":"43.66","EDSAHWMRatio":"37.00","WriteReq":"158","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP16POA2","ColTime":"20:00:00","TotlTran":"961","MXTTimeRch":"0","PeakMXTRatio":"8.50","TClassMaxActTims":"0","QRDispRatio":"82.63","ASCPUUtilRatio":"0.37","ENQImmSuccessRatio":"99.97","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.33","EDSAPercent":"43.66","EDSAHWMRatio":"36.97","WriteReq":"69","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP16POA2","ColTime":"22:00:00","TotlTran":"186","MXTTimeRch":"0","PeakMXTRatio":"5.50","TClassMaxActTims":"0","QRDispRatio":"81.77","ASCPUUtilRatio":"0.10","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"7.62","EDSAPercent":"43.66","EDSAHWMRatio":"36.85","WriteReq":"0","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP16POA4","ColTime":"08:00:00","TotlTran":"26","MXTTimeRch":"0","PeakMXTRatio":"5.50","TClassMaxActTims":"0","QRDispRatio":"79.71","ASCPUUtilRatio":"0.04","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"7.62","EDSAPercent":"43.50","EDSAHWMRatio":"36.40","WriteReq":"5","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"2.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP16POA4","ColTime":"10:00:00","TotlTran":"2148","MXTTimeRch":"0","PeakMXTRatio":"8.50","TClassMaxActTims":"0","QRDispRatio":"80.47","ASCPUUtilRatio":"0.53","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.20","EDSAPercent":"43.50","EDSAHWMRatio":"36.93","WriteReq":"109","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP16POA4","ColTime":"12:00:00","TotlTran":"5020","MXTTimeRch":"0","PeakMXTRatio":"8.50","TClassMaxActTims":"0","QRDispRatio":"80.06","ASCPUUtilRatio":"0.78","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.14","EDSAPercent":"43.66","EDSAHWMRatio":"36.92","WriteReq":"234","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP16POA4","ColTime":"14:00:00","TotlTran":"3362","MXTTimeRch":"0","PeakMXTRatio":"8.00","TClassMaxActTims":"0","QRDispRatio":"78.85","ASCPUUtilRatio":"0.49","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.20","EDSAPercent":"43.81","EDSAHWMRatio":"36.98","WriteReq":"152","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP16POA4","ColTime":"16:00:00","TotlTran":"4510","MXTTimeRch":"0","PeakMXTRatio":"8.50","TClassMaxActTims":"0","QRDispRatio":"80.43","ASCPUUtilRatio":"0.68","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.46","EDSAPercent":"43.81","EDSAHWMRatio":"39.63","WriteReq":"168","ShuntWriteRequest":"0","PkDB2TCBRatio":"3.75","ThreadRatio":"6.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP16POA4","ColTime":"18:00:00","TotlTran":"4084","MXTTimeRch":"0","PeakMXTRatio":"8.00","TClassMaxActTims":"0","QRDispRatio":"78.59","ASCPUUtilRatio":"0.69","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.20","EDSAPercent":"43.81","EDSAHWMRatio":"37.25","WriteReq":"254","ShuntWriteRequest":"0","PkDB2TCBRatio":"3.75","ThreadRatio":"6.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP16POA4","ColTime":"20:00:00","TotlTran":"989","MXTTimeRch":"0","PeakMXTRatio":"6.50","TClassMaxActTims":"0","QRDispRatio":"75.64","ASCPUUtilRatio":"0.43","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"7.94","EDSAPercent":"43.81","EDSAHWMRatio":"37.17","WriteReq":"63","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"AP16POA4","ColTime":"22:00:00","TotlTran":"185","MXTTimeRch":"0","PeakMXTRatio":"8.00","TClassMaxActTims":"0","QRDispRatio":"74.70","ASCPUUtilRatio":"0.14","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"16.67","DSAHWMRatio":"8.14","EDSAPercent":"43.81","EDSAHWMRatio":"36.98","WriteReq":"11","ShuntWriteRequest":"0","PkDB2TCBRatio":"2.5","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAAA","ColTime":"08:00:00","TotlTran":"13843","MXTTimeRch":"0","PeakMXTRatio":"13.00","TClassMaxActTims":"120","QRDispRatio":"84.48","ASCPUUtilRatio":"1.19","ENQImmSuccessRatio":"99.85","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.08","EDSAPercent":"48.55","EDSAHWMRatio":"32.11","WriteReq":"4429","ShuntWriteRequest":"0","PkDB2TCBRatio":"4.0","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAAA","ColTime":"10:00:00","TotlTran":"136542","MXTTimeRch":"0","PeakMXTRatio":"25.00","TClassMaxActTims":"120","QRDispRatio":"83.99","ASCPUUtilRatio":"11.11","ENQImmSuccessRatio":"99.4","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"11.25","EDSAPercent":"48.91","EDSAHWMRatio":"36.98","WriteReq":"37063","ShuntWriteRequest":"0","PkDB2TCBRatio":"16.0","ThreadRatio":"16.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"2","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAAA","ColTime":"12:00:00","TotlTran":"229010","MXTTimeRch":"0","PeakMXTRatio":"20.00","TClassMaxActTims":"120","QRDispRatio":"83.76","ASCPUUtilRatio":"20.27","ENQImmSuccessRatio":"99.06","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.86","EDSAPercent":"49.27","EDSAHWMRatio":"35.69","WriteReq":"62016","ShuntWriteRequest":"0","PkDB2TCBRatio":"11.0","ThreadRatio":"11.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"6","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAAA","ColTime":"14:00:00","TotlTran":"183605","MXTTimeRch":"0","PeakMXTRatio":"19.00","TClassMaxActTims":"120","QRDispRatio":"80.60","ASCPUUtilRatio":"17.66","ENQImmSuccessRatio":"99.04","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"11.02","EDSAPercent":"49.45","EDSAHWMRatio":"35.16","WriteReq":"53042","ShuntWriteRequest":"0","PkDB2TCBRatio":"9.0","ThreadRatio":"9.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"6","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAAA","ColTime":"16:00:00","TotlTran":"224854","MXTTimeRch":"0","PeakMXTRatio":"21.00","TClassMaxActTims":"120","QRDispRatio":"83.20","ASCPUUtilRatio":"18.96","ENQImmSuccessRatio":"99.08","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"11.09","EDSAPercent":"49.64","EDSAHWMRatio":"35.86","WriteReq":"57610","ShuntWriteRequest":"0","PkDB2TCBRatio":"11.0","ThreadRatio":"11.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"3","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAAA","ColTime":"18:00:00","TotlTran":"198227","MXTTimeRch":"0","PeakMXTRatio":"20.00","TClassMaxActTims":"119","QRDispRatio":"83.89","ASCPUUtilRatio":"20.12","ENQImmSuccessRatio":"99.35","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"11.17","EDSAPercent":"49.82","EDSAHWMRatio":"37.28","WriteReq":"53187","ShuntWriteRequest":"0","PkDB2TCBRatio":"11.0","ThreadRatio":"11.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"6","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAAA","ColTime":"20:00:00","TotlTran":"121121","MXTTimeRch":"0","PeakMXTRatio":"16.00","TClassMaxActTims":"120","QRDispRatio":"78.70","ASCPUUtilRatio":"17.04","ENQImmSuccessRatio":"99.48","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"11.17","EDSAPercent":"49.91","EDSAHWMRatio":"35.32","WriteReq":"35846","ShuntWriteRequest":"0","PkDB2TCBRatio":"7.0","ThreadRatio":"7.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAAA","ColTime":"22:00:00","TotlTran":"95392","MXTTimeRch":"0","PeakMXTRatio":"16.00","TClassMaxActTims":"120","QRDispRatio":"78.20","ASCPUUtilRatio":"16.65","ENQImmSuccessRatio":"99.51","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.70","EDSAPercent":"49.91","EDSAHWMRatio":"38.09","WriteReq":"28740","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"1","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAAE","ColTime":"08:00:00","TotlTran":"14027","MXTTimeRch":"0","PeakMXTRatio":"13.00","TClassMaxActTims":"120","QRDispRatio":"84.46","ASCPUUtilRatio":"1.20","ENQImmSuccessRatio":"99.96","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"9.92","EDSAPercent":"46.73","EDSAHWMRatio":"31.69","WriteReq":"4484","ShuntWriteRequest":"0","PkDB2TCBRatio":"4.0","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAAE","ColTime":"10:00:00","TotlTran":"136892","MXTTimeRch":"0","PeakMXTRatio":"18.00","TClassMaxActTims":"120","QRDispRatio":"83.63","ASCPUUtilRatio":"10.94","ENQImmSuccessRatio":"99.33","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.39","EDSAPercent":"47.09","EDSAHWMRatio":"36.01","WriteReq":"36347","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"5","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAAE","ColTime":"12:00:00","TotlTran":"230302","MXTTimeRch":"0","PeakMXTRatio":"19.00","TClassMaxActTims":"120","QRDispRatio":"83.24","ASCPUUtilRatio":"20.16","ENQImmSuccessRatio":"98.97","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.31","EDSAPercent":"47.45","EDSAHWMRatio":"34.87","WriteReq":"61784","ShuntWriteRequest":"0","PkDB2TCBRatio":"10.0","ThreadRatio":"10.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"5","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"1"},
+{"APPID":"BP15PAAE","ColTime":"14:00:00","TotlTran":"183318","MXTTimeRch":"0","PeakMXTRatio":"21.00","TClassMaxActTims":"120","QRDispRatio":"81.39","ASCPUUtilRatio":"17.67","ENQImmSuccessRatio":"99.1","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.31","EDSAPercent":"47.64","EDSAHWMRatio":"34.85","WriteReq":"52885","ShuntWriteRequest":"0","PkDB2TCBRatio":"9.0","ThreadRatio":"9.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"8","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAAE","ColTime":"16:00:00","TotlTran":"224911","MXTTimeRch":"0","PeakMXTRatio":"23.00","TClassMaxActTims":"120","QRDispRatio":"83.43","ASCPUUtilRatio":"19.07","ENQImmSuccessRatio":"99.07","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.70","EDSAPercent":"47.73","EDSAHWMRatio":"36.62","WriteReq":"57200","ShuntWriteRequest":"0","PkDB2TCBRatio":"13.0","ThreadRatio":"13.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"5","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAAE","ColTime":"18:00:00","TotlTran":"197706","MXTTimeRch":"0","PeakMXTRatio":"24.00","TClassMaxActTims":"120","QRDispRatio":"83.49","ASCPUUtilRatio":"20.27","ENQImmSuccessRatio":"99.35","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.70","EDSAPercent":"47.91","EDSAHWMRatio":"37.05","WriteReq":"53150","ShuntWriteRequest":"0","PkDB2TCBRatio":"12.0","ThreadRatio":"12.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"2","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAAE","ColTime":"20:00:00","TotlTran":"121014","MXTTimeRch":"0","PeakMXTRatio":"21.00","TClassMaxActTims":"119","QRDispRatio":"78.79","ASCPUUtilRatio":"16.86","ENQImmSuccessRatio":"99.48","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.39","EDSAPercent":"47.91","EDSAHWMRatio":"35.81","WriteReq":"36239","ShuntWriteRequest":"0","PkDB2TCBRatio":"10.0","ThreadRatio":"10.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAAE","ColTime":"22:00:00","TotlTran":"93958","MXTTimeRch":"0","PeakMXTRatio":"20.00","TClassMaxActTims":"120","QRDispRatio":"77.90","ASCPUUtilRatio":"16.58","ENQImmSuccessRatio":"99.54","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.39","EDSAPercent":"47.91","EDSAHWMRatio":"37.43","WriteReq":"28071","ShuntWriteRequest":"0","PkDB2TCBRatio":"7.0","ThreadRatio":"7.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAA1","ColTime":"08:00:00","TotlTran":"14113","MXTTimeRch":"0","PeakMXTRatio":"12.00","TClassMaxActTims":"120","QRDispRatio":"85.01","ASCPUUtilRatio":"1.21","ENQImmSuccessRatio":"99.89","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.70","EDSAPercent":"47.00","EDSAHWMRatio":"32.04","WriteReq":"4180","ShuntWriteRequest":"0","PkDB2TCBRatio":"4.0","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAA1","ColTime":"10:00:00","TotlTran":"136304","MXTTimeRch":"0","PeakMXTRatio":"17.00","TClassMaxActTims":"120","QRDispRatio":"83.09","ASCPUUtilRatio":"10.90","ENQImmSuccessRatio":"99.32","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"11.17","EDSAPercent":"47.36","EDSAHWMRatio":"34.78","WriteReq":"36790","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"2","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAA1","ColTime":"12:00:00","TotlTran":"230543","MXTTimeRch":"0","PeakMXTRatio":"19.00","TClassMaxActTims":"120","QRDispRatio":"83.20","ASCPUUtilRatio":"20.16","ENQImmSuccessRatio":"99.07","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"11.33","EDSAPercent":"47.73","EDSAHWMRatio":"35.20","WriteReq":"61417","ShuntWriteRequest":"0","PkDB2TCBRatio":"10.0","ThreadRatio":"10.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"5","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAA1","ColTime":"14:00:00","TotlTran":"183202","MXTTimeRch":"0","PeakMXTRatio":"21.00","TClassMaxActTims":"120","QRDispRatio":"80.69","ASCPUUtilRatio":"17.80","ENQImmSuccessRatio":"99.08","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"11.48","EDSAPercent":"47.73","EDSAHWMRatio":"35.65","WriteReq":"53567","ShuntWriteRequest":"0","PkDB2TCBRatio":"11.0","ThreadRatio":"11.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"5","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAA1","ColTime":"16:00:00","TotlTran":"224158","MXTTimeRch":"0","PeakMXTRatio":"18.00","TClassMaxActTims":"120","QRDispRatio":"83.27","ASCPUUtilRatio":"18.86","ENQImmSuccessRatio":"99.19","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"11.25","EDSAPercent":"48.00","EDSAHWMRatio":"35.46","WriteReq":"57131","ShuntWriteRequest":"0","PkDB2TCBRatio":"9.0","ThreadRatio":"9.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"3","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAA1","ColTime":"18:00:00","TotlTran":"198591","MXTTimeRch":"0","PeakMXTRatio":"20.00","TClassMaxActTims":"119","QRDispRatio":"83.31","ASCPUUtilRatio":"20.41","ENQImmSuccessRatio":"99.3","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"11.41","EDSAPercent":"48.09","EDSAHWMRatio":"36.40","WriteReq":"53125","ShuntWriteRequest":"0","PkDB2TCBRatio":"10.0","ThreadRatio":"10.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"5","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAA1","ColTime":"20:00:00","TotlTran":"120488","MXTTimeRch":"0","PeakMXTRatio":"18.00","TClassMaxActTims":"120","QRDispRatio":"79.29","ASCPUUtilRatio":"16.95","ENQImmSuccessRatio":"99.43","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"11.17","EDSAPercent":"48.18","EDSAHWMRatio":"35.62","WriteReq":"35873","ShuntWriteRequest":"0","PkDB2TCBRatio":"9.0","ThreadRatio":"9.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"1","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAA1","ColTime":"22:00:00","TotlTran":"94684","MXTTimeRch":"0","PeakMXTRatio":"18.00","TClassMaxActTims":"120","QRDispRatio":"77.61","ASCPUUtilRatio":"16.57","ENQImmSuccessRatio":"99.51","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"11.25","EDSAPercent":"48.18","EDSAHWMRatio":"37.09","WriteReq":"28757","ShuntWriteRequest":"0","PkDB2TCBRatio":"9.0","ThreadRatio":"9.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"1","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAA5","ColTime":"08:00:00","TotlTran":"13685","MXTTimeRch":"0","PeakMXTRatio":"13.00","TClassMaxActTims":"120","QRDispRatio":"85.01","ASCPUUtilRatio":"1.16","ENQImmSuccessRatio":"99.96","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"9.69","EDSAPercent":"47.09","EDSAHWMRatio":"31.80","WriteReq":"4105","ShuntWriteRequest":"0","PkDB2TCBRatio":"4.0","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAA5","ColTime":"10:00:00","TotlTran":"136709","MXTTimeRch":"0","PeakMXTRatio":"16.00","TClassMaxActTims":"120","QRDispRatio":"82.83","ASCPUUtilRatio":"10.98","ENQImmSuccessRatio":"99.49","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.31","EDSAPercent":"48.18","EDSAHWMRatio":"35.21","WriteReq":"36233","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"7.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"1","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAA5","ColTime":"12:00:00","TotlTran":"229754","MXTTimeRch":"0","PeakMXTRatio":"30.00","TClassMaxActTims":"120","QRDispRatio":"83.29","ASCPUUtilRatio":"20.11","ENQImmSuccessRatio":"98.93","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"11.72","EDSAPercent":"48.45","EDSAHWMRatio":"38.38","WriteReq":"61948","ShuntWriteRequest":"0","PkDB2TCBRatio":"19.0","ThreadRatio":"19.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"12","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAA5","ColTime":"14:00:00","TotlTran":"182853","MXTTimeRch":"0","PeakMXTRatio":"20.00","TClassMaxActTims":"120","QRDispRatio":"80.69","ASCPUUtilRatio":"17.72","ENQImmSuccessRatio":"99.1","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.47","EDSAPercent":"48.55","EDSAHWMRatio":"35.84","WriteReq":"52278","ShuntWriteRequest":"0","PkDB2TCBRatio":"12.0","ThreadRatio":"12.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"2","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAA5","ColTime":"16:00:00","TotlTran":"223908","MXTTimeRch":"0","PeakMXTRatio":"22.00","TClassMaxActTims":"120","QRDispRatio":"83.53","ASCPUUtilRatio":"18.81","ENQImmSuccessRatio":"99.12","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.62","EDSAPercent":"48.73","EDSAHWMRatio":"35.74","WriteReq":"57331","ShuntWriteRequest":"0","PkDB2TCBRatio":"11.0","ThreadRatio":"11.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"9","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAA5","ColTime":"18:00:00","TotlTran":"198016","MXTTimeRch":"0","PeakMXTRatio":"20.00","TClassMaxActTims":"120","QRDispRatio":"83.81","ASCPUUtilRatio":"20.39","ENQImmSuccessRatio":"99.33","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.55","EDSAPercent":"48.91","EDSAHWMRatio":"36.47","WriteReq":"52523","ShuntWriteRequest":"0","PkDB2TCBRatio":"10.0","ThreadRatio":"10.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"6","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAA5","ColTime":"20:00:00","TotlTran":"121426","MXTTimeRch":"0","PeakMXTRatio":"18.00","TClassMaxActTims":"120","QRDispRatio":"78.59","ASCPUUtilRatio":"17.68","ENQImmSuccessRatio":"99.39","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.39","EDSAPercent":"49.00","EDSAHWMRatio":"35.47","WriteReq":"36189","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"2","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP15PAA5","ColTime":"22:00:00","TotlTran":"94051","MXTTimeRch":"0","PeakMXTRatio":"17.00","TClassMaxActTims":"120","QRDispRatio":"79.05","ASCPUUtilRatio":"16.01","ENQImmSuccessRatio":"99.61","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.16","EDSAPercent":"49.00","EDSAHWMRatio":"36.77","WriteReq":"28155","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAAB","ColTime":"08:00:00","TotlTran":"13818","MXTTimeRch":"0","PeakMXTRatio":"12.00","TClassMaxActTims":"120","QRDispRatio":"83.52","ASCPUUtilRatio":"1.11","ENQImmSuccessRatio":"99.96","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"9.69","EDSAPercent":"45.73","EDSAHWMRatio":"31.91","WriteReq":"4275","ShuntWriteRequest":"0","PkDB2TCBRatio":"4.0","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"1","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAAB","ColTime":"10:00:00","TotlTran":"136730","MXTTimeRch":"0","PeakMXTRatio":"17.00","TClassMaxActTims":"120","QRDispRatio":"82.78","ASCPUUtilRatio":"10.67","ENQImmSuccessRatio":"99.48","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.31","EDSAPercent":"46.09","EDSAHWMRatio":"34.72","WriteReq":"36625","ShuntWriteRequest":"0","PkDB2TCBRatio":"7.0","ThreadRatio":"7.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"3","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAAB","ColTime":"12:00:00","TotlTran":"229249","MXTTimeRch":"0","PeakMXTRatio":"19.00","TClassMaxActTims":"120","QRDispRatio":"82.96","ASCPUUtilRatio":"19.99","ENQImmSuccessRatio":"99.03","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.39","EDSAPercent":"46.36","EDSAHWMRatio":"34.62","WriteReq":"61234","ShuntWriteRequest":"0","PkDB2TCBRatio":"10.0","ThreadRatio":"10.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"2","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"1"},
+{"APPID":"BP16PAAB","ColTime":"14:00:00","TotlTran":"183343","MXTTimeRch":"0","PeakMXTRatio":"17.00","TClassMaxActTims":"120","QRDispRatio":"82.44","ASCPUUtilRatio":"17.25","ENQImmSuccessRatio":"99.13","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.39","EDSAPercent":"46.45","EDSAHWMRatio":"35.46","WriteReq":"53184","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"1","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAAB","ColTime":"16:00:00","TotlTran":"222630","MXTTimeRch":"0","PeakMXTRatio":"25.00","TClassMaxActTims":"120","QRDispRatio":"83.60","ASCPUUtilRatio":"18.56","ENQImmSuccessRatio":"99.19","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"11.02","EDSAPercent":"46.64","EDSAHWMRatio":"36.53","WriteReq":"57209","ShuntWriteRequest":"0","PkDB2TCBRatio":"12.0","ThreadRatio":"12.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"3","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAAB","ColTime":"18:00:00","TotlTran":"197662","MXTTimeRch":"0","PeakMXTRatio":"17.00","TClassMaxActTims":"120","QRDispRatio":"81.90","ASCPUUtilRatio":"20.06","ENQImmSuccessRatio":"99.36","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.55","EDSAPercent":"46.82","EDSAHWMRatio":"35.92","WriteReq":"53271","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"9","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAAB","ColTime":"20:00:00","TotlTran":"121286","MXTTimeRch":"0","PeakMXTRatio":"18.00","TClassMaxActTims":"119","QRDispRatio":"82.61","ASCPUUtilRatio":"16.55","ENQImmSuccessRatio":"99.46","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.31","EDSAPercent":"46.91","EDSAHWMRatio":"34.98","WriteReq":"36844","ShuntWriteRequest":"0","PkDB2TCBRatio":"9.0","ThreadRatio":"9.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAAB","ColTime":"22:00:00","TotlTran":"94027","MXTTimeRch":"0","PeakMXTRatio":"17.00","TClassMaxActTims":"120","QRDispRatio":"77.83","ASCPUUtilRatio":"16.52","ENQImmSuccessRatio":"99.47","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.23","EDSAPercent":"46.91","EDSAHWMRatio":"36.56","WriteReq":"28307","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"1","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAAF","ColTime":"08:00:00","TotlTran":"14181","MXTTimeRch":"0","PeakMXTRatio":"13.00","TClassMaxActTims":"120","QRDispRatio":"83.31","ASCPUUtilRatio":"1.16","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"9.92","EDSAPercent":"47.18","EDSAHWMRatio":"32.02","WriteReq":"4135","ShuntWriteRequest":"0","PkDB2TCBRatio":"4.0","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAAF","ColTime":"10:00:00","TotlTran":"135997","MXTTimeRch":"0","PeakMXTRatio":"19.00","TClassMaxActTims":"120","QRDispRatio":"82.81","ASCPUUtilRatio":"10.61","ENQImmSuccessRatio":"99.41","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.39","EDSAPercent":"47.55","EDSAHWMRatio":"35.53","WriteReq":"36108","ShuntWriteRequest":"0","PkDB2TCBRatio":"11.0","ThreadRatio":"11.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"5","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAAF","ColTime":"12:00:00","TotlTran":"230904","MXTTimeRch":"0","PeakMXTRatio":"25.00","TClassMaxActTims":"120","QRDispRatio":"82.89","ASCPUUtilRatio":"20.00","ENQImmSuccessRatio":"98.96","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.94","EDSAPercent":"48.00","EDSAHWMRatio":"36.75","WriteReq":"62097","ShuntWriteRequest":"0","PkDB2TCBRatio":"15.0","ThreadRatio":"15.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"5","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAAF","ColTime":"14:00:00","TotlTran":"182057","MXTTimeRch":"0","PeakMXTRatio":"25.00","TClassMaxActTims":"120","QRDispRatio":"82.23","ASCPUUtilRatio":"17.02","ENQImmSuccessRatio":"99.05","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.86","EDSAPercent":"48.09","EDSAHWMRatio":"36.46","WriteReq":"53450","ShuntWriteRequest":"0","PkDB2TCBRatio":"14.0","ThreadRatio":"14.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"3","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAAF","ColTime":"16:00:00","TotlTran":"222845","MXTTimeRch":"0","PeakMXTRatio":"23.00","TClassMaxActTims":"120","QRDispRatio":"83.46","ASCPUUtilRatio":"18.74","ENQImmSuccessRatio":"99.11","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.70","EDSAPercent":"48.27","EDSAHWMRatio":"36.54","WriteReq":"57776","ShuntWriteRequest":"0","PkDB2TCBRatio":"13.0","ThreadRatio":"13.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"2","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAAF","ColTime":"18:00:00","TotlTran":"198643","MXTTimeRch":"0","PeakMXTRatio":"22.00","TClassMaxActTims":"120","QRDispRatio":"81.50","ASCPUUtilRatio":"20.62","ENQImmSuccessRatio":"99.15","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.70","EDSAPercent":"48.45","EDSAHWMRatio":"37.11","WriteReq":"52645","ShuntWriteRequest":"0","PkDB2TCBRatio":"13.0","ThreadRatio":"13.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"4","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAAF","ColTime":"20:00:00","TotlTran":"120388","MXTTimeRch":"0","PeakMXTRatio":"20.00","TClassMaxActTims":"119","QRDispRatio":"82.59","ASCPUUtilRatio":"16.85","ENQImmSuccessRatio":"99.44","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.55","EDSAPercent":"48.55","EDSAHWMRatio":"36.13","WriteReq":"36421","ShuntWriteRequest":"0","PkDB2TCBRatio":"11.0","ThreadRatio":"11.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"1","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAAF","ColTime":"22:00:00","TotlTran":"95109","MXTTimeRch":"0","PeakMXTRatio":"16.00","TClassMaxActTims":"120","QRDispRatio":"77.52","ASCPUUtilRatio":"16.57","ENQImmSuccessRatio":"99.6","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.23","EDSAPercent":"48.55","EDSAHWMRatio":"37.27","WriteReq":"29332","ShuntWriteRequest":"0","PkDB2TCBRatio":"7.0","ThreadRatio":"7.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAA2","ColTime":"08:00:00","TotlTran":"13941","MXTTimeRch":"0","PeakMXTRatio":"12.00","TClassMaxActTims":"120","QRDispRatio":"83.21","ASCPUUtilRatio":"1.13","ENQImmSuccessRatio":"99.96","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"9.77","EDSAPercent":"46.82","EDSAHWMRatio":"31.83","WriteReq":"4371","ShuntWriteRequest":"0","PkDB2TCBRatio":"3.0","ThreadRatio":"3.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAA2","ColTime":"10:00:00","TotlTran":"136804","MXTTimeRch":"0","PeakMXTRatio":"17.00","TClassMaxActTims":"120","QRDispRatio":"82.95","ASCPUUtilRatio":"10.71","ENQImmSuccessRatio":"99.54","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.47","EDSAPercent":"47.09","EDSAHWMRatio":"34.82","WriteReq":"36873","ShuntWriteRequest":"0","PkDB2TCBRatio":"7.0","ThreadRatio":"7.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"4","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAA2","ColTime":"12:00:00","TotlTran":"229969","MXTTimeRch":"0","PeakMXTRatio":"21.00","TClassMaxActTims":"120","QRDispRatio":"82.74","ASCPUUtilRatio":"20.04","ENQImmSuccessRatio":"99.02","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.47","EDSAPercent":"47.45","EDSAHWMRatio":"35.95","WriteReq":"62592","ShuntWriteRequest":"0","PkDB2TCBRatio":"12.0","ThreadRatio":"12.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"3","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"1"},
+{"APPID":"BP16PAA2","ColTime":"14:00:00","TotlTran":"181852","MXTTimeRch":"0","PeakMXTRatio":"20.00","TClassMaxActTims":"120","QRDispRatio":"82.52","ASCPUUtilRatio":"17.35","ENQImmSuccessRatio":"99.1","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.39","EDSAPercent":"47.64","EDSAHWMRatio":"35.02","WriteReq":"52966","ShuntWriteRequest":"0","PkDB2TCBRatio":"9.0","ThreadRatio":"9.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"6","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAA2","ColTime":"16:00:00","TotlTran":"222456","MXTTimeRch":"0","PeakMXTRatio":"20.00","TClassMaxActTims":"120","QRDispRatio":"83.26","ASCPUUtilRatio":"18.55","ENQImmSuccessRatio":"99.09","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.78","EDSAPercent":"47.82","EDSAHWMRatio":"35.12","WriteReq":"57467","ShuntWriteRequest":"0","PkDB2TCBRatio":"11.0","ThreadRatio":"11.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"10","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAA2","ColTime":"18:00:00","TotlTran":"199257","MXTTimeRch":"0","PeakMXTRatio":"21.00","TClassMaxActTims":"120","QRDispRatio":"81.92","ASCPUUtilRatio":"20.34","ENQImmSuccessRatio":"99.18","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.55","EDSAPercent":"48.00","EDSAHWMRatio":"36.03","WriteReq":"53125","ShuntWriteRequest":"0","PkDB2TCBRatio":"10.0","ThreadRatio":"10.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"8","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAA2","ColTime":"20:00:00","TotlTran":"120766","MXTTimeRch":"0","PeakMXTRatio":"16.00","TClassMaxActTims":"119","QRDispRatio":"82.72","ASCPUUtilRatio":"16.55","ENQImmSuccessRatio":"99.4","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.23","EDSAPercent":"48.00","EDSAHWMRatio":"35.18","WriteReq":"35960","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"2","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAA2","ColTime":"22:00:00","TotlTran":"94387","MXTTimeRch":"0","PeakMXTRatio":"16.00","TClassMaxActTims":"120","QRDispRatio":"77.45","ASCPUUtilRatio":"16.60","ENQImmSuccessRatio":"99.51","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"20.00","DSAHWMRatio":"10.16","EDSAPercent":"48.00","EDSAHWMRatio":"36.73","WriteReq":"28132","ShuntWriteRequest":"0","PkDB2TCBRatio":"7.0","ThreadRatio":"7.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAA6","ColTime":"08:00:00","TotlTran":"13690","MXTTimeRch":"0","PeakMXTRatio":"12.00","TClassMaxActTims":"120","QRDispRatio":"83.60","ASCPUUtilRatio":"1.11","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"9.84","EDSAPercent":"46.55","EDSAHWMRatio":"31.82","WriteReq":"4289","ShuntWriteRequest":"0","PkDB2TCBRatio":"4.0","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAA6","ColTime":"10:00:00","TotlTran":"136924","MXTTimeRch":"0","PeakMXTRatio":"16.00","TClassMaxActTims":"120","QRDispRatio":"82.94","ASCPUUtilRatio":"10.65","ENQImmSuccessRatio":"99.45","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.23","EDSAPercent":"47.45","EDSAHWMRatio":"34.74","WriteReq":"36533","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"7","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAA6","ColTime":"12:00:00","TotlTran":"229129","MXTTimeRch":"0","PeakMXTRatio":"21.00","TClassMaxActTims":"120","QRDispRatio":"82.89","ASCPUUtilRatio":"19.92","ENQImmSuccessRatio":"99.04","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.78","EDSAPercent":"47.82","EDSAHWMRatio":"35.51","WriteReq":"61002","ShuntWriteRequest":"0","PkDB2TCBRatio":"10.0","ThreadRatio":"10.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"7","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAA6","ColTime":"14:00:00","TotlTran":"182759","MXTTimeRch":"0","PeakMXTRatio":"23.00","TClassMaxActTims":"120","QRDispRatio":"82.65","ASCPUUtilRatio":"17.16","ENQImmSuccessRatio":"99.16","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.70","EDSAPercent":"47.91","EDSAHWMRatio":"35.79","WriteReq":"53550","ShuntWriteRequest":"0","PkDB2TCBRatio":"12.0","ThreadRatio":"12.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"6","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAA6","ColTime":"16:00:00","TotlTran":"221986","MXTTimeRch":"0","PeakMXTRatio":"22.00","TClassMaxActTims":"120","QRDispRatio":"83.46","ASCPUUtilRatio":"18.42","ENQImmSuccessRatio":"99.16","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.70","EDSAPercent":"48.00","EDSAHWMRatio":"36.27","WriteReq":"57330","ShuntWriteRequest":"0","PkDB2TCBRatio":"12.0","ThreadRatio":"12.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"6","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAA6","ColTime":"18:00:00","TotlTran":"196310","MXTTimeRch":"0","PeakMXTRatio":"22.00","TClassMaxActTims":"120","QRDispRatio":"81.18","ASCPUUtilRatio":"20.31","ENQImmSuccessRatio":"99.27","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.62","EDSAPercent":"48.27","EDSAHWMRatio":"36.01","WriteReq":"52526","ShuntWriteRequest":"0","PkDB2TCBRatio":"10.0","ThreadRatio":"10.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"6","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAA6","ColTime":"20:00:00","TotlTran":"121572","MXTTimeRch":"0","PeakMXTRatio":"18.00","TClassMaxActTims":"119","QRDispRatio":"82.50","ASCPUUtilRatio":"16.67","ENQImmSuccessRatio":"99.5","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.39","EDSAPercent":"48.27","EDSAHWMRatio":"35.04","WriteReq":"36315","ShuntWriteRequest":"0","PkDB2TCBRatio":"9.0","ThreadRatio":"9.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"3","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP16PAA6","ColTime":"22:00:00","TotlTran":"94497","MXTTimeRch":"0","PeakMXTRatio":"16.00","TClassMaxActTims":"120","QRDispRatio":"77.13","ASCPUUtilRatio":"16.53","ENQImmSuccessRatio":"99.6","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.39","EDSAPercent":"48.27","EDSAHWMRatio":"36.79","WriteReq":"28179","ShuntWriteRequest":"0","PkDB2TCBRatio":"7.0","ThreadRatio":"7.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAAC","ColTime":"08:00:00","TotlTran":"13637","MXTTimeRch":"0","PeakMXTRatio":"12.00","TClassMaxActTims":"120","QRDispRatio":"82.25","ASCPUUtilRatio":"1.06","ENQImmSuccessRatio":"99.88","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"9.92","EDSAPercent":"46.55","EDSAHWMRatio":"31.80","WriteReq":"4100","ShuntWriteRequest":"0","PkDB2TCBRatio":"3.0","ThreadRatio":"3.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAAC","ColTime":"10:00:00","TotlTran":"136986","MXTTimeRch":"0","PeakMXTRatio":"24.00","TClassMaxActTims":"120","QRDispRatio":"82.36","ASCPUUtilRatio":"10.35","ENQImmSuccessRatio":"99.53","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.78","EDSAPercent":"46.91","EDSAHWMRatio":"36.89","WriteReq":"36030","ShuntWriteRequest":"0","PkDB2TCBRatio":"14.0","ThreadRatio":"14.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"5","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAAC","ColTime":"12:00:00","TotlTran":"229495","MXTTimeRch":"0","PeakMXTRatio":"18.00","TClassMaxActTims":"120","QRDispRatio":"82.70","ASCPUUtilRatio":"19.53","ENQImmSuccessRatio":"99.1","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.47","EDSAPercent":"47.36","EDSAHWMRatio":"35.17","WriteReq":"62625","ShuntWriteRequest":"0","PkDB2TCBRatio":"9.0","ThreadRatio":"9.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"4","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"3"},
+{"APPID":"BP17PAAC","ColTime":"14:00:00","TotlTran":"182753","MXTTimeRch":"0","PeakMXTRatio":"19.00","TClassMaxActTims":"120","QRDispRatio":"82.13","ASCPUUtilRatio":"16.92","ENQImmSuccessRatio":"99.01","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.39","EDSAPercent":"47.36","EDSAHWMRatio":"34.80","WriteReq":"54041","ShuntWriteRequest":"0","PkDB2TCBRatio":"9.0","ThreadRatio":"9.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"5","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAAC","ColTime":"16:00:00","TotlTran":"220855","MXTTimeRch":"0","PeakMXTRatio":"23.00","TClassMaxActTims":"120","QRDispRatio":"83.41","ASCPUUtilRatio":"18.44","ENQImmSuccessRatio":"99.14","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"11.02","EDSAPercent":"47.64","EDSAHWMRatio":"36.66","WriteReq":"58011","ShuntWriteRequest":"0","PkDB2TCBRatio":"14.0","ThreadRatio":"14.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"3","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAAC","ColTime":"18:00:00","TotlTran":"197571","MXTTimeRch":"0","PeakMXTRatio":"20.00","TClassMaxActTims":"119","QRDispRatio":"81.62","ASCPUUtilRatio":"19.73","ENQImmSuccessRatio":"99.37","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.70","EDSAPercent":"47.82","EDSAHWMRatio":"36.00","WriteReq":"52126","ShuntWriteRequest":"0","PkDB2TCBRatio":"9.0","ThreadRatio":"9.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"6","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAAC","ColTime":"20:00:00","TotlTran":"120227","MXTTimeRch":"0","PeakMXTRatio":"19.00","TClassMaxActTims":"120","QRDispRatio":"81.94","ASCPUUtilRatio":"16.38","ENQImmSuccessRatio":"99.36","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.31","EDSAPercent":"47.91","EDSAHWMRatio":"36.36","WriteReq":"36233","ShuntWriteRequest":"0","PkDB2TCBRatio":"10.0","ThreadRatio":"10.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"1","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAAC","ColTime":"22:00:00","TotlTran":"94907","MXTTimeRch":"0","PeakMXTRatio":"16.00","TClassMaxActTims":"120","QRDispRatio":"75.20","ASCPUUtilRatio":"16.17","ENQImmSuccessRatio":"99.44","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.31","EDSAPercent":"47.91","EDSAHWMRatio":"37.21","WriteReq":"28762","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAAG","ColTime":"08:00:00","TotlTran":"14311","MXTTimeRch":"0","PeakMXTRatio":"12.00","TClassMaxActTims":"120","QRDispRatio":"82.37","ASCPUUtilRatio":"1.13","ENQImmSuccessRatio":"99.96","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"9.77","EDSAPercent":"48.64","EDSAHWMRatio":"31.46","WriteReq":"4486","ShuntWriteRequest":"0","PkDB2TCBRatio":"3.0","ThreadRatio":"3.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAAG","ColTime":"10:00:00","TotlTran":"136208","MXTTimeRch":"0","PeakMXTRatio":"17.00","TClassMaxActTims":"120","QRDispRatio":"82.46","ASCPUUtilRatio":"10.62","ENQImmSuccessRatio":"99.57","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.39","EDSAPercent":"49.00","EDSAHWMRatio":"34.59","WriteReq":"36424","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"6","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAAG","ColTime":"12:00:00","TotlTran":"229623","MXTTimeRch":"0","PeakMXTRatio":"19.00","TClassMaxActTims":"120","QRDispRatio":"83.61","ASCPUUtilRatio":"19.40","ENQImmSuccessRatio":"98.96","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.62","EDSAPercent":"49.45","EDSAHWMRatio":"34.51","WriteReq":"61484","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"7","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"1"},
+{"APPID":"BP17PAAG","ColTime":"14:00:00","TotlTran":"181937","MXTTimeRch":"0","PeakMXTRatio":"17.00","TClassMaxActTims":"120","QRDispRatio":"82.08","ASCPUUtilRatio":"17.22","ENQImmSuccessRatio":"99.14","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.23","EDSAPercent":"49.55","EDSAHWMRatio":"34.46","WriteReq":"52713","ShuntWriteRequest":"0","PkDB2TCBRatio":"7.0","ThreadRatio":"7.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"3","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAAG","ColTime":"16:00:00","TotlTran":"220553","MXTTimeRch":"0","PeakMXTRatio":"19.00","TClassMaxActTims":"120","QRDispRatio":"83.24","ASCPUUtilRatio":"18.31","ENQImmSuccessRatio":"99.15","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.55","EDSAPercent":"49.73","EDSAHWMRatio":"35.42","WriteReq":"56764","ShuntWriteRequest":"0","PkDB2TCBRatio":"10.0","ThreadRatio":"10.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"4","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAAG","ColTime":"18:00:00","TotlTran":"198792","MXTTimeRch":"0","PeakMXTRatio":"18.00","TClassMaxActTims":"120","QRDispRatio":"81.61","ASCPUUtilRatio":"20.07","ENQImmSuccessRatio":"99.29","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.55","EDSAPercent":"50.00","EDSAHWMRatio":"35.60","WriteReq":"52962","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"9","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAAG","ColTime":"20:00:00","TotlTran":"122034","MXTTimeRch":"0","PeakMXTRatio":"16.00","TClassMaxActTims":"120","QRDispRatio":"82.33","ASCPUUtilRatio":"16.64","ENQImmSuccessRatio":"99.51","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.16","EDSAPercent":"50.00","EDSAHWMRatio":"35.02","WriteReq":"36299","ShuntWriteRequest":"0","PkDB2TCBRatio":"7.0","ThreadRatio":"7.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"2","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAAG","ColTime":"22:00:00","TotlTran":"94662","MXTTimeRch":"0","PeakMXTRatio":"16.00","TClassMaxActTims":"119","QRDispRatio":"75.09","ASCPUUtilRatio":"16.31","ENQImmSuccessRatio":"99.54","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.16","EDSAPercent":"50.00","EDSAHWMRatio":"37.10","WriteReq":"27634","ShuntWriteRequest":"0","PkDB2TCBRatio":"7.0","ThreadRatio":"7.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAA3","ColTime":"08:00:00","TotlTran":"14000","MXTTimeRch":"0","PeakMXTRatio":"13.00","TClassMaxActTims":"120","QRDispRatio":"82.61","ASCPUUtilRatio":"1.08","ENQImmSuccessRatio":"99.93","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"9.84","EDSAPercent":"46.45","EDSAHWMRatio":"32.17","WriteReq":"4200","ShuntWriteRequest":"0","PkDB2TCBRatio":"4.0","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAA3","ColTime":"10:00:00","TotlTran":"136399","MXTTimeRch":"0","PeakMXTRatio":"16.00","TClassMaxActTims":"120","QRDispRatio":"82.44","ASCPUUtilRatio":"10.71","ENQImmSuccessRatio":"99.39","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.23","EDSAPercent":"46.73","EDSAHWMRatio":"34.53","WriteReq":"37656","ShuntWriteRequest":"0","PkDB2TCBRatio":"7.0","ThreadRatio":"7.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"4","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAA3","ColTime":"12:00:00","TotlTran":"229844","MXTTimeRch":"0","PeakMXTRatio":"20.00","TClassMaxActTims":"120","QRDispRatio":"83.44","ASCPUUtilRatio":"19.37","ENQImmSuccessRatio":"99.09","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.55","EDSAPercent":"47.64","EDSAHWMRatio":"34.50","WriteReq":"62278","ShuntWriteRequest":"0","PkDB2TCBRatio":"10.0","ThreadRatio":"10.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"4","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAA3","ColTime":"14:00:00","TotlTran":"180600","MXTTimeRch":"0","PeakMXTRatio":"17.00","TClassMaxActTims":"120","QRDispRatio":"82.21","ASCPUUtilRatio":"16.79","ENQImmSuccessRatio":"99.13","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.39","EDSAPercent":"47.82","EDSAHWMRatio":"34.85","WriteReq":"52913","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"3","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAA3","ColTime":"16:00:00","TotlTran":"220650","MXTTimeRch":"0","PeakMXTRatio":"21.00","TClassMaxActTims":"120","QRDispRatio":"83.49","ASCPUUtilRatio":"18.24","ENQImmSuccessRatio":"99.14","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.39","EDSAPercent":"47.91","EDSAHWMRatio":"35.27","WriteReq":"57439","ShuntWriteRequest":"0","PkDB2TCBRatio":"10.0","ThreadRatio":"10.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"3","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAA3","ColTime":"18:00:00","TotlTran":"197857","MXTTimeRch":"0","PeakMXTRatio":"17.00","TClassMaxActTims":"120","QRDispRatio":"81.87","ASCPUUtilRatio":"19.48","ENQImmSuccessRatio":"99.31","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.55","EDSAPercent":"48.09","EDSAHWMRatio":"35.40","WriteReq":"52343","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"4","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAA3","ColTime":"20:00:00","TotlTran":"120903","MXTTimeRch":"0","PeakMXTRatio":"16.00","TClassMaxActTims":"119","QRDispRatio":"81.67","ASCPUUtilRatio":"16.81","ENQImmSuccessRatio":"99.37","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.23","EDSAPercent":"48.18","EDSAHWMRatio":"35.23","WriteReq":"35731","ShuntWriteRequest":"0","PkDB2TCBRatio":"7.0","ThreadRatio":"7.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAA3","ColTime":"22:00:00","TotlTran":"94345","MXTTimeRch":"0","PeakMXTRatio":"17.00","TClassMaxActTims":"120","QRDispRatio":"75.75","ASCPUUtilRatio":"15.65","ENQImmSuccessRatio":"99.46","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.16","EDSAPercent":"48.18","EDSAHWMRatio":"36.99","WriteReq":"28335","ShuntWriteRequest":"0","PkDB2TCBRatio":"7.0","ThreadRatio":"7.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAA7","ColTime":"08:00:00","TotlTran":"13691","MXTTimeRch":"0","PeakMXTRatio":"13.00","TClassMaxActTims":"120","QRDispRatio":"83.08","ASCPUUtilRatio":"1.08","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.08","EDSAPercent":"50.36","EDSAHWMRatio":"31.74","WriteReq":"4156","ShuntWriteRequest":"0","PkDB2TCBRatio":"4.0","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAA7","ColTime":"10:00:00","TotlTran":"137003","MXTTimeRch":"0","PeakMXTRatio":"16.00","TClassMaxActTims":"120","QRDispRatio":"82.58","ASCPUUtilRatio":"10.52","ENQImmSuccessRatio":"99.49","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.39","EDSAPercent":"52.09","EDSAHWMRatio":"34.93","WriteReq":"37013","ShuntWriteRequest":"0","PkDB2TCBRatio":"7.0","ThreadRatio":"7.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"3","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAA7","ColTime":"12:00:00","TotlTran":"230358","MXTTimeRch":"0","PeakMXTRatio":"21.00","TClassMaxActTims":"120","QRDispRatio":"83.46","ASCPUUtilRatio":"19.37","ENQImmSuccessRatio":"99.1","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.31","EDSAPercent":"52.45","EDSAHWMRatio":"35.23","WriteReq":"62326","ShuntWriteRequest":"0","PkDB2TCBRatio":"10.0","ThreadRatio":"10.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"6","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAA7","ColTime":"14:00:00","TotlTran":"181351","MXTTimeRch":"0","PeakMXTRatio":"23.00","TClassMaxActTims":"120","QRDispRatio":"82.36","ASCPUUtilRatio":"16.99","ENQImmSuccessRatio":"99.12","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.78","EDSAPercent":"52.55","EDSAHWMRatio":"35.78","WriteReq":"52938","ShuntWriteRequest":"0","PkDB2TCBRatio":"11.0","ThreadRatio":"11.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"2","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAA7","ColTime":"16:00:00","TotlTran":"219792","MXTTimeRch":"0","PeakMXTRatio":"21.00","TClassMaxActTims":"120","QRDispRatio":"83.40","ASCPUUtilRatio":"18.21","ENQImmSuccessRatio":"99.01","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.55","EDSAPercent":"52.73","EDSAHWMRatio":"36.54","WriteReq":"57222","ShuntWriteRequest":"0","PkDB2TCBRatio":"11.0","ThreadRatio":"11.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"1","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAA7","ColTime":"18:00:00","TotlTran":"197617","MXTTimeRch":"0","PeakMXTRatio":"18.00","TClassMaxActTims":"120","QRDispRatio":"81.47","ASCPUUtilRatio":"20.23","ENQImmSuccessRatio":"99.29","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.70","EDSAPercent":"52.82","EDSAHWMRatio":"35.97","WriteReq":"53219","ShuntWriteRequest":"0","PkDB2TCBRatio":"9.0","ThreadRatio":"9.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"3","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAA7","ColTime":"20:00:00","TotlTran":"121033","MXTTimeRch":"0","PeakMXTRatio":"16.00","TClassMaxActTims":"119","QRDispRatio":"82.18","ASCPUUtilRatio":"17.39","ENQImmSuccessRatio":"99.5","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.23","EDSAPercent":"52.82","EDSAHWMRatio":"34.45","WriteReq":"36602","ShuntWriteRequest":"0","PkDB2TCBRatio":"7.0","ThreadRatio":"7.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"2","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP17PAA7","ColTime":"22:00:00","TotlTran":"94306","MXTTimeRch":"0","PeakMXTRatio":"16.00","TClassMaxActTims":"120","QRDispRatio":"74.99","ASCPUUtilRatio":"16.27","ENQImmSuccessRatio":"99.48","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.16","EDSAPercent":"52.82","EDSAHWMRatio":"36.84","WriteReq":"28483","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAAD","ColTime":"08:00:00","TotlTran":"14193","MXTTimeRch":"0","PeakMXTRatio":"13.00","TClassMaxActTims":"120","QRDispRatio":"82.75","ASCPUUtilRatio":"1.08","ENQImmSuccessRatio":"99.89","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"9.69","EDSAPercent":"47.82","EDSAHWMRatio":"32.04","WriteReq":"4423","ShuntWriteRequest":"0","PkDB2TCBRatio":"4.0","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAAD","ColTime":"10:00:00","TotlTran":"136845","MXTTimeRch":"0","PeakMXTRatio":"18.00","TClassMaxActTims":"120","QRDispRatio":"82.60","ASCPUUtilRatio":"10.72","ENQImmSuccessRatio":"99.4","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.47","EDSAPercent":"48.09","EDSAHWMRatio":"35.48","WriteReq":"37042","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"3","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAAD","ColTime":"12:00:00","TotlTran":"229662","MXTTimeRch":"0","PeakMXTRatio":"21.00","TClassMaxActTims":"120","QRDispRatio":"83.60","ASCPUUtilRatio":"19.37","ENQImmSuccessRatio":"98.97","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.55","EDSAPercent":"48.45","EDSAHWMRatio":"35.68","WriteReq":"61595","ShuntWriteRequest":"0","PkDB2TCBRatio":"11.0","ThreadRatio":"11.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"11","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAAD","ColTime":"14:00:00","TotlTran":"182051","MXTTimeRch":"0","PeakMXTRatio":"18.00","TClassMaxActTims":"120","QRDispRatio":"81.93","ASCPUUtilRatio":"16.76","ENQImmSuccessRatio":"99.1","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.31","EDSAPercent":"48.55","EDSAHWMRatio":"34.55","WriteReq":"53269","ShuntWriteRequest":"0","PkDB2TCBRatio":"10.0","ThreadRatio":"10.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"1","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAAD","ColTime":"16:00:00","TotlTran":"220054","MXTTimeRch":"0","PeakMXTRatio":"18.00","TClassMaxActTims":"120","QRDispRatio":"83.43","ASCPUUtilRatio":"18.03","ENQImmSuccessRatio":"99.15","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.47","EDSAPercent":"48.73","EDSAHWMRatio":"34.99","WriteReq":"56918","ShuntWriteRequest":"0","PkDB2TCBRatio":"9.0","ThreadRatio":"9.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"8","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAAD","ColTime":"18:00:00","TotlTran":"198343","MXTTimeRch":"0","PeakMXTRatio":"20.00","TClassMaxActTims":"120","QRDispRatio":"84.07","ASCPUUtilRatio":"19.37","ENQImmSuccessRatio":"99.33","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.55","EDSAPercent":"48.82","EDSAHWMRatio":"35.92","WriteReq":"53482","ShuntWriteRequest":"0","PkDB2TCBRatio":"9.0","ThreadRatio":"9.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"3","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAAD","ColTime":"20:00:00","TotlTran":"121530","MXTTimeRch":"0","PeakMXTRatio":"16.00","TClassMaxActTims":"119","QRDispRatio":"81.28","ASCPUUtilRatio":"16.61","ENQImmSuccessRatio":"99.5","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.31","EDSAPercent":"48.91","EDSAHWMRatio":"35.52","WriteReq":"35910","ShuntWriteRequest":"0","PkDB2TCBRatio":"6.0","ThreadRatio":"6.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"1","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAAD","ColTime":"22:00:00","TotlTran":"94265","MXTTimeRch":"0","PeakMXTRatio":"16.00","TClassMaxActTims":"120","QRDispRatio":"77.67","ASCPUUtilRatio":"15.25","ENQImmSuccessRatio":"99.52","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.16","EDSAPercent":"48.91","EDSAHWMRatio":"37.27","WriteReq":"28359","ShuntWriteRequest":"0","PkDB2TCBRatio":"7.0","ThreadRatio":"7.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"1","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAAH","ColTime":"08:00:00","TotlTran":"13750","MXTTimeRch":"0","PeakMXTRatio":"12.00","TClassMaxActTims":"120","QRDispRatio":"81.55","ASCPUUtilRatio":"1.07","ENQImmSuccessRatio":"99.89","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"9.84","EDSAPercent":"47.82","EDSAHWMRatio":"31.76","WriteReq":"4322","ShuntWriteRequest":"0","PkDB2TCBRatio":"3.0","ThreadRatio":"3.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAAH","ColTime":"10:00:00","TotlTran":"136844","MXTTimeRch":"0","PeakMXTRatio":"17.00","TClassMaxActTims":"120","QRDispRatio":"82.33","ASCPUUtilRatio":"10.78","ENQImmSuccessRatio":"99.53","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.31","EDSAPercent":"49.45","EDSAHWMRatio":"34.47","WriteReq":"36087","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"4","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAAH","ColTime":"12:00:00","TotlTran":"230452","MXTTimeRch":"0","PeakMXTRatio":"19.00","TClassMaxActTims":"120","QRDispRatio":"83.51","ASCPUUtilRatio":"19.49","ENQImmSuccessRatio":"99.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.62","EDSAPercent":"49.82","EDSAHWMRatio":"35.80","WriteReq":"62101","ShuntWriteRequest":"0","PkDB2TCBRatio":"10.0","ThreadRatio":"10.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"4","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"2"},
+{"APPID":"BP18PAAH","ColTime":"14:00:00","TotlTran":"181142","MXTTimeRch":"0","PeakMXTRatio":"21.00","TClassMaxActTims":"120","QRDispRatio":"81.92","ASCPUUtilRatio":"16.51","ENQImmSuccessRatio":"99.27","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.78","EDSAPercent":"49.91","EDSAHWMRatio":"36.27","WriteReq":"53048","ShuntWriteRequest":"0","PkDB2TCBRatio":"9.0","ThreadRatio":"9.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"1","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAAH","ColTime":"16:00:00","TotlTran":"221996","MXTTimeRch":"0","PeakMXTRatio":"19.00","TClassMaxActTims":"120","QRDispRatio":"83.29","ASCPUUtilRatio":"18.29","ENQImmSuccessRatio":"99.08","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.55","EDSAPercent":"50.18","EDSAHWMRatio":"35.39","WriteReq":"57515","ShuntWriteRequest":"0","PkDB2TCBRatio":"10.0","ThreadRatio":"10.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"2","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAAH","ColTime":"18:00:00","TotlTran":"197205","MXTTimeRch":"0","PeakMXTRatio":"17.00","TClassMaxActTims":"120","QRDispRatio":"83.75","ASCPUUtilRatio":"20.00","ENQImmSuccessRatio":"99.31","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.39","EDSAPercent":"50.36","EDSAHWMRatio":"35.78","WriteReq":"52263","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"6","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAAH","ColTime":"20:00:00","TotlTran":"120612","MXTTimeRch":"0","PeakMXTRatio":"16.00","TClassMaxActTims":"119","QRDispRatio":"81.34","ASCPUUtilRatio":"16.81","ENQImmSuccessRatio":"99.52","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.23","EDSAPercent":"50.45","EDSAHWMRatio":"34.49","WriteReq":"36195","ShuntWriteRequest":"0","PkDB2TCBRatio":"7.0","ThreadRatio":"7.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAAH","ColTime":"22:00:00","TotlTran":"94140","MXTTimeRch":"0","PeakMXTRatio":"17.00","TClassMaxActTims":"120","QRDispRatio":"77.32","ASCPUUtilRatio":"16.60","ENQImmSuccessRatio":"99.53","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.23","EDSAPercent":"50.45","EDSAHWMRatio":"36.30","WriteReq":"28658","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAA4","ColTime":"08:00:00","TotlTran":"13953","MXTTimeRch":"0","PeakMXTRatio":"13.00","TClassMaxActTims":"120","QRDispRatio":"82.49","ASCPUUtilRatio":"1.06","ENQImmSuccessRatio":"100.0","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.00","EDSAPercent":"47.73","EDSAHWMRatio":"31.83","WriteReq":"4177","ShuntWriteRequest":"0","PkDB2TCBRatio":"4.0","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAA4","ColTime":"10:00:00","TotlTran":"136646","MXTTimeRch":"0","PeakMXTRatio":"17.00","TClassMaxActTims":"120","QRDispRatio":"82.48","ASCPUUtilRatio":"10.83","ENQImmSuccessRatio":"99.44","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.31","EDSAPercent":"48.00","EDSAHWMRatio":"35.01","WriteReq":"36405","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"1","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAA4","ColTime":"12:00:00","TotlTran":"229709","MXTTimeRch":"0","PeakMXTRatio":"19.00","TClassMaxActTims":"120","QRDispRatio":"83.36","ASCPUUtilRatio":"19.28","ENQImmSuccessRatio":"98.96","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.47","EDSAPercent":"48.27","EDSAHWMRatio":"34.98","WriteReq":"62274","ShuntWriteRequest":"0","PkDB2TCBRatio":"9.0","ThreadRatio":"9.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"9","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAA4","ColTime":"14:00:00","TotlTran":"180516","MXTTimeRch":"0","PeakMXTRatio":"22.00","TClassMaxActTims":"120","QRDispRatio":"82.09","ASCPUUtilRatio":"16.66","ENQImmSuccessRatio":"99.01","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.62","EDSAPercent":"48.36","EDSAHWMRatio":"35.12","WriteReq":"53519","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"5","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAA4","ColTime":"16:00:00","TotlTran":"219802","MXTTimeRch":"0","PeakMXTRatio":"18.00","TClassMaxActTims":"120","QRDispRatio":"83.53","ASCPUUtilRatio":"18.05","ENQImmSuccessRatio":"99.02","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.47","EDSAPercent":"48.55","EDSAHWMRatio":"34.79","WriteReq":"56850","ShuntWriteRequest":"0","PkDB2TCBRatio":"9.0","ThreadRatio":"9.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"9","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAA4","ColTime":"18:00:00","TotlTran":"198449","MXTTimeRch":"0","PeakMXTRatio":"25.00","TClassMaxActTims":"120","QRDispRatio":"83.92","ASCPUUtilRatio":"19.25","ENQImmSuccessRatio":"99.36","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"11.02","EDSAPercent":"48.82","EDSAHWMRatio":"37.72","WriteReq":"53357","ShuntWriteRequest":"0","PkDB2TCBRatio":"15.0","ThreadRatio":"15.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"3","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAA4","ColTime":"20:00:00","TotlTran":"120685","MXTTimeRch":"0","PeakMXTRatio":"20.00","TClassMaxActTims":"119","QRDispRatio":"81.47","ASCPUUtilRatio":"16.50","ENQImmSuccessRatio":"99.43","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.47","EDSAPercent":"48.82","EDSAHWMRatio":"35.29","WriteReq":"35568","ShuntWriteRequest":"0","PkDB2TCBRatio":"11.0","ThreadRatio":"11.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAA4","ColTime":"22:00:00","TotlTran":"94844","MXTTimeRch":"0","PeakMXTRatio":"16.00","TClassMaxActTims":"120","QRDispRatio":"77.97","ASCPUUtilRatio":"16.07","ENQImmSuccessRatio":"99.55","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.00","EDSAPercent":"48.82","EDSAHWMRatio":"37.13","WriteReq":"28692","ShuntWriteRequest":"0","PkDB2TCBRatio":"6.0","ThreadRatio":"6.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAA8","ColTime":"08:00:00","TotlTran":"13700","MXTTimeRch":"0","PeakMXTRatio":"13.00","TClassMaxActTims":"120","QRDispRatio":"82.17","ASCPUUtilRatio":"1.06","ENQImmSuccessRatio":"99.93","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"9.92","EDSAPercent":"47.36","EDSAHWMRatio":"32.32","WriteReq":"4115","ShuntWriteRequest":"0","PkDB2TCBRatio":"4.0","ThreadRatio":"4.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAA8","ColTime":"10:00:00","TotlTran":"136467","MXTTimeRch":"0","PeakMXTRatio":"19.00","TClassMaxActTims":"120","QRDispRatio":"82.66","ASCPUUtilRatio":"10.76","ENQImmSuccessRatio":"99.49","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.47","EDSAPercent":"49.09","EDSAHWMRatio":"35.57","WriteReq":"36114","ShuntWriteRequest":"0","PkDB2TCBRatio":"10.0","ThreadRatio":"10.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"3","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAA8","ColTime":"12:00:00","TotlTran":"229652","MXTTimeRch":"0","PeakMXTRatio":"22.00","TClassMaxActTims":"120","QRDispRatio":"83.53","ASCPUUtilRatio":"19.30","ENQImmSuccessRatio":"99.04","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.78","EDSAPercent":"49.36","EDSAHWMRatio":"36.01","WriteReq":"61993","ShuntWriteRequest":"0","PkDB2TCBRatio":"13.0","ThreadRatio":"13.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"7","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAA8","ColTime":"14:00:00","TotlTran":"180804","MXTTimeRch":"0","PeakMXTRatio":"21.00","TClassMaxActTims":"120","QRDispRatio":"82.16","ASCPUUtilRatio":"16.61","ENQImmSuccessRatio":"98.96","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.70","EDSAPercent":"49.45","EDSAHWMRatio":"35.64","WriteReq":"52760","ShuntWriteRequest":"0","PkDB2TCBRatio":"12.0","ThreadRatio":"12.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"3","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAA8","ColTime":"16:00:00","TotlTran":"220362","MXTTimeRch":"0","PeakMXTRatio":"19.00","TClassMaxActTims":"120","QRDispRatio":"83.59","ASCPUUtilRatio":"18.18","ENQImmSuccessRatio":"99.18","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.55","EDSAPercent":"49.64","EDSAHWMRatio":"34.90","WriteReq":"57005","ShuntWriteRequest":"0","PkDB2TCBRatio":"10.0","ThreadRatio":"10.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"4","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAA8","ColTime":"18:00:00","TotlTran":"197943","MXTTimeRch":"0","PeakMXTRatio":"17.00","TClassMaxActTims":"120","QRDispRatio":"83.29","ASCPUUtilRatio":"20.30","ENQImmSuccessRatio":"99.29","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.55","EDSAPercent":"49.82","EDSAHWMRatio":"35.59","WriteReq":"53566","ShuntWriteRequest":"0","PkDB2TCBRatio":"8.0","ThreadRatio":"8.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"5","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAA8","ColTime":"20:00:00","TotlTran":"121028","MXTTimeRch":"0","PeakMXTRatio":"15.00","TClassMaxActTims":"119","QRDispRatio":"81.21","ASCPUUtilRatio":"17.18","ENQImmSuccessRatio":"99.5","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.16","EDSAPercent":"49.91","EDSAHWMRatio":"34.14","WriteReq":"35454","ShuntWriteRequest":"0","PkDB2TCBRatio":"7.0","ThreadRatio":"7.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"1","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"},
+{"APPID":"BP18PAA8","ColTime":"22:00:00","TotlTran":"94935","MXTTimeRch":"0","PeakMXTRatio":"15.00","TClassMaxActTims":"120","QRDispRatio":"77.58","ASCPUUtilRatio":"16.70","ENQImmSuccessRatio":"99.58","SMSOSTms":"0","SMSTGVIOLTms":"0","DSAPercent":"25.00","DSAHWMRatio":"10.08","EDSAPercent":"49.91","EDSAHWMRatio":"35.88","WriteReq":"28829","ShuntWriteRequest":"0","PkDB2TCBRatio":"7.0","ThreadRatio":"7.0","ThreadWtOrOF":"0","BufferOrStringWaitTSQ":"0","BufferOrStringWaitTDQ":"0","QueuedAlloc":"0","SysOrTranDumpTaken":"0"}
+]
+
+var data = {"data":[],"xAxis":[]};
+var chartCount = 0;
+var compare1 = "14:00:00";
+var compare2 = "16:00:00";
+var options = new Array();
+var types = new Array();
+var detailChart;
+function initData(){
+	var compareIndex = "ColTime";
+	var xAxisIndex = "APPID";
+	for(var type in jsonTrend[0]){
+		if(type!=xAxisIndex && type!=compareIndex){
+			types[chartCount] = type;
+			var temp = document.createElement("div");
+			temp.id = type;
+			temp.className="chart_image";
+			$("#chart").append(temp);	
+			$("div[id="+type+"]").click(function(){
+				showDetails(this.id)
+			})
+		}
+		chartCount++;
+		var temp = {"type":type,compare1:[],compare2:[],dis:[],base:[]};
+		jsonTrend.forEach(function(item){
+			var content = parseFloat(item[type]);
+			
+			if(item[compareIndex] == compare1){
+				if(temp.min == undefined || temp.min > content){
+					temp.min = content;
+				}
+				if(temp.max == undefined || temp.max < content){
+					temp.max = content
+				}
+				tempNum = parseFloat(item[type]);
+				if(tempNum == null){
+					tempNum = item[type];
+				}
+				temp.compare1.push(tempNum);
+			}else if(item[compareIndex] == compare2){
+				if(temp.min == undefined || temp.min > content){
+					temp.min = content;
+				}
+				if(temp.max == undefined || temp.max < content){
+					temp.max = content
+				}
+				tempNum = parseFloat(item[type]);
+				if(tempNum == null){
+					tempNum = item[type];
+				}
+				temp.compare2.push(parseFloat(tempNum));
+			}
+		})
+		if(temp.min == temp.max){
+			temp.max = temp.max+1;
+		}
+		data.data.push(temp);
+	}
+		
+	data.data.forEach(function(item){
+		for(var i=0;i<item.compare1.length;i++){
+			var temp1 = parseFloat(item.compare1[i]);
+			var temp2 = parseFloat(item.compare2[i]);
+			if(temp1<temp2){
+				item.base.push(temp1);
+				item.dis.push({value : temp2-temp1, itemStyle:{ normal:{color:'red'}}})
+			}else{
+				item.base.push(temp2);
+				item.dis.push({value : temp1-temp2, itemStyle:{ normal:{color:'green'}}})
+			}
+		}
+	})
+	jsonTrend.forEach(function(reg1){
+		var flag = true;
+		data.xAxis.forEach(function(reg2){
+			if(reg1["APPID"] == reg2){
+				flag = false;
+			}
+
+		})
+		if(flag){
+			data.xAxis.push(reg1["APPID"]);
+		}
+	})
+	console.log("xAxis:"+JSON.stringify(data.xAxis))
+}
+
+function showChart(){
+	// 路径配置
+    require.config({
+        paths: {
+            echarts: 'http://echarts.baidu.com/build/dist'
+        }
+    });
+	require(
+        [
+            'echarts',
+            'echarts/chart/bar', 
+            'echarts/chart/line',
+            'echarts/chart/pie',
+            'echarts/chart/gauge',
+            'echarts/chart/funnel',
+            'echarts/chart/radar'// 使用柱状图就加载bar模块，按需加载
+        ],
+        function (ec) {
+            // 基于准备好的dom，初始化echarts图表
+            // console.log("detailChart set")
+            detailChart = ec.init(document.getElementById("detail1"),"macarons");
+
+            var chart = document.getElementsByClassName("chart_image");
+            for(var i=2;i<chartCount;i++){
+            	var temp = data.data[i];
+            	var sum = 0;
+            	// temp.dis.forEach(function(dis){
+            	// 	sum+=dis;
+            	// });
+            	// if(sum!=0){
+	            	options[i-2] = {
+	                    title :{text : temp.type},
+	                    tooltip : {trigger: 'axis'},
+	                    legend: {data:[compare1, compare2],selectedMode:true},
+	                    xAxis : [{show: true,type : 'category',data : data.xAxis}],
+	                    yAxis : [{name: "TotlTran",type : 'value', min : temp.min, max : temp.max}],
+	                    series : [
+	                    	{
+	                            name:compare2,
+	                            type:'line',
+	                    		clickable:true,
+	                            itemStyle: {normal: {color : 'rgba(18,189,4,1)'}},
+	                            data:temp.compare1
+	                        },
+	                        {
+	                            name:compare1,
+	                            type:'line',
+	                            itemStyle:{normal:{color: 'rgba(203,173,0,1)'}},
+	                            data:temp.compare2
+	                        },
+	                        {
+	                            name:'base',
+	                            type:'bar',
+	                            stack: '1',
+	                            barWidth: 6,
+	                            itemStyle:{
+	                                normal:{
+	                                    color:'rgba(0,0,0,0)'
+	                                },
+	                                emphasis:{
+	                                    color:'rgba(0,0,0,0)'
+	                                }
+	                            },
+	                            data:temp.base
+	                        },
+	                        {
+	                            name:'change',
+	                            type:'bar',
+	                            stack: '1',
+	                            data:temp.dis
+	                        }
+	                    ]
+	                };
+	                myChart = ec.init(chart[i-2],"macarons");
+	                // console.log("options:"+JSON.stringify(options[i-2]))
+					myChart.setOption(options[i-2]);
+            	// }
+            };
+            setTimeout(function(){
+            	myChart.resize();	
+            })
+
+	hideDetails();
+		}
+	);	
+}
+
+$("#close_txt").click(function close(){
+	// console.log("close")
+	hideDetails();
+})
+
+function createTable(temp){
+	// console.log("temp:"+JSON.stringify(temp))
+	var table = $("#chartDetails");
+	table.empty();
+	var tr = $("<tr></tr>")
+	tr.appendTo(table);
+	tr.append($("<th>Compare</th>"))
+	tr.append($("<th>"+compare1+"</th>"))
+	tr.append($("<th>"+compare2+"</th>"))
+	// console.log("createTable append")
+	var index = 0;
+	for(var type in jsonTrend[0]){
+			
+	}
+	for(var i=0;i<temp.compare1.length;i++){
+		if(i%2 == 1){
+			var tr = $("<tr class='trOdd'></tr>")
+		}else{
+			var tr = $("<tr></tr>")
+		}
+		tr.appendTo(table);
+		tr.append($("<td>"+data.xAxis[i]+"</td>"))
+		var var1 = temp.compare1[i];
+		var var2 = temp.compare2[i];
+		tr.append($("<td>"+var1+"</td>"))
+		if(var1 > var2){
+			tr.append($("<td style='color:blue'>"+var2+"↓</td>"))	
+		}else if(var1 < var2){
+			tr.append($("<td style='color:red'>"+var2+"↑</td>"))	
+		}else{
+			tr.append($("<td>"+var2+"</td>"))	
+		}
+		
+	}
+}
+
+function showDetails(type){
+	var index = 0;
+	data.data.forEach(function(temp){
+		if(temp.type == type){
+			// console.log("options:"+JSON.stringify(options[index-2]));
+			detailChart.setOption(options[index-2]);
+			// console.log("createTable start")
+			createTable(temp);
+			// console.log("createTable end")
+		}
+		index++;
+	})
+	$('#detail').show();
+	$("#fade").show();
+	return false;
+}
+ 
+
+ initData();
+ showChart();
+ console.log("types:")
+</script>

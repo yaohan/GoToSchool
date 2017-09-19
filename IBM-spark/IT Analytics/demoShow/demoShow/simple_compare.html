@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <style>
+    	.main_chart{
+			width:30vw;
+			height:30vh;
+			display: inline-block;
+    	}
+        .detail_chart{
+            width:78vw; 
+            height:80vh;
+        }
+    	.white-block{
+			position: absolute;
+			top: 10%;
+			left: 10%;
+			width: 80%;
+			height: 80%;
+			padding: 16px;
+			border: none;
+			background-color: white;
+			z-index:1002;
+			overflow: auto;
+    	}
+    	.fade-block{
+			position: absolute;
+			top: 0%;
+			left: 0%;
+			width: 100%;
+			height: 100%;
+			background-color: black;
+			z-index:1001;
+			-moz-opacity: 0.8;
+			opacity:.80;
+			filter: alpha(opacity=80);
+    	}
+        .close_txt{
+            z-index:1002;
+            font-size: 24px;
+            color:white;
+            position:fixed;
+            right:10%;
+            top:3%
+        }
+    </style>
+</head>
+<body>
+	<div id="chart">
+
+		<div id="main" class="main_chart"></div>
+    	<div id="main2" class="main_chart"></div> 
+    	<div id="main3" class="main_chart"></div>                        
+		<div id="main4" class="main_chart"></div>
+    	<div id="main5" class="main_chart"></div> 
+    	<div id="main6" class="main_chart"></div>                        
+    </div>
+    <div id="detail" class="white-block">
+		<div id="detail1" class="detail_chart"></div>
+    	<div id="detail2" class="detail_chart"></div> 
+    	<div id="detail3" class="detail_chart"></div>                        
+	</div>
+	<div id="fade"  class="fade-block">
+		<a id="close_txt" class="close_txt">关闭</a>
+	</div>
+</body>
+    <!-- ECharts单文件引入 -->
+    <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+    <script src="js/jquery.js"></script>
+    <script type="text/javascript">
+
+	$('#detail').hide();
+	$("#fade").hide();
+
+	$("#close_txt").click(function(){
+		$('#detail').hide();
+		$("#fade").hide();		
+	})
+	$("#main").click(function(){
+		$('#detail').show();
+		$("#fade").show();			
+	})
+
+	$("#main2").click(function(){
+		$('#detail').show();
+		$("#fade").show();			
+	})
+	$("#main3").click(function(){
+		$('#detail').show();
+		$("#fade").show();			
+	})
+	$("#main4").click(function(){
+		$('#detail').show();
+		$("#fade").show();			
+	})
+	$("#main5").click(function(){
+		$('#detail').show();
+		$("#fade").show();			
+	})
+	$("#main6").click(function(){
+		$('#detail').show();
+		$("#fade").show();			
+	})
+
+        // 路径配置
+    require.config({
+        paths: {
+            echarts: 'http://echarts.baidu.com/build/dist'
+        }
+    });
+                      // 使用
+    require(
+        [
+            'echarts',
+            'echarts/chart/bar', 
+            'echarts/chart/line',
+            'echarts/chart/pie',
+            'echarts/chart/gauge',
+            'echarts/chart/funnel',
+            'echarts/chart/radar'// 使用柱状图就加载bar模块，按需加载
+        ],
+        function (ec) {
+            // 基于准备好的dom，初始化echarts图表
+
+			var myChart = ec.init(document.getElementById('main'),'macarons'); 
+            var myChart2 = ec.init(document.getElementById('main2'),'macarons'); 
+            var myChart3 = ec.init(document.getElementById('main3'),'macarons'); 
+            var myChart4 = ec.init(document.getElementById('main4'),'macarons'); 
+            var myChart5 = ec.init(document.getElementById('main5'),'macarons'); 
+            var myChart6 = ec.init(document.getElementById('main6'),'macarons'); 
+
+            var detailChart1 = ec.init(document.getElementById('detail1'),'macarons');
+            var detailChart2 = ec.init(document.getElementById('detail2'),'macarons');
+            var detailChart3 = ec.init(document.getElementById('detail3'),'macarons');
+
+            
+            var option1 = {
+                    title :{text : 'TotlTran'},
+                    tooltip : {trigger: 'axis'},
+                    legend: {data:['14:00', '16:00'],selectedMode:true},
+                    xAxis : [{show: true,type : 'category',data : ['AP15POA1','AP15POA3','AP16POA2','AP16POA4']}],
+                    yAxis : [{name: "TotlTran",type : 'value',min : 3300,max : 4700}],
+                    series : [
+                    	{
+                            name:'16:00',
+                            type:'line',
+                            itemStyle: {normal: {color : 'rgba(18,189,4,1)'}},
+                            data:[4610,4268,4419,4510]
+                        },
+                        {
+                            name:'14:00',
+                            type:'line',
+                            itemStyle:{normal:{color: 'rgba(203,173,0,1)'}},
+                            data:[3471,3520,3698,3362]
+                        },
+                        {
+                            name:'14:00',
+                            type:'bar',
+                            stack: '1',
+                            barWidth: 6,
+                            itemStyle:{
+                                normal:{
+                                    color:'rgba(0,0,0,0)'
+                                },
+                                emphasis:{
+                                    color:'rgba(0,0,0,0)'
+                                }
+                            },
+                            data:[3471,3520,3698,3362]
+                        },
+                        {
+                            name:'Change',
+                            type:'bar',
+                            stack: '1',
+                            data:[1139,748,721,1148]
+                        }
+                    ]
+            };
+
+            var option2 = {
+                    title :{text : 'QRDispRatio'},
+                    tooltip : {trigger: 'axis'},
+                    legend: {data:['14:00', '16:00'],selectedMode:true},
+                    xAxis : [{show: true,type : 'category',data : ['AP15POA1','AP15POA3','AP16POA2','AP16POA4']}],
+                    yAxis : [{name: "QRDispRatio",type : 'value',min : 78,max : 84}],
+                    series : [
+                    	{
+                            name:'16:00',
+                            type:'line',
+                            itemStyle: {normal: {color : 'rgba(18,189,4,1)'}},
+                            data:[81.52,79.26,82.95,80.43]
+                        },
+                        {
+                            name:'14:00',
+                            type:'line',
+                            itemStyle:{normal:{color: 'rgba(203,173,0,1)'}},
+                            data:[81.00,78.47,83.34,78.85]
+                        },
+                        {
+                            name:'14:00',
+                            type:'bar',
+                            stack: '1',
+                            barWidth: 6,
+                            itemStyle:{
+                                normal:{
+                                    color:'rgba(0,0,0,0)'
+                                },
+                                emphasis:{
+                                    color:'rgba(0,0,0,0)'
+                                }
+                            },
+                            data:[81.00,78.47,82.95,78.85]
+                        },
+                        {
+                            name:'Change',
+                            type:'bar',
+                            stack: '1',
+                            data:[0.52,0.79,{value : 0.39, itemStyle:{ normal:{color:'red'}}},1.58]
+                        }
+                    ]
+            };
+
+            var option3 = {
+                title :{text : 'ASCPUUtilRatio'},
+                tooltip : {trigger: 'axis'},
+                legend: {data:['14:00', '16:00'],selectedMode:true},
+                xAxis : [{show: true,type : 'category',data : ['AP15POA1','AP15POA3','AP16POA2','AP16POA4']}],
+                yAxis : [{name: "ASCPUUtilRatio",type : 'value',min : 0.4,max : 0.9}],
+                series : [
+                	{
+                        name:'16:00',
+                        type:'line',
+                        itemStyle: {normal: {color : 'rgba(18,189,4,1)'}},
+                        data:[0.88,0.58,0.71,0.68]
+                    },
+                    {
+                        name:'14:00',
+                        type:'line',
+                        itemStyle:{normal:{color: 'rgba(203,173,0,1)'}},
+                        data:[0.55,0.69,0.55,0.49]
+                    },
+                    {
+                        name:'14:00',
+                        type:'bar',
+                        stack: '1',
+                        barWidth: 6,
+                        itemStyle:{
+                            normal:{
+                                color:'rgba(0,0,0,0)'
+                            },
+                            emphasis:{
+                                color:'rgba(0,0,0,0)'
+                            }
+                        },
+                        data:[0.55,0.58,0.55,0.49]
+                    },
+                    {
+                        name:'Change',
+                        type:'bar',
+                        stack: '1',
+                        data:[0.33,{value : 0.11, itemStyle:{ normal:{color:'red'}}},0.16,0.19]
+                    }
+                ]
+            };
+
+            var detail1 = {
+                       
+                title :{
+                    text : 'Difference',
+                },
+                tooltip : {
+                    trigger: 'axis',
+                    formatter: function (params){
+                        return params[0].name + ' : '
+                               + (params[2].value - params[1].value > 0 ? '+' : '-') 
+                               + params[0].value + '<br/>'
+                               + params[2].seriesName + ' : ' + params[2].value + '<br/>'
+                               + params[3].seriesName + ' : ' + params[3].value + '<br/>'
+                    }
+                },
+                toolbox: {
+                    show : true,
+                    feature : {
+                        mark : {show: true},
+                        dataView : {show: true, readOnly: false},
+                        magicType : {show: true, type: ['line', 'bar']},
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                legend: {
+                    data:['Before', 'After'],
+                    selectedMode:true
+                },
+                xAxis : [
+                    {
+                       show: true,
+                        type : 'category',
+                        data : ['APPLID1','APPLID2','APPLID3','APPLID4','APPLID5','APPLID6']
+                    }
+                ],
+                yAxis : [
+                    {
+                        name: "ResponseTime",
+                        type : 'value',
+                        min : 200,
+                        max : 450
+                    }
+                ],
+                series : [
+                    {
+                        name:'After',
+                        type:'line',
+                        itemStyle: {
+                            normal: {
+                                color : 'rgba(18,189,4,1)'
+                                }
+                            },
+                        data:[400, 374, 251, 300, 420, 400, 440]
+                    },
+                    {
+                        name:'Before',
+                        type:'line',
+                        symbol:'none',
+                        itemStyle:{
+                            normal:{
+                              lineStyle: {
+                                width:1,
+                                color: 'rgba(203,173,0,1)',
+                                type:'dashed'
+                              }
+                            }
+                        },
+                        data:[320, 332, 301, 334, 360, 330, 350]
+                    },
+                    {
+                        name:'上周2',
+                        type:'bar',
+                        stack: '1',
+                        barWidth: 6,
+                        itemStyle:{
+                            normal:{
+                                color:'rgba(0,0,0,0)'
+                            },
+                            emphasis:{
+                                color:'rgba(0,0,0,0)'
+                            }
+                        },
+                        data:[320, 332, 251, 300, 360, 330, 350]
+                    },
+                    {
+                        name:'Change',
+                        type:'bar',
+                        stack: '1',
+                        data:[
+                          80, 42, 
+                          {value : 50, itemStyle:{ normal:{color:'red'}}},
+                          {value : 34, itemStyle:{ normal:{color:'red'}}}, 
+                          60, 70, 90
+                        ]
+                    }
+                ]
+            };
+
+            var detail2 = {
+           
+                title :{
+                    text : 'Before',
+                },
+                tooltip : {
+                    trigger: 'axis',
+                    formatter: function (params){
+                        return params[0].name + ' : '
+                               + (params[2].value - params[1].value > 0 ? '+' : '-') 
+                               + params[0].value + '<br/>'
+                               + params[2].seriesName + ' : ' + params[2].value + '<br/>'
+                               + params[3].seriesName + ' : ' + params[3].value + '<br/>'
+                    }
+                },
+                toolbox: {
+                    show : true,
+                    feature : {
+                        mark : {show: true},
+                        dataView : {show: true, readOnly: false},
+                        magicType : {show: true, type: ['line', 'bar']},
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                legend: {
+                    data:['Before'],
+                    selectedMode:false
+                },
+                xAxis : [
+                    {
+                       show: true,
+                        type : 'category',
+                        data : ['APPLID1','APPLID2','APPLID3','APPLID4','APPLID5','APPLID6']
+                    }
+                ],
+                yAxis : [
+                    {
+                        name: "ResponseTime",
+                        type : 'value',
+                        min : 200,
+                        max : 450
+                    }
+                ],
+                series : [
+                    
+                    {
+                        name:'Before',
+                        type:'bar',
+                        symbol:'none',
+                        itemStyle: {
+                            normal: {
+                                color : 'rgba(203,173,0,1)'
+                                }
+                            },
+                        data:[320, 332, 301, 334, 360, 330, 350]
+                    }
+                ]
+            };
+            
+            var detail3 = {
+                   
+                title :{
+                    text : 'After',
+                },
+                tooltip : {
+                    trigger: 'axis',
+                    formatter: function (params){
+                        return params[0].name + ' : '
+                               + (params[2].value - params[1].value > 0 ? '+' : '-') 
+                               + params[0].value + '<br/>'
+                               + params[2].seriesName + ' : ' + params[2].value + '<br/>'
+                               + params[3].seriesName + ' : ' + params[3].value + '<br/>'
+                    }
+                },
+                toolbox: {
+                    show : true,
+                    feature : {
+                        mark : {show: true},
+                        dataView : {show: true, readOnly: false},
+                        magicType : {show: true, type: ['line', 'bar']},
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                legend: {
+                    data:['After'],
+                    selectedMode:false
+                },
+                xAxis : [
+                    {
+                       show: true,
+                        type : 'category',
+                        data : ['APPLID1','APPLID2','APPLID3','APPLID4','APPLID5','APPLID6']
+                    }
+                ],
+                yAxis : [
+                    {
+                        name: "ResponseTime",
+                        type : 'value',
+                        min : 200,
+                        max : 450
+                    }
+                ],
+                series : [
+                    {
+                        name:'After',
+                        type:'bar',
+                        itemStyle: {
+                            normal: {
+                                color : 'rgba(18,189,4,1)'
+                                }
+                            },
+                        data:[400, 374, 251, 300, 420, 400, 440]
+                    }
+                    
+                ]
+            };
+        // 为echarts对象加载数据 
+        myChart.setOption(option1); 
+        myChart2.setOption(option2); 
+        myChart3.setOption(option3); 
+        myChart4.setOption(option1); 
+        myChart5.setOption(option2); 
+        myChart6.setOption(option3); 
+
+        detailChart1.setOption(detail1); 
+        detailChart2.setOption(detail2); 
+        detailChart3.setOption(detail3); 
+
+
+        setTimeout(function (){
+            window.onresize = function () {
+                myChart.resize();
+                myChart2.resize();
+                myChart3.resize();
+                myChart4.resize();
+                myChart5.resize();
+                myChart6.resize();
+
+                detailChart1.resize();
+                detailChart2.resize();
+                detailChart3.resize();
+            }
+        },200)
+    }
+);
+</script>

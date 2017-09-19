@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width:1200px;height:400px;"></div>
+    <div id="main2" style="width:1200px;height:400px;"></div> 
+    <div id="main3" style="width:1200px;height:400px;"></div>                        
+
+    <!-- ECharts单文件引入 -->
+    <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+    <script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: 'http://echarts.baidu.com/build/dist'
+            }
+        });
+        
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar', 
+                'echarts/chart/line',
+                'echarts/chart/pie',
+                'echarts/chart/gauge',
+                'echarts/chart/funnel',
+                'echarts/chart/radar'// 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+
+                var id = main
+                var myChart = ec.init(document.getElementById(id),'macarons'); 
+                var myChart2 = ec.init(document.getElementById('main2'),'macarons'); 
+                var myChart3 = ec.init(document.getElementById('main3'),'macarons'); 
+
+                
+                var option1 = {
+                   
+                        title :{
+                            text : 'Difference',
+                        },
+                        tooltip : {
+                            trigger: 'axis',
+                            formatter: function (params){
+                                return params[0].name + ' : '
+                                       + (params[2].value - params[1].value > 0 ? '+' : '-') 
+                                       + params[0].value + '<br/>'
+                                       + params[2].seriesName + ' : ' + params[2].value + '<br/>'
+                                       + params[3].seriesName + ' : ' + params[3].value + '<br/>'
+                            }
+                        },
+                        toolbox: {
+                            show : true,
+                            feature : {
+                                mark : {show: true},
+                                dataView : {show: true, readOnly: false},
+                                magicType : {show: true, type: ['line', 'bar']},
+                                restore : {show: true},
+                                saveAsImage : {show: true}
+                            }
+                        },
+                        legend: {
+                            data:['Before', 'After'],
+                            selectedMode:true
+                        },
+                        xAxis : [
+                            {
+                               show: true,
+                                type : 'category',
+                                data : ['APPLID1','APPLID2','APPLID3','APPLID4','APPLID5','APPLID6']
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                name: "ResponseTime",
+                                type : 'value',
+                                min : 200,
+                                max : 450
+                            }
+                        ],
+                        series : [
+                            {
+                                name:'After',
+                                type:'line',
+                                itemStyle: {
+                                    normal: {
+                                        color : 'rgba(18,189,4,1)'
+                                        }
+                                    },
+                                data:[400, 374, 251, 300, 420, 400, 440]
+                            },
+                            {
+                                name:'Before',
+                                type:'line',
+                                symbol:'none',
+                                itemStyle:{
+                                    normal:{
+                                      lineStyle: {
+                                        width:1,
+                                        color: 'rgba(203,173,0,1)',
+                                        type:'dashed'
+                                      }
+                                    }
+                                },
+                                data:[320, 332, 301, 334, 360, 330, 350]
+                            },
+                            {
+                                name:'上周2',
+                                type:'bar',
+                                stack: '1',
+                                barWidth: 6,
+                                itemStyle:{
+                                    normal:{
+                                        color:'rgba(0,0,0,0)'
+                                    },
+                                    emphasis:{
+                                        color:'rgba(0,0,0,0)'
+                                    }
+                                },
+                                data:[320, 332, 251, 300, 360, 330, 350]
+                            },
+                            {
+                                name:'Change',
+                                type:'bar',
+                                stack: '1',
+                                data:[
+                                  80, 42, 
+                                  {value : 50, itemStyle:{ normal:{color:'red'}}},
+                                  {value : 34, itemStyle:{ normal:{color:'red'}}}, 
+                                  60, 70, 90
+                                ]
+                            }
+                        ]
+                    };
+
+                    var option2 = {
+                   
+                        title :{
+                            text : 'Before',
+                        },
+                        tooltip : {
+                            trigger: 'axis',
+                            formatter: function (params){
+                                return params[0].name + ' : '
+                                       + (params[2].value - params[1].value > 0 ? '+' : '-') 
+                                       + params[0].value + '<br/>'
+                                       + params[2].seriesName + ' : ' + params[2].value + '<br/>'
+                                       + params[3].seriesName + ' : ' + params[3].value + '<br/>'
+                            }
+                        },
+                        toolbox: {
+                            show : true,
+                            feature : {
+                                mark : {show: true},
+                                dataView : {show: true, readOnly: false},
+                                magicType : {show: true, type: ['line', 'bar']},
+                                restore : {show: true},
+                                saveAsImage : {show: true}
+                            }
+                        },
+                        legend: {
+                            data:['Before'],
+                            selectedMode:false
+                        },
+                        xAxis : [
+                            {
+                               show: true,
+                                type : 'category',
+                                data : ['APPLID1','APPLID2','APPLID3','APPLID4','APPLID5','APPLID6']
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                name: "ResponseTime",
+                                type : 'value',
+                                min : 200,
+                                max : 450
+                            }
+                        ],
+                        series : [
+                            
+                            {
+                                name:'Before',
+                                type:'bar',
+                                symbol:'none',
+                                itemStyle: {
+                                    normal: {
+                                        color : 'rgba(203,173,0,1)'
+                                        }
+                                    },
+                                data:[320, 332, 301, 334, 360, 330, 350]
+                            }
+                        ]
+                    };
+        
+
+        var option3 = {
+                   
+                        title :{
+                            text : 'After',
+                        },
+                        tooltip : {
+                            trigger: 'axis',
+                            formatter: function (params){
+                                return params[0].name + ' : '
+                                       + (params[2].value - params[1].value > 0 ? '+' : '-') 
+                                       + params[0].value + '<br/>'
+                                       + params[2].seriesName + ' : ' + params[2].value + '<br/>'
+                                       + params[3].seriesName + ' : ' + params[3].value + '<br/>'
+                            }
+                        },
+                        toolbox: {
+                            show : true,
+                            feature : {
+                                mark : {show: true},
+                                dataView : {show: true, readOnly: false},
+                                magicType : {show: true, type: ['line', 'bar']},
+                                restore : {show: true},
+                                saveAsImage : {show: true}
+                            }
+                        },
+                        legend: {
+                            data:['After'],
+                            selectedMode:false
+                        },
+                        xAxis : [
+                            {
+                               show: true,
+                                type : 'category',
+                                data : ['APPLID1','APPLID2','APPLID3','APPLID4','APPLID5','APPLID6']
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                name: "ResponseTime",
+                                type : 'value',
+                                min : 200,
+                                max : 450
+                            }
+                        ],
+                        series : [
+                            {
+                                name:'After',
+                                type:'bar',
+                                itemStyle: {
+                                    normal: {
+                                        color : 'rgba(18,189,4,1)'
+                                        }
+                                    },
+                                data:[400, 374, 251, 300, 420, 400, 440]
+                            }
+                            
+                        ]
+                    };
+                // 为echarts对象加载数据 
+                myChart.setOption(option1); 
+                myChart2.setOption(option2); 
+                myChart3.setOption(option3); 
+
+        myChart.connect([myChart2, myChart3]);
+        myChart2.connect([myChart, myChart3]);
+        myChart3.connect([myChart, myChart2]);
+
+        setTimeout(function (){
+            window.onresize = function () {
+                myChart.resize();
+                myChart2.resize();
+                myChart3.resize();
+            }
+        },200)
+
+            }
+        );
+
+        
+
+        
+    </script>
+</body>

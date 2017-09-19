@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>Compare</title>
+</head>
+<link rel='stylesheet' href='css/detail.css' />
+<body>
+	<h2 class="inline-title">CICS Analytics Compare</h2>
+    <h5 class="inline-title" id="subtitle"></h5>
+	<div id="chart" class="chart-box"></div>
+    <div id="detail" class="white-block">
+		<div id="detail1" class="detail-block"></div>
+		<table id="chartDetails" cellpadding="0" cellspacing="0">
+			<tbody>
+				
+			</tbody>
+		</table>
+	</div>
+	<div id="fade"  class="fade-block">
+		<a id="close_txt" class="button-close">关闭</a>
+	</div>
+</body>
+
+<script src="js/jquery.min.js"></script>
+<!-- ECharts单文件引入 -->
+<script src="dist/echarts.js"></script>
+<script type="text/javascript">
+//console.log("data:"+data);
+	function hideDetails(){
+		$('#detail').hide();
+		$("#fade").hide();
+	}
+	hideDetails();
+
+var height = document.body.offsetHeight ;
+$("#chart").attr("max-height",height);
+
+var data;
+var chartCount = 0;
+var options = new Array();
+var types = new Array();
+var myChart = new Array();
+var detailChart;
+var compare1 = "scene1"
+var compare2 = "scene2"
+
+function initData(){
+    data = DATA;
+    console.log("data:"+JSON.stringify(data))
+    data.forEach(function(item){
+            var type = item.type;
+            types[chartCount] = item.type;
+            var temp = document.createElement("div");
+            temp.id = type;
+            temp.className="chart_image";
+            $("#chart").append(temp);
+            $("div[id="+type+"]").click(function(){
+                showDetails(this.id)
+            })
+            chartCount++;
+    })
+}
+
+function showChart(){
+    // 路径配置
+    require.config({
+        paths: {
+            echarts: 'dist'
+        }
+    });
+    require(
+            [
+                'echarts',
+                'echarts/chart/bar',
+                'echarts/chart/line',
+                'echarts/chart/pie',
+                'echarts/chart/gauge',
+                'echarts/chart/funnel',
+                'echarts/chart/radar'// 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                // console.log("detailChart set")
+                detailChart = ec.init(document.getElementById("detail1"),"macarons");
+
+                var chart = document.getElementsByClassName("chart_image");
+                for(var i=0;i<chartCount;i++){
+                    var temp = data[i];
+                    var sum = 0;
+                    options[i] = {
+                        title :{text : temp.type,x:'center'},
+                        legend: {show:false,data:["scene1", "scene2"],selectedMode:true},
+                        xAxis : [{show: false,type : 'category',data : temp.xAxis}],
+                        yAxis : [{show:false,name: "",type : 'value', min : temp.min, max : temp.max}],
+                        series : [
+                            {
+                                name:"scene1",
+                                type:'line',
+                                clickable:true,
+                                itemStyle: {normal: {color : 'rgba(18,189,4,1)'}},
+                                data:temp.scene1
+                            },
+                            {
+                                name:"scene2",
+                                type:'line',
+                                itemStyle:{normal:{color: 'rgba(203,173,0,1)'}},
+                                data:temp.scene2
+                            },
+                            {
+                                name:'base',
+                                type:'bar',
+                                stack: '1',
+                                barWidth: 6,
+                                itemStyle:{
+                                    normal:{
+                                        color:'rgba(0,0,0,0)'
+                                    },
+                                    emphasis:{
+                                        color:'rgba(0,0,0,0)'
+                                    }
+                                },
+                                data:temp.base
+                            },
+                            {
+                                name:'change',
+                                type:'bar',
+                                stack: '1',
+                                data:temp.dis
+                            }
+                        ]
+                    };
+                    myChart[i] = ec.init(chart[i],"macarons");
+                    myChart[i].setOption(options[i]);
+                };
+                hideDetails();
+            }
+    );
+}
+
+$("#close_txt").click(function close(){
+    // console.log("close")
+    hideDetails();
+})
+
+function createTable(temp){
+    //console.log("temp:"+JSON.stringify(temp))
+    var table = $("#chartDetails");
+    table.empty();
+    var tr = $("<tr></tr>")
+    tr.appendTo(table);
+    tr.append($("<th>Region</th>"))
+    tr.append($("<th>"+compare1+"</th>"))
+    tr.append($("<th>"+compare2+"</th>"))
+    tr.append($("<th>change</th>"))
+    tr.append($("<th>changeRadio</th>"))
+    // console.log("createTable append")
+    var index = 0;
+    for(var i=0;i<temp.scene1.length;i++){
+        if(i%2 == 1){
+            var tr = $("<tr class='trOdd'></tr>")
+        }else{
+            var tr = $("<tr></tr>")
+        }
+        tr.appendTo(table);
+        tr.append($("<td>"+temp.xAxis[i]+"</td>"))
+        var var1 = temp.scene1[i];
+        var var2 = temp.scene2[i];
+        var change = (var2-var1).toFixed(2);
+        if(var1 == 0){
+            var changeRadio = "0.00%"
+        }else{
+            var changeRadio = ((change/var1)*100).toFixed(2)+"%";
+        }
+        tr.append($("<td>"+var1+"</td>"))
+        if(change<0){
+            tr.append($("<td style='color:blue'>"+var2+"↓</td>"))
+            tr.append($("<td style='color:blue'>"+change+"</td>"));
+            tr.append($("<td style='color:blue'>"+changeRadio+"</td>"));
+        }else if(change>0){
+            tr.append($("<td style='color:red'>"+var2+"↑</td>"))
+            tr.append($("<td style='color:red'>"+change+"</td>"));
+            tr.append($("<td style='color:red'>"+changeRadio+"</td>"));
+        }else{
+            tr.append($("<td>"+var2+"</td>"))
+            tr.append($("<td>"+change+"</td>"));
+            tr.append($("<td>"+changeRadio+"</td>"));
+        }
+    }
+}
+
+function showDetails(type){
+    var index = 0;
+    data.forEach(function(temp){
+        if(temp.type == type){
+            var options = {
+                title :{text : temp.type},
+                tooltip : {trigger: 'axis',
+                    formatter:function(a){
+                        var base;
+                        var compare;
+                        var region;
+                        //console.log(JSON.stringify(a));
+                        a.forEach(function(item){
+                            region = item[1];
+                            if(item[0] == "scene1"){
+								base = item[2];
+                            }else if(item[0] == "scene2"){
+								compare = item[2];
+                            }
+                        })
+                        var change = (compare-base).toFixed(2);
+                        if(base == 0){
+                            var changeRadio = "0.00%";
+                        }else{
+                            var changeRadio = ((change/base)*100).toFixed(2)+"%";
+                        }
+                        var val;
+                        if(change<0){
+                            val = region+"<br>"+
+                                    "change:<span style='color:blue;display:inline-block'>"+change+"</span><br>"+
+                                    "changeRadio:<span style='color:blue;display:inline-block'>"+changeRadio+"</span><br>"+
+                                    compare1+":"+base+"<br>"+
+                                    compare2+":"+compare;
+                        }else if(change>0){
+                            val = region+"<br>"+
+                                    "change:<span style='color:red;display:inline-block'>"+change+"</span><br>"+
+                                    "changeRadio:<span style='color:red;display:inline-block'>"+changeRadio+"</span><br>"+
+                                    compare1+":"+base+"<br>"+
+                                    compare2+":"+compare;
+                        }else{
+                            val = region+"<br>"+
+                                    "change:"+change+"<br>"+
+                                    "changeRadio:"+changeRadio+"<br>"+
+                                    compare1+":"+base+"<br>"+
+                                    compare2+":"+compare;
+                        }
+//                            console.log("val:"+val)
+                        return val;
+
+                    }},
+                legend: {data:["scene1", "scene2"],selectedMode:true},
+                xAxis : [{
+                            type : 'category',
+                            data : temp.xAxis,
+                            axisLabel:{  
+                                 interval:0,//横轴信息全部显示  
+                                 rotate:-30,//-30度角倾斜显示  
+                            }  
+                        }],
+                yAxis : [{name: "",type : 'value', min : temp.min, max : temp.max}],
+                series : [
+                    {
+                        name:"scene1",
+                        type:'line',
+                        clickable:true,
+                        itemStyle: {normal: {color : 'rgba(18,189,4,1)'}},
+                        data:temp.scene1
+                    },
+                    {
+                        name:"scene2",
+                        type:'line',
+                        itemStyle:{normal:{color: 'rgba(203,173,0,1)'}},
+                        data:temp.scene2
+                    },
+                    {
+                        name:'base',
+                        type:'bar',
+                        stack: '1',
+                        barWidth: 6,
+                        itemStyle:{
+                            normal:{
+                                color:'rgba(0,0,0,0)'
+                            },
+                            emphasis:{
+                                color:'rgba(0,0,0,0)'
+                            }
+                        },
+                        data:temp.base
+                    },
+                    {
+                        name:'change',
+                        type:'bar',
+                        stack: '1',
+                        data:temp.dis
+                    }
+                ]
+            };
+            detailChart.setOption(options,true);
+            createTable(temp);
+        }
+        index++;
+    })
+    $('#detail').show();
+    $("#fade").show();
+    return false;
+}
+ initData();
+ showChart();
+setTimeout(function (){
+    window.onresize = function () {
+        myChart.forEach(function(item){
+            item.resize();
+        })
+        detailChart.resize();
+    }
+},200)
+</script>
